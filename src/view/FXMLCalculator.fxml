@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Calculador" fx:id="calc">
+    <children>
+        <VBox fx:id="cajaPrincipal">
+            <children>
+                <Label fx:id="titulo"/>
+                <!--<ChoiceBox fx:id="numVectores"/>-->
+                <Button fx:id="btnAgregar" text="Agregar Vector" onAction="#agregarVector"/>
+                <Button fx:id="btnEliminar" text="Eliminar Vector" onAction="#eliminarVector"/>
+                <HBox fx:id="cajaTabla">
+                <TableView fx:id="tablaDatos" prefHeight="200.0" prefWidth="320.0"/>
+                <Label fx:id="lblResultados" id="lblResultados"/>
+                </HBox>
+                <Button onAction="#ObternerResultados" text="Obtener Resultados" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0"/>
+
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

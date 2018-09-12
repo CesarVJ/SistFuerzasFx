@@ -1,0 +1,224 @@
+
+.root{
+    -fx-background-color: whitesmoke;
+}
+.button-raised {
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 12px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: rgb(77, 102, 204);
+    -fx-pref-width: 150;
+    -fx-text-fill: WHITE;
+}
+.lblResultados{
+    
+    -fx-font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+-fx-color: #ffffff;
+-fx-font-size: 18px;
+-fx-font-weight: 400;
+-fx-text-align: center;
+-fx-background: #889ccf;
+-fx-margin: 0 0 25px;
+-fx-overflow: hidden;
+-fx-padding: 20px;
+-fx-border-radius: 35px 0px 35px 0px;
+-fx-moz-border-radius: 35px 0px 35px 0px;
+-fx-webkit-border-radius: 35px 0px 35px 0px;
+
+    
+}
+
+#cambiarModo{
+	
+	-fx-margin: 10 10 20px;
+}
+
+#tituloEjercicio1{
+	-fx-font-size:12px;
+}
+#table{
+	-fx-max-height:300px;
+	
+}
+
+
+.tabs{
+    -fx-background-color: #7FDBFF;
+    -fx-font-family: sans-serif;
+     -fx-pref-width: 240px;
+	-fx-text-align: center;
+	-fx-padding: 10px 20px 10px 30px;
+    /*-fx-border-color:white;*/
+    -jfx-button-type: RAISED;
+    -fx-text-fill: WHITE;
+    -fx-border-radius: 50px;   
+    
+
+}
+
+.tabs:selected{
+	    -fx-background-color: white;
+		-fx-rippler-fill: RED;
+	    -fx-stroke: red;
+}
+
+.tabs:visited{
+		    -fx-background-color: black;
+
+		    
+	
+}
+
+.login{
+    -fx-background-color: white;
+	-fx-border-color:#7FDBFF;	
+	-fx-height:30px;
+	-fx-font-size: 18px;
+	
+}
+
+
+
+.pass{
+	
+	-jfx-focus-color: #4059A9;
+    -jfx-unfocus-color: #4d4d4d;
+
+    	
+    
+}
+.mail{
+	
+}
+
+.btnLogin{
+	-fx-pref-width: 600px;
+	-fx-background-color: #2ECC40;
+	-fx-font-size:15px;	
+}
+.btnLogin:hover{
+	-fx-background-color: linear-gradient(#2ECC40, #45B649);	
+	-fx-cursor: hand;
+}
+.btnLogin:pressed{
+	-fx-background-color: #2ECC40;
+	-fx-font-size:14px		
+}
+
+
+.title{
+	-fx-text-align:center;
+	-fx-font-weight:bold;
+	-fx-font-size:19px;	
+
+}
+
+#btnRegistrarse{
+		-fx-pref-width: 457px;
+		-fx-pref-height: 25px;
+		-fx-font-size:18px;
+		 -fx-text-fill: WHITE;	
+}
+
+.tab {
+    /*-fx-padding: 0px;*/
+    -fx-border-width: 0px;
+     -fx-pref-width: 230px;
+     -fx-pref-height:50px;
+     -fx-cursor:hand;
+	-fx-text-align:rigth;
+	-fx-font-size: 18px;
+	-fx-font-family: sans-serif;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab  > .tab-container{    
+    -fx-border-color: rgba(0,0,0,0);
+    -fx-border-width: 1px;   
+}
+.tab-pane > .tab-header-area > .headers-region >.tab:selected .focus-indicator{
+    -fx-border-width: 0px;  
+}
+
+
+
+.VBMenu, .btns, .filesButtons{
+	-fx-background-color: #0B3C5D;/*#4ABDAC  #0E0B16*/
+	-fx-font-size:16px;
+	-fx-color:white;
+	-fx-text-fill: WHITE;	
+}
+
+.btns{
+ -fx-alignment:CENTER_LEFT;
+  	 -fx-border-insets: 0,1,0;
+ 	 -fx-border-width: 0px 0px 0px 5px;
+ 	 -fx-border-color: #0B3C5D; 	
+
+}
+ .btns:pressed, .filesButtons:pressed{
+ 	-fx-background-color:#66B9BF; 	
+ 	 	
+ }
+ 
+ .btns:hover, .titleButtons:hover, .filesButtons:hover{ 	
+ 	 	-fx-background-color:#66B9BF; 
+ 	 	 -fx-border-color: #66B9BF; 	 	
+ 	
+ }
+ 
+ .backgrounds{
+ 	-fx-background-color:white;
+ }
+ 
+ .titleBar{
+ 	 	-fx-background-color:#0B3C5D; 	
+ }
+ 
+  .titleButtons{
+ 	-fx-background-color: #0B3C5D;/*#4ABDAC  #0E0B16*/
+	-fx-text-fill: WHITE;
+	-fx-cursor:hand;
+ }
+ 
+  .btns:focused{
+ 	-fx-background-color:#66B9BF; 
+ 	-fx-font-weight:bold;
+ 	-fx-alignment:CENTER; 	
+ 	 -fx-border-insets: 0,1,0;
+ 	 -fx-border-width: 0px 0px 0px 5px;
+ 	 -fx-border-color: #88D317;
+ 		
+ 	
+ }
+ 
+ .board{
+ 	-fx-background-color:white;
+ 	-fx-border-insets: 1,1,1;
+ 	 -fx-border-width: 15px 15px 15px 15px;
+ 	-fx-border-color:#0B3C5D;
+
+ }
+ .textBoard{
+ 		-fx-text-fill: BLACK;
+ 	-fx-font-size:20px;
+	-fx-color:black;
+	-fx-text-fill: BLACK;	
+	 	-fx-font-weight:bold;
+	
+ }
+ 
+ .imageViewIco{
+ 	 -fx-alignment:CENTER;	
+ }
+ 
+ .filesButtons{
+ 	-fx-alignment:CENTER;
+  	 -fx-border-insets: 0,0,0;
+ 	 -fx-border-width: 2px 2px 2px 2px;
+ 	 -fx-border-color: #0B3C5D; 
+ 	 -fx-border-radius:0px;
+ 	
+ }
+ 
+ 
+

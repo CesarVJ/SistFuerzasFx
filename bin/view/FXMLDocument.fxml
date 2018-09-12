@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.ChoiceBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TipoEjercicio1" fx:id="ejercicios1">
+    <children>
+        
+        <!--<Label layoutX="33.0" layoutY="15.0" text="TableViewExample" textFill="#253dc6">
+            <font>
+                            <TextField id="VResultante" fx:id="VResultante" layoutX="120.0" layoutY="64.0" promptText="Vector resultante" />
+
+                <Font size="28.0"/>
+            </font>
+        </Label>-->
+        
+        
+        
+        <HBox fx:id="cajaPrincipal">
+          
+            <VBox fx:id="cajaIzquierda">
+                <children>
+                    <ImageView fx:id="grafica1" layoutX="400.0" layoutY="400.0"/>
+                    <Label fx:id="textoInferior"/>
+                    <HBox fx:id="cajaVResultante">
+                        <children>
+                            <Label text="Vector Resultante: "/><TextField id="VResultante" fx:id="VResultante" layoutX="120.0" layoutY="64.0" promptText="Vector resultante"/>
+
+                        </children>
+                    </HBox>
+                    <HBox fx:id="cajaAnguloResultante">
+                        <children>
+                            <Label text="Angulo Resultante: "/><TextField id="AnguloResultante" fx:id="AnguloResultante" layoutX="120.0" layoutY="64.0" promptText="Angulo resultante"/>
+                        </children>
+                    </HBox>
+                </children>
+            </VBox>
+            <VBox fx:id ="cajaDerecha" prefHeight="400.0"  prefWidth="554.0">  <!-- prefHeight="400.0" -->
+            
+                <children>
+                    <Label fx:id="tituloEjercicio1" maxHeight="Infinity"/>      
+                    <ChoiceBox fx:id="cambiarModo" />              
+                    <TableView fx:id="table" prefHeight="379.0" prefWidth="602.0"/>
+                        <HBox fx:id="cajaBotones">
+                            <children>
+                                <Button onAction="#ejercicioAnterior" text="Ejercicio anterior" fx:id="btnAnterior" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />                            
+                                <Button onAction="#verificarDatos" text="Calificar" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0"/>
+                                <Button onAction="#siguienteEjercicio" text="Siguiente ejercicio" fx:id="btnSiguiente" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />
+                                <!--<Button text="Regresar" onAction="#regresarInicio" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />-->
+
+                            </children>
+                        </HBox>
+                    </children>
+            </VBox>   
+        </HBox> 
+    </children>
+    
+</AnchorPane>

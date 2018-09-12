@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Formulario">
+    <children>
+        <VBox fx:id="cajaPrincipal">
+            <children>
+                <Label fx:id="lblTitulo"/>
+               
+               <HBox fx:id="boxName" >
+                
+                 <TextField fx:id="nombre" id="nombre"  />   
+                 <TextField fx:id="apellido" id="apellido"  />
+                              
+                </HBox>
+
+                
+                            
+                <VBox fx:id="boxUser" >
+                       <TextField fx:id="mail" id="mail"/>     
+                 <HBox fx:id="boxDate">
+                      <TextField fx:id="usuario" id="usuario"/>          
+                	 <DatePicker fx:id="birthDay" id="birthDay" maxWidth="225.0"/>
+                 </HBox>
+                 <PasswordField fx:id="password" id="password"/>
+                 <PasswordField fx:id="passwordConfirm" id="passwordConfirm"/>                
+                </VBox>
+                
+
+                
+                <Button fx:id="btnRegistrarse" id="btnRegistrarse"  text="Registrarse" prefHeight="25.0" prefWidth="457.0" onAction="#registrarUsuarios"/>
+
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
+
