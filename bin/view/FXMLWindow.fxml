@@ -24,8 +24,12 @@
 		<VBox fx:id="VBMenu"  layoutY="40.0">	
 			<children>	
 			<Button fx:id="btnPerfil" text="Perfil" onAction="#abrirPerfil"/>	
-			<Button fx:id="btnEjercicios" text="Ejercicios" onAction="#abrirEjercicio"/>		
-			<Button fx:id="btnCalculador" text="Calculador" onAction="#abrirCalculador"/>		
+			<Button fx:id="btnEjercicios" text="Ejercicios" onAction="#abrirEjercicio"/>
+			<VBox fx:id="VBSub">
+			<Button fx:id="btnEjercicios1" text="Vectores por componentes"/>
+			<Button fx:id="btnEjercicios2" text="Diag.Cuerpo Libre"/>											
+			</VBox>						
+			<Button fx:id="btnCalculador" onAction="#abrirCalculador"/>		
 			<Button fx:id="btnRegresar" text="Salir" onAction="#regresarLogin"/>
 			<Button fx:id="btnAgregar" text="Añadir Ejercicios" onAction="#agregarEjercicio"/>															
 			</children>			

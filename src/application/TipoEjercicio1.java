@@ -233,7 +233,11 @@ public class TipoEjercicio1 implements Initializable {
 
 	public void ejercicioAnterior() {
 		numEjercicio -= 1;
+		if(numEjercicio==1) {
+			imgSistema= new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer1.png"), 500, 500, true, true);
+		}else {
 		imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+		}
 		// grafica1.setImage(new
 		// Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer"+(numEjercicio)+".png"),500,400,true,true));
 		grafica1.setImage(imgSistema);
@@ -325,7 +329,7 @@ public class TipoEjercicio1 implements Initializable {
 				btnSiguiente.setDisable(true);
 			}
 				if(btnSiguiente.isDisabled()) {
-					if(ejercicioMax==numEjercicio && (ejercicioMax)<new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length ) {
+					if(ejercicioMax==numEjercicio && (ejercicioMax)<new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length+1 ) {
 					btnSiguiente.setDisable(false);
 					ejercicioMax++;
 					}

@@ -110,6 +110,7 @@
 	-fx-text-align:center;
 	-fx-font-weight:bold;
 	-fx-font-size:19px;	
+	
 
 }
 
@@ -216,9 +217,31 @@
   	 -fx-border-insets: 0,0,0;
  	 -fx-border-width: 2px 2px 2px 2px;
  	 -fx-border-color: #0B3C5D; 
- 	 -fx-border-radius:0px;
+ 	 -fx-border-radius:0px; 	  	
+ }
+ 
+ .btnEjercicios1, .btnEjercicios2{
+ 	 	-fx-font-size:12px;
+ 	 	-fx-background-color: #062F4F;
+
+ }
+ 
+ .btnCalc{
+ 	 	-fx-font-size:15px;
  	
  }
+ 
+ .textForm{
+ 		-fx-text-fill: BLACK;
+ 	-fx-font-size:15px;
+	-fx-color:black;
+	-fx-text-fill: BLACK;	
+	 	-fx-font-weight:bold;
+	 -fx-text-align: JUSTIFY;
+	 	
+	
+ }
+ 
  
  
 

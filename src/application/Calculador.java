@@ -120,6 +120,9 @@ public class Calculador extends Resultados implements Initializable{
 
     }
       
+      
+      
+      
       @FXML
       private void ObternerResultados(){
           ObservableList<ContenidoTabla>  dataRows = FXCollections.observableArrayList();

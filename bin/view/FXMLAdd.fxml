@@ -19,16 +19,32 @@
 
 
     <children>
-            	<VBox fx:id="board" layoutX="300.0" layoutY="100.0" prefHeight="280.0" prefWidth="350.0">
-            	<Label fx:id="texto1"/>
-            	<ImageView fx:id="icoImg"/>
-            	<Label text="" fx:id="texto"/> 
-            	<Label fx:id="texto2"/>            	
-            	<HBox>
-            	<Button fx:id="btnAgregar" text="Agregar Imagen" prefHeight="25.0" prefWidth="457.0" onAction="#agregarGrafica"/>
-                <Button fx:id="btnValidar" text="Validar" prefHeight="25.0" prefWidth="457.0" />
-            	</HBox>              	                           	
+            	<VBox fx:id="board" layoutX="200.0" layoutY="100.0" prefHeight="280.0" prefWidth="350.0">
+            		<Label fx:id="texto1"/>
+            		<ImageView fx:id="icoImg"/>
+            		<Label text="" fx:id="texto"/> 
+            		<Label fx:id="texto2"/>            	
+            		<HBox>
+            			<Button fx:id="btnAgregar" text="Agregar Imagen" prefHeight="25.0" prefWidth="457.0" onAction="#agregarGrafica"/>
+                		<Button fx:id="btnValidar" text="Validar" prefHeight="25.0" prefWidth="457.0" />
+            		</HBox>              	                           	
             	</VBox>   
+            	
+            	
+            	<VBox spacing="15.0" fx:id="formData" layoutX="600.0" layoutY="100.0" prefHeight="380.0" prefWidth="360.0">
+            		<Label fx:id="indicacionLbl">Ingresa la imagen del ejercicio a agregar junto con los datos de la misma y al finalizar oprime "Validar"</Label>
+            		<HBox spacing="20.0">
+            			<Label fx:id="tipoLbl">Selecciona el tipo de ejercicio a añadir: </Label>
+            			<ChoiceBox fx:id="tipoEjercicio"></ChoiceBox>
+            		</HBox>
+            		<HBox spacing="20.0">
+            			<Label fx:id="vectLbl">Selecciona el numero de vectores: </Label>
+            			<TextField fx:id="numVect" prefWidth="50.0"></TextField>
+            		</HBox>
+            		<TableView fx:id="tablaDatos" prefHeight="200.0" prefWidth="320.0"/>            	
+            	
+            		
+            	</VBox>
                          
                 
         

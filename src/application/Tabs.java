@@ -5,6 +5,7 @@
  */
 package application;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 //import com.jfoenix.controls.JFXButton;
 //import com.jfoenix.controls.JFXTextField;
@@ -56,6 +57,9 @@ public class Tabs extends Application{
     
     @Override
     public void start(Stage primaryStage) throws IOException {
+		String username = System.getProperty("user.home");
+	    new File (username+"\\SistFuerzasFiles\\imgEjercicios").mkdirs();
+
         
         Parent root = FXMLLoader.load(getClass().getResource("/view/FXMLDocument.fxml"));
         

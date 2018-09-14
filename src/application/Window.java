@@ -38,9 +38,9 @@ public class Window implements Initializable{
 	@FXML
 	private HBox main;
 	@FXML
-	private VBox VBMenu,VBMenu2,menuPrincipal;
+	private VBox VBMenu,VBMenu2,menuPrincipal,VBSub;
 	@FXML
-	private Button btnRegresar,btnPerfil,btnEjercicios,btnCalculador,btnCerrar,btnMin,btnAgregar;
+	private Button btnRegresar,btnPerfil,btnEjercicios,btnCalculador,btnCerrar,btnMin,btnAgregar,btnEjercicios1,btnEjercicios2;
 	static Stage stage=null;
 	
 	@FXML
@@ -81,7 +81,8 @@ public class Window implements Initializable{
 	}
 	
 	public void agregarEjercicio() {
-		
+		VBSub.getChildren().remove(btnEjercicios1);
+		VBSub.getChildren().remove(btnEjercicios2);		
 		ventanaAdd.toFront();
 
 	}
@@ -89,15 +90,25 @@ public class Window implements Initializable{
 	public void abrirEjercicio() {
 		//root3.getChildren().get(0).toFront();	
 		ventanaEjer.toFront();
+		try {
+		VBSub.getChildren().addAll(btnEjercicios1,btnEjercicios2);
+		}catch(Exception e) {
+			VBSub.getChildren().remove(btnEjercicios1);
+			VBSub.getChildren().remove(btnEjercicios2);
+		}
 	}
 	
 	public void abrirCalculador() {
+		VBSub.getChildren().remove(btnEjercicios1);
+		VBSub.getChildren().remove(btnEjercicios2);
 		VentanaCalc.toFront();
 
 		
 	}
 	
 	public void abrirPerfil() {
+		VBSub.getChildren().remove(btnEjercicios1);
+		VBSub.getChildren().remove(btnEjercicios2);
 
 
 	}
@@ -125,6 +136,14 @@ public class Window implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		btnCalculador.setText("Calculador\nde fuerzas");
+		btnCalculador.setWrapText(true);
+		
+		//btnCalculador.textProperty().setValue("Calculador de fuerzas");
+		
+		VBSub.getChildren().remove(btnEjercicios1);
+		VBSub.getChildren().remove(btnEjercicios2);
+
 		
 		File[] paths;
 
@@ -205,6 +224,12 @@ public class Window implements Initializable{
 		btnEjercicios.setPrefHeight(60);
 		btnEjercicios.setPrefWidth(150);
 		
+		btnEjercicios1.setPrefHeight(40);
+		btnEjercicios1.setPrefWidth(150);
+		
+		btnEjercicios2.setPrefHeight(40);
+		btnEjercicios2.setPrefWidth(150);
+		
 		btnCalculador.setPrefHeight(60);
 		btnCalculador.setPrefWidth(150);
 		
@@ -222,7 +247,9 @@ public class Window implements Initializable{
 		btnRegresar.getStyleClass().add("btns");
 		btnPerfil.getStyleClass().add("btns");
 		btnEjercicios.getStyleClass().add("btns");
-		btnCalculador.getStyleClass().add("btns");
+		btnEjercicios1.getStyleClass().addAll("btns","btnEjercicios1");
+		btnEjercicios2.getStyleClass().addAll("btns","btnEjercicios2");
+		btnCalculador.getStyleClass().addAll("btns","btnCalc");
 		
 		btnRegresar.setPadding(Insets.EMPTY);
 		btnPerfil.setPadding(Insets.EMPTY);
@@ -232,6 +259,8 @@ public class Window implements Initializable{
 		btnPerfil.setGraphic(new ImageView("/images/userLogo1.png"));
 		btnRegresar.setGraphic(new ImageView("/images/salir.png"));
 		btnEjercicios.setGraphic(new ImageView("/images/ejercicios.png"));
+		btnEjercicios1.setGraphic(new ImageView("/images/vector.png"));
+		btnEjercicios2.setGraphic(new ImageView("/images/dcl.png"));
 		btnCalculador.setGraphic(new ImageView("/images/calculador.png"));
 		btnAgregar.setGraphic(new ImageView("/images/add.png"));
 		
