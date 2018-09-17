@@ -11,6 +11,8 @@ public class Usuario {
 	private String correo;
 	private String usuario;
 	private String password;
+	private int maxEjer1;
+	private int maxEjer2;
 
 	
 	
@@ -65,6 +67,18 @@ public class Usuario {
 	}
 	public String getCorrero() {
 		return this.correo;
+	}
+	public int getMaxEjer1() {
+		return maxEjer1;
+	}
+	public void setMaxEjer1(int maxEjer1) {
+		this.maxEjer1 = maxEjer1;
+	}
+	public int getMaxEjer2() {
+		return maxEjer2;
+	}
+	public void setMaxEjer2(int maxEjer2) {
+		this.maxEjer2 = maxEjer2;
 	}
 	
 

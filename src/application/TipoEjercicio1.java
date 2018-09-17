@@ -6,6 +6,9 @@
 package application;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +35,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.Usuario;
 
 /**
  * FXML Controller class
@@ -73,14 +77,18 @@ public class TipoEjercicio1 implements Initializable {
 	Tabs obj = new Tabs();
 
 	ObservableList<ContenidoTabla> data;
-	static int numEjercicio = 1, ejercicioMax = 1;
+	static int numEjercicio = 1, ejercicioMax = getUserName().getMaxEjer1();
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		ejercicioMax = getUserName().getMaxEjer1();
+		numEjercicio=1;
 		ejercicios1.getStyleClass().add("backgrounds");
 
 		cajaBotones.setSpacing(10);
-		btnSiguiente.setDisable(true);
+		if(ejercicioMax==1) {
+			btnSiguiente.setDisable(true);
+		}
 		if (numEjercicio == 1) {
 			btnAnterior.setDisable(true);
 
@@ -206,6 +214,8 @@ public class TipoEjercicio1 implements Initializable {
 	
 	@FXML
 	private void siguienteEjercicio(ActionEvent event) {
+		System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer1());
+
 
 		btnAnterior.setDisable(false);
 		numEjercicio++;
@@ -215,10 +225,10 @@ public class TipoEjercicio1 implements Initializable {
 		//if (numEjercicio == ejercicioMax || ejercicioMax == 1) {
 			//ejercicioMax++;
 		//}
-		if(numEjercicio==ejercicioMax || numEjercicio==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length) {
+		if(numEjercicio==ejercicioMax || numEjercicio==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1) {
 			btnSiguiente.setDisable(true);
 		}
-		imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+		imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
 		// grafica1.setImage(new
 		// Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer"+numEjercicio+".png"),500,400,true,true));
 		grafica1.setImage(imgSistema);
@@ -226,7 +236,7 @@ public class TipoEjercicio1 implements Initializable {
 		tituloEjercicio1.setText("Estes es otro ejercicio");
 		limpiarDatos();
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
-		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length);
+		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
 
 
 	}
@@ -236,7 +246,7 @@ public class TipoEjercicio1 implements Initializable {
 		if(numEjercicio==1) {
 			imgSistema= new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer1.png"), 500, 500, true, true);
 		}else {
-		imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+		imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
 		}
 		// grafica1.setImage(new
 		// Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer"+(numEjercicio)+".png"),500,400,true,true));
@@ -247,7 +257,7 @@ public class TipoEjercicio1 implements Initializable {
 
 		btnSiguiente.setDisable(false);
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
-		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length);
+		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
 
 
 	}
@@ -325,17 +335,28 @@ public class TipoEjercicio1 implements Initializable {
 			
 			System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 			
-			if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length && numEjercicio==ejercicioMax) {
+			if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length && numEjercicio==ejercicioMax) {
 				btnSiguiente.setDisable(true);
 			}
 				if(btnSiguiente.isDisabled()) {
-					if(ejercicioMax==numEjercicio && (ejercicioMax)<new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length+1 ) {
+					if(ejercicioMax==numEjercicio && (ejercicioMax)<new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1 ) {
 					btnSiguiente.setDisable(false);
 					ejercicioMax++;
+					System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer1());
+					getUserName().setMaxEjer1(ejercicioMax);
+					System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer1());
+					try {
+						aumentarMaximos(getUserName(),ejercicioMax);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+
 					}
 				}	
 				
-				System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length);
+				System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
 			
 		} else {
 			resultado.setTitle("Respuesta incorrecta");
@@ -350,6 +371,52 @@ public class TipoEjercicio1 implements Initializable {
 		resultado.setHeaderText(null);
 		resultado.showAndWait();
 
+	}
+	public void aumentarMaximos(Usuario user,int max) throws IOException {
+		
+		RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+	  	boolean band = false;
+			String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
+			int maxEjer1=0,maxEjer2=0;
+			long pointer=0;
+		while(!band && file.getFilePointer()<file.length()) {
+			pointer=file.getFilePointer();
+			nombre = file.readLine();				
+			apellido = file.readLine();
+			nacimiento = file.readLine();
+			usuario = file.readLine();
+			password = file.readLine();
+			band = usuario.equals(user.getUsuario());
+			mail = file.readLine();
+			maxEjer1=file.readInt();
+			maxEjer2=file.readInt();
+
+		}
+		
+		if(band) {
+			file.seek(pointer);
+			file.writeBytes(nombre+"\n");
+			file.writeBytes(apellido+"\n");
+			file.writeBytes(nacimiento+"\n");			
+			file.writeBytes(usuario+"\n");	
+			file.writeBytes(password+"\n");			
+			file.writeBytes(mail+"\n");		
+			file.writeInt(max);
+			file.writeInt(maxEjer2);
+		}
+		file.close();
+
+	}
+	
+	public static Usuario getUserName() {
+		//try {
+		Tabs user = new Tabs();
+		//System.out.println("TU usuario es "+user.user.getUsuario());
+		return user.user;
+		//}catch(Exception e) {
+			//Formulario user = new Formulario();
+			//return user.cuenta;
+		//}
 	}
 
 }

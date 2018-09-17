@@ -26,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 //import model.Formulario;
+import model.Usuario;
 
 public class Window implements Initializable{
 
@@ -45,6 +46,13 @@ public class Window implements Initializable{
 	
 	@FXML
 	Image imgSistema2;
+	Usuario usuario;
+	
+	public Window(Usuario user) {
+		usuario=user;
+	}
+	public Window() {
+	}
 	
 	public void crearVentana(ActionEvent event) {
 		
@@ -76,6 +84,9 @@ public class Window implements Initializable{
 		 //((Node)(eventLog.getSource())).getScene().getWindow().setFocused(true);
 		 Tabs program = new Tabs();
 		   ((Node)(event.getSource())).getScene().getWindow().hide();
+		   usuario=null;
+		   program.user=null;
+		   ventanaEjer=null;
 		 program.start(new Stage());
  
 	}
@@ -89,13 +100,18 @@ public class Window implements Initializable{
 	
 	public void abrirEjercicio() {
 		//root3.getChildren().get(0).toFront();	
-		ventanaEjer.toFront();
+		//ventanaEjer.toFront();
 		try {
 		VBSub.getChildren().addAll(btnEjercicios1,btnEjercicios2);
 		}catch(Exception e) {
 			VBSub.getChildren().remove(btnEjercicios1);
 			VBSub.getChildren().remove(btnEjercicios2);
 		}
+	}
+	
+	public void abrirEjercicio1() {
+		//root3.getChildren().get(0).toFront();	
+		ventanaEjer.toFront();		
 	}
 	
 	public void abrirCalculador() {
@@ -136,6 +152,11 @@ public class Window implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		System.out.println("");
+		
+		
+		
 		btnCalculador.setText("Calculador\nde fuerzas");
 		btnCalculador.setWrapText(true);
 		
@@ -151,7 +172,7 @@ public class Window implements Initializable{
 		
 		String username = System.getProperty("user.home");
 	    System.out.println("username = " + username);
-	    new File (username+"\\SistFuerzasFiles\\imgEjercicios").mkdirs();
+	    new File (username+"\\SistFuerzasFiles\\imgEjercicios1").mkdirs();
 	    
 		//imgSistema2 = new Image("file:///"+username+"\\SistFuerzasFiles\\imgEjercicios\\Ejer1.png", 500, 355, true, true);// Ancho.alto
 //C:\Users\alberto\SistFuerzasFiles\imgEjercicios

@@ -237,9 +237,16 @@
 	-fx-color:black;
 	-fx-text-fill: BLACK;	
 	 	-fx-font-weight:bold;
-	 -fx-text-align: JUSTIFY;
-	 	
+	 -fx-text-align: JUSTIFY;	 	
 	
+ }
+ 
+ .formData{
+ 	 	-fx-border-color:WHITE;
+ 	 	-fx-background-color:white;
+ 	-fx-border-insets: 1,1,1;
+ 	 -fx-border-width: 5px 5px 5px 5px;
+ 	
  }
  
  

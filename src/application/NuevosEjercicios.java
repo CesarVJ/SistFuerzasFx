@@ -1,7 +1,9 @@
 package application;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -62,6 +64,8 @@ public class NuevosEjercicios implements Initializable{
 	
 	int contadorFilas=0;
 	int numFilasAnt=0;
+	int vects=0;	
+	String ruta="",nameFile="";
 
 	
 	
@@ -70,9 +74,11 @@ public class NuevosEjercicios implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		  TableColumn fuerzas = new TableColumn("Fuerzas(Nw)");
-	      fuerzas.setMinWidth(150);
+	      fuerzas.setMinWidth(160);
 	      TableColumn angulo = new TableColumn("Angulo");
-	      angulo.setMinWidth(150);
+	      angulo.setMinWidth(160);
+	      
+	   
 	      
 	      tablaDatos.getColumns().addAll(fuerzas,angulo);
 	      tablaDatos.resizeColumn(fuerzas, 0);
@@ -81,7 +87,11 @@ public class NuevosEjercicios implements Initializable{
 	      fuerzas.setCellValueFactory(new PropertyValueFactory<ContenidoTabla,TextField>("fuerzas"));
 	      angulo.setCellValueFactory(new PropertyValueFactory<ContenidoTabla,TextField>("angulo"));
 	       
-	      tablaDatos.setItems(data);      
+	      tablaDatos.setItems(data); 
+	      
+	      tablaDatos.resizeColumn(fuerzas, 28);
+			tablaDatos.resizeColumn(angulo, 28);
+			
 		
 		
 		
@@ -122,16 +132,17 @@ public class NuevosEjercicios implements Initializable{
                 boolean success = false;
                 if (db.hasFiles()) {
                     texto.setText(db.getFiles().get(0).getAbsolutePath());
-                    int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length;            		
+                    int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;            		
             		try {
-						Path temp = Files.move(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
-					} catch (IOException e) {
+						//Path temp = Files.move(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+						ruta= texto.getText();
+						nameFile = db.getFiles().get(0).getName();
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
                     success = true;
                 }
-                /* let the source know whether the string was successfully 
-                 * transferred and used */
+
                 event.setDropCompleted(success);
 
                 event.consume();
@@ -147,11 +158,12 @@ public class NuevosEjercicios implements Initializable{
 		board.getOnDragDropped();
 		
 		board.getStyleClass().add("board");
-		formData.getStyleClass().add("board");
+		formData.getStyleClass().add("formData");
 		
 		
 		try {
 		numVect.setOnKeyPressed(e->{
+			
 			//if(e.getCode().equals("DIGIT1")) {
 				
 			
@@ -160,7 +172,11 @@ public class NuevosEjercicios implements Initializable{
 			if((numVect.getText().equals(""))){
 				numFilasAnt=0;
 			}else {
+				try {
 			numFilasAnt= Integer.parseInt(numVect.getText());
+				}catch(Exception ex) {
+					numFilasAnt=tablaDatos.getItems().size();
+				}
 			}
 			
 		});
@@ -173,18 +189,22 @@ public class NuevosEjercicios implements Initializable{
 			
 			//numFilasAnt= tablaDatos.getItems().size()-1;
 			if(!verificarExp(e)) return;			
-			int vects;			
+					
 
 			if((numVect.getText().equals(""))){
 				vects=0;
 			}else {
+				try {
 				vects = Integer.parseInt(numVect.getText());
+				}catch(Exception ex) {
+					vects=tablaDatos.getItems().size();
+				}
 				if(vects>=10 || numFilasAnt>=10) return;
 			}
 
 			//System.out.println(numVect.getText());
 			//int lastNumber= numVect.getText().charAt(numVect.getText().length());
-			if((numFilasAnt-vects)>0) {
+			if((numFilasAnt-vects)>=0) {
 				for(int i=0;i<(numFilasAnt-vects);i++) {
 					eliminarVector();				
 				}
@@ -246,7 +266,7 @@ public class NuevosEjercicios implements Initializable{
 		
 		int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length;
 		
-		Path temp = Files.move(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+		Path temp = Files.move(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
 		System.out.println(temp.getParent());
 		//JOptionPane.showMessageDialog(null,"El archivo se ha guardado en "+new File("..\\SistFuerzasFiles\\imgEjercicios\\Ejer"+(maxFiles+1)+".png").getAbsolutePath());
 		
@@ -259,6 +279,64 @@ public class NuevosEjercicios implements Initializable{
 		
 		System.out.println(file.getAbsolutePath());
 	}
+	
+	public void validarEjercicio() throws FileNotFoundException {
+		//Numero de vectores es vects
+		//tipo de ejercicio 
+		//Nombre de imagen
+		//Fuerzas
+		//Angulos
+		int tipo =0;
+		if(tipoEjercicio.getSelectionModel().getSelectedIndex()==1) {
+			tipo =1;
+		}
+		
+		ObservableList<ContenidoTabla> dataRows = FXCollections.observableArrayList();
+		int i = 0;
+		float[] angulos = new float[vects];
+		float[] fuerzas = new float[vects];
+
+
+		for (ContenidoTabla bean : data) {
+			if (!bean.getFuerzas().getText().isEmpty()) {
+				dataRows.add(bean);
+				angulos[i] = Float.parseFloat(bean.getAngulo().getText());
+				fuerzas[i] = Float.parseFloat(bean.getFuerzas().getText());
+
+			}
+			i++;
+
+		}
+		String strAngulos="",strFuerzas="";
+		for(int j=0;j<vects;j++) {
+			strAngulos=angulos[j]+"";
+			strFuerzas=fuerzas[j]+"";
+			System.out.println(strFuerzas+":"+strAngulos);
+
+		}	
+		
+		RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
+		try {
+			file.seek(file.length());
+			file.writeBytes(nameFile);
+			file.writeInt(tipo);
+			file.writeInt(vects);
+			
+			
+			
+			file.close();
+            int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;            		
+			Files.move(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 	
 	

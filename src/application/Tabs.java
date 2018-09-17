@@ -58,10 +58,12 @@ public class Tabs extends Application{
     @Override
     public void start(Stage primaryStage) throws IOException {
 		String username = System.getProperty("user.home");
-	    new File (username+"\\SistFuerzasFiles\\imgEjercicios").mkdirs();
+	    new File (username+"\\SistFuerzasFiles\\imgEjercicios1").mkdirs();
+	    new File (username+"\\SistFuerzasFiles\\imgEjercicio2").mkdirs();
+
 
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/FXMLDocument.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("/view/FXMLDocument.fxml"));
         
         //Ventana del programa
         ventana = primaryStage;
@@ -145,7 +147,7 @@ public class Tabs extends Application{
         
 
         btnIniciar.setOnAction(e->{
-        	
+        	user=null;
         	user = new Usuario();        	
         	String passwordTxt =new String( pass.getText());
         	
@@ -158,7 +160,7 @@ public class Tabs extends Application{
 					if(ingresar(user) || (pass.getText().equals("root")&&mail.getText().equals("root"))) {
 						
 						//ventana.setScene(escena2);//===============PAra utilizar el otro estilo
-						Window win = new Window();
+						Window win = new Window(user);
 						win.crearVentana(e);
 					}else {
 						//Datos incorrectos
@@ -272,7 +274,7 @@ public class Tabs extends Application{
         cajaBtn.getChildren().addAll(btnRegresar);
         
         VBox cajaMayor = new VBox();
-        cajaMayor.getChildren().addAll(root,cajaBtn);//Root es el tipo ejercicio1
+        //cajaMayor.getChildren().addAll(root,cajaBtn);//Root es el tipo ejercicio1
         menu2.getChildren().addAll(cajaMayor);
         tab1.setContent(menu2);
         
@@ -296,7 +298,8 @@ public class Tabs extends Application{
     
     public boolean ingresar(Usuario user) throws FileNotFoundException {
     	boolean band = false;
-		String nombre,apellido,nacimiento,usuario,password,mail;
+		String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
+		int maxEjer1=0,maxEjer2=0;
 		RandomAccessFile file = new RandomAccessFile(
 				 System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
 			try {
@@ -308,8 +311,23 @@ public class Tabs extends Application{
 					password = file.readLine();
 					band = usuario.equals(user.getUsuario()) && password.equals(user.getPassword());
 					mail = file.readLine();
+					maxEjer1=file.readInt();
+					maxEjer2=file.readInt();
 
 				}
+				
+				if(band) {
+				user.setNombre(nombre);
+				user.setApellidos(apellido);
+				user.setNacimiento(java.sql.Date.valueOf(nacimiento));
+				user.setCorreo(mail);
+				user.setMaxEjer1(maxEjer1);
+				user.setMaxEjer2(maxEjer2);
+				System.out.println("Ejercicios max:"+user.getMaxEjer1());
+				}
+		
+				
+				
 				file.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

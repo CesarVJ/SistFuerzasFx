@@ -137,11 +137,20 @@ public class Formulario implements Initializable {
 					cuenta.setUsuario(usuario.getText());
 					cuenta.setPassword(password.getText());
 					cuenta.setCorreo(mail.getText());
+					cuenta.setMaxEjer1(0);
+					cuenta.setMaxEjer2(0);
 					file.close();
 
 					
 					registrarUsuario(cuenta);
-					abrirVentana(event);
+					//abrirVentana(event);
+					Alert iniciaSes = new Alert(Alert.AlertType.WARNING);
+					iniciaSes.setTitle("Registro exitoso");
+					iniciaSes.setContentText(cuenta.getUsuario()+" inicia sesion para continuar.");
+		            ImageView error = new ImageView(new Image(getClass().getResourceAsStream("/images/respuesta_incorrecta.png"),50,50,true,true));
+		            iniciaSes.setGraphic(error);
+		            iniciaSes.setHeaderText(null);
+		            iniciaSes.showAndWait();
 					return;
 
 					
@@ -181,6 +190,7 @@ public class Formulario implements Initializable {
 	public boolean verificarExistencias(String user) throws IOException {
 		boolean band = false;
 		String nombre,apellido,nacimiento,usuario,password,mail;
+		int maxEjer1,maxEjer2;
 		RandomAccessFile file = new RandomAccessFile(
 				 System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
 			while(!band && file.getFilePointer()<file.length()) {
@@ -191,6 +201,8 @@ public class Formulario implements Initializable {
 				band = usuario.equals(user);
 				password = file.readLine();
 				mail = file.readLine();
+				maxEjer1=file.readInt();
+				maxEjer2=file.readInt();
 	
 			}
 			file.close();
@@ -226,7 +238,9 @@ public class Formulario implements Initializable {
 			file.writeBytes(user.getNacimiento()+"\n");			
 			file.writeBytes(user.getUsuario()+"\n");	
 			file.writeBytes(user.getPassword()+"\n");			
-			file.writeBytes(user.getCorreo()+"\n");			
+			file.writeBytes(user.getCorreo()+"\n");		
+			file.writeInt(1);
+			file.writeInt(1);
 			file.close();
 			
 			

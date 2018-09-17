@@ -26,7 +26,7 @@
 			<Button fx:id="btnPerfil" text="Perfil" onAction="#abrirPerfil"/>	
 			<Button fx:id="btnEjercicios" text="Ejercicios" onAction="#abrirEjercicio"/>
 			<VBox fx:id="VBSub">
-			<Button fx:id="btnEjercicios1" text="Vectores por componentes"/>
+			<Button fx:id="btnEjercicios1" text="Vectores por componentes" onAction="#abrirEjercicio1"/>
 			<Button fx:id="btnEjercicios2" text="Diag.Cuerpo Libre"/>											
 			</VBox>						
 			<Button fx:id="btnCalculador" onAction="#abrirCalculador"/>		
