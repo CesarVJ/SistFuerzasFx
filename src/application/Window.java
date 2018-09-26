@@ -39,7 +39,7 @@ public class Window implements Initializable{
 	@FXML
 	private HBox main;
 	@FXML
-	private VBox VBMenu,VBMenu2,menuPrincipal,VBSub;
+	private VBox VBMenu,VBMenu2,menuPrincipal,VBSub,exit;
 	@FXML
 	private Button btnRegresar,btnPerfil,btnEjercicios,btnCalculador,btnCerrar,btnMin,btnAgregar,btnEjercicios1,btnEjercicios2;
 	static Stage stage=null;
@@ -288,12 +288,15 @@ public class Window implements Initializable{
 		try {
 			Tabs valid = new Tabs();		
 			if(!valid.user.getUsuario().equals("root")) {
-				btnAgregar.setDisable(true);			
+				//btnAgregar.setDisable(true);
+				exit.getChildren().remove(0);				
 			}
 			}catch(Exception e) {
 				Formulario form = new Formulario();
 				if(!form.cuenta.getUsuario().equals("root")) {
-					btnAgregar.setDisable(true);			
+					//btnAgregar.setDisable(true);
+					exit.getChildren().remove(0);				
+
 				}
 				
 				

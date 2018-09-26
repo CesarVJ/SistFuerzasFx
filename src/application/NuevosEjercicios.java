@@ -163,7 +163,8 @@ public class NuevosEjercicios implements Initializable{
 		
 		try {
 		numVect.setOnKeyPressed(e->{
-			
+			System.out.println("KeyReleased()"+numVect.getText());
+
 			//if(e.getCode().equals("DIGIT1")) {
 				
 			
@@ -171,24 +172,35 @@ public class NuevosEjercicios implements Initializable{
 
 			if((numVect.getText().equals(""))){
 				numFilasAnt=0;
+				System.out.println("KeyReleased(Textto vacio)");
+
 			}else {
 				try {
 			numFilasAnt= Integer.parseInt(numVect.getText());
+			System.out.println("KeyReleased(TRY)");
+
 				}catch(Exception ex) {
 					numFilasAnt=tablaDatos.getItems().size();
+					System.out.println("KeyReleased(Catch)");
+
+					
 				}
 			}
 			
 		});
 		}catch(NumberFormatException e) {
 			numFilasAnt= tablaDatos.getItems().size();
+			System.out.println("KeyReleased(Catch 2)");
+
 		}
 		
 		
 		numVect.setOnKeyReleased(e->{
-			
+			System.out.println("KeyReleased(Inicio)");
 			//numFilasAnt= tablaDatos.getItems().size()-1;
-			if(!verificarExp(e)) return;			
+			if(!verificarExp(e)) return;		
+			System.out.println("KeyReleased(Medio)");
+
 					
 
 			if((numVect.getText().equals(""))){
@@ -196,8 +208,12 @@ public class NuevosEjercicios implements Initializable{
 			}else {
 				try {
 				vects = Integer.parseInt(numVect.getText());
+				System.out.println("KeyReleased(Exito)");
+
 				}catch(Exception ex) {
 					vects=tablaDatos.getItems().size();
+					System.out.println("KeyReleased(Error)");
+
 				}
 				if(vects>=10 || numFilasAnt>=10) return;
 			}
@@ -208,22 +224,21 @@ public class NuevosEjercicios implements Initializable{
 				for(int i=0;i<(numFilasAnt-vects);i++) {
 					eliminarVector();				
 				}
+				System.out.println("KeyReleased(Eliminando): "+ (numFilasAnt)+" "+vects);
+
 			}else {				
 				for(int i=0;i<vects;i++) {
 					agregarVector();				
 				}
+				System.out.println("KeyReleased(Agregando)");
+
 				
 			}			
 			System.out.println(e.getCode());
-			//if(e.getCode().equals("BACK_SPACE")) {
-				
-			//}
-		
-			
+			//if(e.getCode().equals("BACK_SPACE")) {		
 		});
 
 		
-		//cajaPrincipal.setPrefSize(580, 1100);
 		
 		add.getStyleClass().add("backgrounds");				
 		add.getStylesheets().add(NuevosEjercicios.class.getResource("/view/Estilos.css").toExternalForm());
@@ -257,26 +272,12 @@ public class NuevosEjercicios implements Initializable{
 		File file = select.showOpenDialog(stage);
 		file.setWritable(true);
 		
-		
-		//file.renameTo(new File("\\images\\imgEjercicios\\Ejer3.png"));  "/images/imgEjercicios/Ejer3.png"
-		//"../Ejer3.png" -----Apunta al archivo del proyecto
-		//  "src/images/imgEjercicios/Ejer3.png" 
-		
-		//int maxFiles= new File("..\\SistFuerzasFiles\\imgEjercicios").listFiles().length;
-		
 		int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length;
 		
 		Path temp = Files.move(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
 		System.out.println(temp.getParent());
 		//JOptionPane.showMessageDialog(null,"El archivo se ha guardado en "+new File("..\\SistFuerzasFiles\\imgEjercicios\\Ejer"+(maxFiles+1)+".png").getAbsolutePath());
-		
-		//if(temp!=null) {
-			//JOptionPane.showMessageDialog(null,"Se a registrado con exito");				
-		//}else {
-			//System.out.println("Algo salio mal");
-		//}
-		
-		
+				
 		System.out.println(file.getAbsolutePath());
 	}
 	
@@ -316,16 +317,23 @@ public class NuevosEjercicios implements Initializable{
 		}	
 		
 		RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
+        int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;            		
+
+		int id = maxFiles+2;
 		try {
-			file.seek(file.length());
-			file.writeBytes(nameFile);
+		    file.seek(file.length());
+		    file.writeInt(id);
+			file.writeBytes(nameFile+"\n");
 			file.writeInt(tipo);
 			file.writeInt(vects);
+			for(int n=0;n<vects;n++) {
+				file.writeFloat(angulos[n]);
+				file.writeFloat(fuerzas[n]);
+			}
 			
 			
 			
 			file.close();
-            int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;            		
 			Files.move(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
 			
 			

@@ -147,7 +147,7 @@ public class Formulario implements Initializable {
 					Alert iniciaSes = new Alert(Alert.AlertType.WARNING);
 					iniciaSes.setTitle("Registro exitoso");
 					iniciaSes.setContentText(cuenta.getUsuario()+" inicia sesion para continuar.");
-		            ImageView error = new ImageView(new Image(getClass().getResourceAsStream("/images/respuesta_incorrecta.png"),50,50,true,true));
+		            ImageView error = new ImageView(new Image(getClass().getResourceAsStream("/images/respuesta_correcta.png"),50,50,true,true));
 		            iniciaSes.setGraphic(error);
 		            iniciaSes.setHeaderText(null);
 		            iniciaSes.showAndWait();

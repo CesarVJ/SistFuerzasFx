@@ -58,8 +58,20 @@ public class Tabs extends Application{
     @Override
     public void start(Stage primaryStage) throws IOException {
 		String username = System.getProperty("user.home");
+		
+		
+		
+		try {
+			File dirc = new File(username);
+			dirc.setWritable(true, true);
 	    new File (username+"\\SistFuerzasFiles\\imgEjercicios1").mkdirs();
 	    new File (username+"\\SistFuerzasFiles\\imgEjercicio2").mkdirs();
+		}catch(Exception e) {
+			File dirc = new File(username);
+			dirc.setWritable(true, true);
+			new File (username+"/SistFuerzasFiles/imgEjercicios1").mkdirs();
+		    new File (username+"/SistFuerzasFiles/imgEjercicio2").mkdirs();
+		}
 
 
         

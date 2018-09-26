@@ -69,6 +69,9 @@ public class TipoEjercicio1 implements Initializable {
 	@FXML
 	private AnchorPane ejercicios1;
 	
+	private int contadorFilas;
+	private static int vects=0;
+	
     //int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length;            		
 
 
@@ -235,6 +238,24 @@ public class TipoEjercicio1 implements Initializable {
 
 		tituloEjercicio1.setText("Estes es otro ejercicio");
 		limpiarDatos();
+		
+		
+		contadorFilas=table.getItems().size();
+		int numVects=leerEjercicio(numEjercicio);
+		int sizeTab=table.getItems().size();
+		if(numVects>sizeTab) {
+			for(int i=0;i<(numVects-sizeTab);i++) {
+				agregarVector();				
+			}
+		}else if(numVects<sizeTab){
+			for(int i=0;i<(sizeTab-numVects);i++) {
+				eliminarVector();				
+			}
+		}
+		
+		
+		
+		
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
 
@@ -254,7 +275,18 @@ public class TipoEjercicio1 implements Initializable {
 		if (numEjercicio == 1) {
 			btnAnterior.setDisable(true);
 		}
-
+		contadorFilas=table.getItems().size();
+		int numVects=leerEjercicio(numEjercicio);
+		int sizeTab=table.getItems().size();
+		if(numVects>sizeTab) {
+			for(int i=0;i<(numVects-sizeTab);i++) {
+				agregarVector();				
+			}
+		}else if(numVects<sizeTab){
+			for(int i=0;i<(sizeTab-numVects);i++) {
+				eliminarVector();				
+			}
+		}
 		btnSiguiente.setDisable(false);
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
@@ -292,10 +324,10 @@ public class TipoEjercicio1 implements Initializable {
 		ObservableList<ContenidoTabla> dataRows = FXCollections.observableArrayList();
 		Resultados obj = new Resultados();
 		int i = 0;
-		float[] angulos = new float[3];
-		float[] fuerzas = new float[3];
-		float[] fx = new float[3];
-		float[] fy = new float[3];
+		float[] angulos = new float[vects];
+		float[] fuerzas = new float[vects];
+		float[] fx = new float[vects];
+		float[] fy = new float[vects];
 
 		for (ContenidoTabla bean : data) {
 			if (!bean.getFuerzas().getText().isEmpty()) {
@@ -310,8 +342,8 @@ public class TipoEjercicio1 implements Initializable {
 			i++;
 
 		}
-		obj.setSumFx(fuerzas, angulos, 3);
-		obj.setSumFy(fuerzas, angulos, 3);
+		obj.setSumFx(fuerzas, angulos, vects);
+		obj.setSumFy(fuerzas, angulos, vects);
 		obj.setVR();
 		obj.setAnguloResult();
 		System.out.println("La sumatoria de Fx = " + obj.getSumFx());
@@ -407,6 +439,60 @@ public class TipoEjercicio1 implements Initializable {
 		file.close();
 
 	}
+	
+	public static int leerEjercicio(int idEjer) {
+		if(idEjer==1) {
+			return 3;
+		}
+		
+		int id=0,tipo=0;
+		try {
+			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
+			
+			//file.seek(file.length());
+		    try {
+		    	boolean band=false;
+		    	
+		    	while(file.getFilePointer()<file.length() || !band) {
+		    		id=file.readInt();System.out.println(id);
+		    		band = id==idEjer ? true:false;
+		    		String name= file.readLine();System.out.println(name);
+		    		tipo= file.readInt();System.out.println(tipo);
+		    		vects = file.readInt();System.out.println(vects);
+					for(int n=0;n<vects;n++) {
+						float angulo= file.readFloat();
+						float fuerza= file.readFloat();
+						System.out.println("Angulo: "+angulo+"=> Fuerza: "+fuerza);
+					}
+		    	}
+				
+				
+				
+				file.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return vects;
+	}
+	
+	
+	 private void agregarVector(){
+         contadorFilas++;
+         data.add(new ContenidoTabla("","","","",""));
+   }
+     private void eliminarVector(){
+         data.remove(--contadorFilas);          
+         table.getItems().removeAll(table.getSelectionModel().getSelectedItems());
+   }
+	
+	
 	
 	public static Usuario getUserName() {
 		//try {
