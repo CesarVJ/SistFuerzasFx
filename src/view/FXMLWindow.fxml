@@ -27,12 +27,13 @@
 			<Button fx:id="btnEjercicios" text="Ejercicios" onAction="#abrirEjercicio"/>
 			<VBox fx:id="VBSub">
 			<Button fx:id="btnEjercicios1" text="Vectores por componentes" onAction="#abrirEjercicio1"/>
-			<Button fx:id="btnEjercicios2" text="Diag.Cuerpo Libre"/>											
+			<Button fx:id="btnEjercicios2" text="Diag.Cuerpo Libre" onAction="#abrirEjercicio2"/>											
 			</VBox>						
 			<Button fx:id="btnCalculador" onAction="#abrirCalculador"/>	
 			<VBox fx:id="exit">
 				<Button fx:id="btnAgregar" text="Añadir Ejercicios" onAction="#agregarEjercicio"/>																					
 			</VBox>	
+			<Button fx:id="btnRecursos" onAction="#recursosDidacticos"/>			
 			<Button fx:id="btnRegresar" text="Salir" onAction="#regresarLogin"/>
 			</children>			
 		</VBox>

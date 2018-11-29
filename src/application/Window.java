@@ -32,7 +32,7 @@ public class Window implements Initializable{
 
 	
 	@FXML
-	AnchorPane ventanaPrincipal,contenedor,VentanaCalc,ventanaEjer,titleBar,ventanaAdd;
+	AnchorPane ventanaPrincipal,contenedor,VentanaCalc,ventanaEjer,titleBar,ventanaAdd,ventanaProfile,ventanaEjer2,recursos;
 	 @FXML
 	 private Label lblText;
 	static ActionEvent eventLog;
@@ -41,7 +41,7 @@ public class Window implements Initializable{
 	@FXML
 	private VBox VBMenu,VBMenu2,menuPrincipal,VBSub,exit;
 	@FXML
-	private Button btnRegresar,btnPerfil,btnEjercicios,btnCalculador,btnCerrar,btnMin,btnAgregar,btnEjercicios1,btnEjercicios2;
+	private Button btnRegresar,btnPerfil,btnEjercicios,btnCalculador,btnCerrar,btnMin,btnAgregar,btnEjercicios1,btnEjercicios2,btnRecursos;
 	static Stage stage=null;
 	
 	@FXML
@@ -98,6 +98,10 @@ public class Window implements Initializable{
 
 	}
 	
+	public void recursosDidacticos() {
+		recursos.toFront();		
+	}
+	
 	public void abrirEjercicio() {
 		//root3.getChildren().get(0).toFront();	
 		//ventanaEjer.toFront();
@@ -114,6 +118,11 @@ public class Window implements Initializable{
 		ventanaEjer.toFront();		
 	}
 	
+	public void abrirEjercicio2() {
+		//root3.getChildren().get(0).toFront();	
+		ventanaEjer2.toFront();		
+	}
+	
 	public void abrirCalculador() {
 		VBSub.getChildren().remove(btnEjercicios1);
 		VBSub.getChildren().remove(btnEjercicios2);
@@ -125,6 +134,8 @@ public class Window implements Initializable{
 	public void abrirPerfil() {
 		VBSub.getChildren().remove(btnEjercicios1);
 		VBSub.getChildren().remove(btnEjercicios2);
+		ventanaProfile.toFront();
+		
 
 
 	}
@@ -159,6 +170,9 @@ public class Window implements Initializable{
 		
 		btnCalculador.setText("Calculador\nde fuerzas");
 		btnCalculador.setWrapText(true);
+		
+		btnRecursos.setText("  Recursos\n  Didacticos");
+		btnRecursos.setWrapText(true);
 		
 		//btnCalculador.textProperty().setValue("Calculador de fuerzas");
 		
@@ -245,6 +259,9 @@ public class Window implements Initializable{
 		btnEjercicios.setPrefHeight(60);
 		btnEjercicios.setPrefWidth(150);
 		
+		btnRecursos.setPrefHeight(60);
+		btnRecursos.setPrefWidth(150);
+		
 		btnEjercicios1.setPrefHeight(40);
 		btnEjercicios1.setPrefWidth(150);
 		
@@ -268,6 +285,7 @@ public class Window implements Initializable{
 		btnRegresar.getStyleClass().add("btns");
 		btnPerfil.getStyleClass().add("btns");
 		btnEjercicios.getStyleClass().add("btns");
+		btnRecursos.getStyleClass().addAll("btns","btnCalc");
 		btnEjercicios1.getStyleClass().addAll("btns","btnEjercicios1");
 		btnEjercicios2.getStyleClass().addAll("btns","btnEjercicios2");
 		btnCalculador.getStyleClass().addAll("btns","btnCalc");
@@ -284,6 +302,7 @@ public class Window implements Initializable{
 		btnEjercicios2.setGraphic(new ImageView("/images/dcl.png"));
 		btnCalculador.setGraphic(new ImageView("/images/calculador.png"));
 		btnAgregar.setGraphic(new ImageView("/images/add.png"));
+		btnRecursos.setGraphic(new ImageView("/images/resources.png"));
 		
 		try {
 			Tabs valid = new Tabs();		
@@ -310,14 +329,21 @@ public class Window implements Initializable{
 	    
 	    
 	    try {
+	    	ventanaProfile		=	FXMLLoader.load(getClass().getResource("/view/FXMLProfile.fxml"));
 	    	ventanaEjer = FXMLLoader.load(getClass().getResource("/view/FXMLDocument.fxml"));
 	    	VentanaCalc = FXMLLoader.load(getClass().getResource("/view/FXMLCalculator.fxml"));
+	    	ventanaEjer2 = FXMLLoader.load(getClass().getResource("/view/FXMLCuerpoL.fxml"));
 	    	ventanaAdd = FXMLLoader.load(getClass().getResource("/view/FXMLAdd.fxml"));
+	    	recursos=FXMLLoader.load(getClass().getResource("/view/FXMLResources.fxml"));
 
 			
 			contenedor.getChildren().addAll(ventanaAdd);
-			contenedor.getChildren().addAll(VentanaCalc);
+			contenedor.getChildren().addAll(VentanaCalc);			
 			contenedor.getChildren().addAll(ventanaEjer);
+			contenedor.getChildren().addAll(ventanaEjer2);
+			contenedor.getChildren().addAll(recursos);
+			contenedor.getChildren().addAll(ventanaProfile);
+
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

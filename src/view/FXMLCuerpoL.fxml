@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.ChoiceBox?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.TipoEjercicio2" fx:id="ejercicios2">
+
+	<HBox fx:id="mainBox">
+	
+            <VBox fx:id="cajaIzquierda">
+                <children>
+                    <ImageView fx:id="imgCuerpo" layoutX="400.0" layoutY="400.0"/>
+                    <Label fx:id="textoInferior"/>
+                    <HBox fx:id="cajaVResultante">
+                        <children>
+                            <Label text="Tan A: "/><TextField id="tanA" fx:id="tanA" layoutX="120.0" layoutY="64.0" promptText="0°"/>
+
+                        </children>
+                    </HBox>
+                    <HBox fx:id="cajaAnguloResultante">
+                        <children>
+                            <Label text="TanB:  "/><TextField id="tanB" fx:id="tanB" layoutX="120.0" layoutY="64.0" promptText="0°"/>
+                        </children>
+                    </HBox>
+                </children>
+            </VBox>
+            <VBox fx:id="cajaDerecha">
+            <Label text="Ejercicio 1"/>
+            
+            
+            </VBox>
+	
+	
+	</HBox>
+
+</AnchorPane>
+

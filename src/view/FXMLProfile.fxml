@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.Profile" fx:id="profile">
+	<!-- TODO Add Nodes -->
+	
+	<!--  <HBox fx:id="mainBox" prefHeight="580.0" prefWidth="1100.0">-->
+	
+	<VBox fx:id="picture" layoutX="100.0" layoutY="50" prefHeight="450.0" prefWidth="305.0" >
+		<VBox fx:id="titlePic" prefHeight="30.0" >
+			<Label fx:id="textUser" text="     Perfil de usuario  " ></Label>
+		</VBox>
+		<VBox fx:id="photoBox" prefHeight="200.0">
+		<ImageView fx:id="photoProfile"/>
+		<Label fx:id="userName" text=""/>
+		<Label text="Ejercicios resueltos: "/>
+		
+		<HBox fx:id="info1">
+			<Label text="Vect. por Componente: " />
+			<ProgressBar fx:id="progressEjer1"/>	
+			<Label text=" 5/10 " />					
+		</HBox>
+		<HBox fx:id="info2">
+			<Label text="Diagram. Cuerpo Libre:  " />
+			<ProgressBar fx:id="progressEjer2"/>	
+			<Label text=" 8/10 " />
+		</HBox>
+		</VBox>
+		
+
+	</VBox>
+	
+	<VBox fx:id="accountDetails" layoutX="470.0" layoutY="50" prefHeight="450.0" prefWidth="510.0" > 
+		<VBox fx:id="titleAccount" prefHeight="30.0" >
+			<Label fx:id="textAccount" text="    Detalles de la cuenta  " ></Label>
+		</VBox>
+		<HBox spacing="200" fx:id="titlesBox">
+		<Label fx:id="firstNametxt" text="Nombre(s): "/>
+		<Label fx:id="lastNametxt" text="Apellido(s): "/>
+		</HBox>
+		<HBox spacing="130" fx:id="namesBox">
+		<TextField fx:id="firstName"> </TextField>
+		<TextField fx:id="lastName"> </TextField>
+		</HBox>
+	</VBox>
+		
+	
+	
+	
+	
+	
+</AnchorPane>
+
