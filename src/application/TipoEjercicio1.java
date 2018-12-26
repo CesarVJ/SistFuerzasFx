@@ -70,7 +70,7 @@ public class TipoEjercicio1 implements Initializable {
 	private AnchorPane ejercicios1;
 	
 	private int contadorFilas;
-	private static int vects=0;
+	private static int vects=3;
 	
     //int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length;            		
 
@@ -328,6 +328,8 @@ public class TipoEjercicio1 implements Initializable {
 		float[] fuerzas = new float[vects];
 		float[] fx = new float[vects];
 		float[] fy = new float[vects];
+		int[] fun1 = new int[vects];
+		int[] fun2= new int[vects];
 
 		for (ContenidoTabla bean : data) {
 			if (!bean.getFuerzas().getText().isEmpty()) {
@@ -336,16 +338,33 @@ public class TipoEjercicio1 implements Initializable {
 				fuerzas[i] = Float.parseFloat(bean.getFuerzas().getText());
 				fx[i] = Float.parseFloat(bean.getFx().getText());
 				fy[i] = Float.parseFloat(bean.getFy().getText());
+				if(cambiarModo.getSelectionModel().getSelectedIndex()==1) {
+					fun1[i]=bean.getFuncion().getSelectionModel().getSelectedIndex();
+					fun2[i]=bean.getFuncion2().getSelectionModel().getSelectedIndex();
+					System.out.println("Funcion1: "+fun1[i]+"  Funcion2: "+fun2[i]);
+					//Sen =0
+					//Cos =1
+				}
 
 			}
 			System.out.println(fuerzas[i] + "," + angulos[i] + "  Fx = " + fx[i]);
 			i++;
 
 		}
-		obj.setSumFx(fuerzas, angulos, vects);
-		obj.setSumFy(fuerzas, angulos, vects);
-		obj.setVR();
-		obj.setAnguloResult();
+		
+		if(cambiarModo.getSelectionModel().getSelectedIndex()==0) {
+			obj.setSumFx(fuerzas, angulos, vects);
+			obj.setSumFy(fuerzas, angulos, vects);
+			obj.setVR();
+			obj.setAnguloResult();
+			
+		}else {
+			obj.setSumFxV2(fuerzas, angulos,fx,fun1 ,vects);
+			obj.setSumFyV2(fuerzas, angulos,fy ,fun2,vects);
+			obj.setVR();
+			obj.setAnguloResult();
+		}
+		
 		System.out.println("La sumatoria de Fx = " + obj.getSumFx());
 		System.out.println("La sumatoria de Fy = " + obj.getSumFy());
 		System.out.println("Vector resultante : " + String.format("%.3f", obj.getVR()));
@@ -353,8 +372,11 @@ public class TipoEjercicio1 implements Initializable {
 
 		Alert resultado = new Alert(Alert.AlertType.WARNING);
 
-		if (VResultante.getText().equalsIgnoreCase(String.format("%.3f", obj.getVR()))
-				&& AnguloResultante.getText().equalsIgnoreCase(String.format("%.3f", obj.getAnguloResult()))) {
+		//VResultante.getText().equalsIgnoreCase(String.format("%.3f", obj.getVR()))
+		//AnguloResultante.getText().equalsIgnoreCase(String.format("%.3f", obj.getAnguloResult()))
+		System.out.println("Resultado del usuario: "+Math.round(Float.parseFloat(VResultante.getText()))+" Resultado del algoritmo: "+Math.round(obj.getVR()));
+		if (Math.round(Float.parseFloat(VResultante.getText()))==Math.round(obj.getVR())
+				&& Math.round(Float.parseFloat(AnguloResultante.getText()))==Math.abs(Math.round(obj.getAnguloResult()))) {
 			resultado.setTitle("Respuesta correcta");
 			resultado.setContentText("Tus resultados han sido los correctos, puedes pasar al siguiente ejercicio.");
 			ImageView correcta = new ImageView(
@@ -440,6 +462,7 @@ public class TipoEjercicio1 implements Initializable {
 
 	}
 	
+	static Resultados oficiales= new Resultados(); 
 	public static int leerEjercicio(int idEjer) {
 		if(idEjer==1) {
 			return 3;
@@ -459,11 +482,20 @@ public class TipoEjercicio1 implements Initializable {
 		    		String name= file.readLine();System.out.println(name);
 		    		tipo= file.readInt();System.out.println(tipo);
 		    		vects = file.readInt();System.out.println(vects);
+		    		float[] angulos= new float[vects];
+		    		float[] fuerzas= new float[vects];
+
 					for(int n=0;n<vects;n++) {
 						float angulo= file.readFloat();
 						float fuerza= file.readFloat();
+						angulos[n]=angulo;
+						fuerzas[n]=fuerza;
 						System.out.println("Angulo: "+angulo+"=> Fuerza: "+fuerza);
 					}
+					oficiales.setSumFx(fuerzas, angulos, vects);
+					oficiales.setSumFy(fuerzas, angulos, vects);
+					System.out.println("Resultados oficiales: SUmFx= "+oficiales.getSumFx()+" SumFy= "+oficiales.getSumFy());
+
 		    	}
 				
 				

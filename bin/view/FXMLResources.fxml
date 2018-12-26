@@ -8,15 +8,63 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.web.WebView?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.Recursos" fx:id="recursos">
-
-	<VBox fx:id="btnApuntes" layoutX="100.0" layoutY="50" prefHeight="150.0" prefWidth="150.0" >
+<AnchorPane   fx:id="contenedor1">
+	<VBox fx:id="btnApuntes" layoutX="100.0" layoutY="70" prefHeight="150.0" prefWidth="150.0" >
 	<ImageView fx:id="imgApuntes"/>
+	<Label fx:id="txtApuntes" text="Apuntes"/>
 	</VBox>
-	<VBox fx:id="btnVideos" layoutX="300.0" layoutY="50" prefHeight="150.0" prefWidth="150.0" >
+	<VBox fx:id="btnVideos" layoutX="350.0" layoutY="70" prefHeight="150.0" prefWidth="150.0" >
 		<ImageView fx:id="imgVideos"/>	
+			<Label fx:id="txtVideos" text="Videos"/>		
 	</VBox>
+	<VBox fx:id="btnEjemplos" layoutX="600.0" layoutY="70" prefHeight="150.0" prefWidth="150.0" >
+		<ImageView fx:id="imgEjemplos"/>	
+			<Label fx:id="txtEjemplos" text="Ejemplos"/>
+		
+	</VBox>
+	<VBox fx:id="btnCuestionarios" layoutX="850.0" layoutY="70" prefHeight="150.0" prefWidth="150.0" >
+		<ImageView fx:id="imgCuestionarios"/>
+			<Label fx:id="txtCuestionarios" text="Cuestionarios"/>
+			
+	</VBox>
+	
+	<!--Aqui comeinzan los de la parte de abajo-->
+	<VBox fx:id="btnWikis" layoutX="100.0" layoutY="300" prefHeight="150.0" prefWidth="150.0" >
+		<ImageView fx:id="imgWikis"/>
+			<Label fx:id="txtWikis" text="Wikis"/>		
+	</VBox>
+		<VBox fx:id="btnObjetivo" layoutX="350.0" layoutY="300" prefHeight="150.0" prefWidth="150.0" >
+		<ImageView fx:id="imgObjetivo"/>
+			<Label fx:id="txtObjetivo" />		
+	</VBox>
+		<VBox fx:id="btnPropuestos" layoutX="600.0" layoutY="300" prefHeight="150.0" prefWidth="150.0" >
+		<ImageView fx:id="imgPropuestos"/>
+			<Label fx:id="txtPropuestos" />		
+	</VBox>
+	
+	
+	
+	<Hyperlink fx:id="myHyperlink"></Hyperlink>
+	</AnchorPane>
+	
+	<AnchorPane   fx:id="contenedor2">
+      <children>
+      <ImageView layoutX="30.0" layoutY="15" fx:id="btnAtras"/>
+      <WebView fx:id="video1" layoutX="100.0" layoutY="50" prefHeight="250.0" prefWidth="370.0" >
+	
+	</WebView>
+	<WebView fx:id="video2" layoutX="570.0" layoutY="50" prefHeight="250.0" prefWidth="370.0" >
+	
+	</WebView>
+
+         </children>
+      </AnchorPane>
+	
+	
 
 </AnchorPane>
 

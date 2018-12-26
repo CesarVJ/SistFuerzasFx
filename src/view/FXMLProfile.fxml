@@ -6,57 +6,94 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.ImageView?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.Profile" fx:id="profile">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+	prefHeight="580.0" prefWidth="1100.0"
+	fx:controller="application.Profile" fx:id="profile">
 	<!-- TODO Add Nodes -->
-	
-	<!--  <HBox fx:id="mainBox" prefHeight="580.0" prefWidth="1100.0">-->
-	
-	<VBox fx:id="picture" layoutX="100.0" layoutY="50" prefHeight="450.0" prefWidth="305.0" >
-		<VBox fx:id="titlePic" prefHeight="30.0" >
-			<Label fx:id="textUser" text="     Perfil de usuario  " ></Label>
+
+	<!-- <HBox fx:id="mainBox" prefHeight="580.0" prefWidth="1100.0"> -->
+
+	<VBox fx:id="picture" layoutX="100.0" layoutY="50"
+		prefHeight="450.0" prefWidth="305.0">
+		<VBox fx:id="titlePic" prefHeight="30.0">
+			<Label fx:id="textUser" text="     Perfil de usuario  "></Label>
 		</VBox>
 		<VBox fx:id="photoBox" prefHeight="200.0">
-		<ImageView fx:id="photoProfile"/>
-		<Label fx:id="userName" text=""/>
-		<Label text="Ejercicios resueltos: "/>
-		
-		<HBox fx:id="info1">
-			<Label text="Vect. por Componente: " />
-			<ProgressBar fx:id="progressEjer1"/>	
-			<Label text=" 5/10 " />					
-		</HBox>
-		<HBox fx:id="info2">
-			<Label text="Diagram. Cuerpo Libre:  " />
-			<ProgressBar fx:id="progressEjer2"/>	
-			<Label text=" 8/10 " />
-		</HBox>
+			<ImageView fx:id="photoProfile" />
+			<Label fx:id="userName" text="" />
+			<Label text="Ejercicios resueltos: " />
+
+			<HBox fx:id="info1">
+				<Label text="Vect. por Componente: " />
+				<ProgressBar fx:id="progressEjer1" />
+				<Label text=" 5/10 " />
+			</HBox>
+			<HBox fx:id="info2">
+				<Label text="Diagram. Cuerpo Libre:  " />
+				<ProgressBar fx:id="progressEjer2" />
+				<Label text=" 8/10 " />
+				
+			</HBox>
+			<HBox fx:id="exportBtns">
+				<ImageView fx:id="exportConf"/>	
+				<ImageView fx:id="exportApp"/>						
+			</HBox>
 		</VBox>
-		
+
 
 	</VBox>
-	
-	<VBox fx:id="accountDetails" layoutX="470.0" layoutY="50" prefHeight="450.0" prefWidth="510.0" > 
-		<VBox fx:id="titleAccount" prefHeight="30.0" >
-			<Label fx:id="textAccount" text="    Detalles de la cuenta  " ></Label>
+
+	<VBox fx:id="accountDetails" layoutX="470.0" layoutY="50"
+		prefHeight="450.0" prefWidth="510.0">
+		<VBox fx:id="titleAccount" prefHeight="30.0">
+			<Label fx:id="textAccount" text="    Detalles de la cuenta  "></Label>
 		</VBox>
-		<HBox spacing="200" fx:id="titlesBox">
-		<Label fx:id="firstNametxt" text="Nombre(s): "/>
-		<Label fx:id="lastNametxt" text="Apellido(s): "/>
+		<HBox spacing="130" fx:id="titlesBox">
+			<Label fx:id="firstNametxt" text="Nombre(s): " />
+			<Label fx:id="lastNametxt" text="Apellido(s): " />
 		</HBox>
 		<HBox spacing="130" fx:id="namesBox">
-		<TextField fx:id="firstName"> </TextField>
-		<TextField fx:id="lastName"> </TextField>
+			<TextField fx:id="firstName">
+			</TextField>
+			<TextField fx:id="lastName">
+			</TextField>
 		</HBox>
-	</VBox>
 		
-	
-	
-	
-	
-	
+		<HBox spacing="130" fx:id="titlesBox2">
+			<Label fx:id="txtMail" text="Correo: " />
+			<Label fx:id="txtBirthDay" text="Fecha de nacimiento: " />
+		</HBox>
+		<HBox spacing="130" fx:id="mailBox">
+			<TextField fx:id="correoTF">
+			</TextField>
+            <DatePicker fx:id="birthDay"  maxWidth="325.0"/>
+		</HBox>
+		
+		<HBox spacing="130" fx:id="titlesBox3">
+			<Label fx:id="txtPassword" text="Contraseña: " />
+			<Label fx:id="txtConfirmPass" text="Confirmar contraseña:" />
+		</HBox>
+		<HBox spacing="130" fx:id="passBox">
+			<PasswordField fx:id="password" maxWidth="325.0"/>
+            <PasswordField fx:id="passwordConfirm" maxWidth="325.0"/>            
+		</HBox>
+		<Button layoutX="900" text="Guardar"/>
+		
+	</VBox>
+
+
+
+
+
+
 </AnchorPane>
 

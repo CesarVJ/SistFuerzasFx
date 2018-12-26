@@ -291,6 +291,19 @@
 		-fx-text-align: JUSTIFY;
  }
  
+ .resourcesBox:pressed{
+ 	     -fx-pref-width: 160px; 	
+ 	     -fx-pref-height: 160px; 	 	 	 	     	
+ }
+ .resourcesBox:hover{
+ 		-fx-cursor: hand;
+ 	
+ }
+ .boton:hover{
+ 		-fx-cursor: hand; 	
+ 	
+ }
+ 
  
  
 
