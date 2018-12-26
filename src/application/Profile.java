@@ -1,6 +1,14 @@
 package application;
-
+import model.Zipper;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -18,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Usuario;
+
 
 public class Profile implements Initializable{
 	
@@ -129,6 +138,36 @@ public class Profile implements Initializable{
 		}
 				
 		passwordConfirm.setPromptText("Confrima contraseña");
+		
+		exportConf.setOnMouseClicked(e->{
+			//SistFuerzasFiles
+			Path files= Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\users.dat");
+			Path destino= Paths.get(System.getProperty("user.home")+"\\Desktop\\Export");			
+			File fil = new File(System.getProperty("user.home")+"\\Desktop\\Export");
+			
+		     try {
+		    	 	//Ubicacion destino del zip
+		            Zipper z = new Zipper(new File(System.getProperty("user.home")+"\\Desktop\\Export\\FisicaFiles.zip"));
+		            //z.zip(new File(System.getProperty("user.home")+"\\Desktop\\Export\\prueba"));
+		            
+		            //Ruta a zippear
+		            z.zip(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\"));
+
+		            System.out.println("Listo");
+		        } catch (FileNotFoundException e2) {
+		            e2.printStackTrace();
+		        } catch (IOException e2) {
+		            e2.printStackTrace();
+		        }
+			
+			//fil.setWritable(true);
+			//Files.setPosixFilePermissions(destino, PosixFilePermissions.fromString("rw-r--r--"));	
+			//Files.copy(files, Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Export.rar"), StandardCopyOption.REPLACE_EXISTING);
+			//Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+
+
+			
+		});
 
 
 
