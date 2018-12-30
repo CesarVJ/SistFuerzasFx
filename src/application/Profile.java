@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,13 +36,13 @@ public class Profile implements Initializable{
 	//@FXML
 	//private HBox mainBox;
 	@FXML
-	private VBox picture,accountDetails,titlePic,titleAccount,photoBox;
+	private VBox picture,accountDetails,titlePic,titleAccount,photoBox,exportBtns1,exportBtns2,importBtns;
 	@FXML
 	private HBox info1,info2,titlesBox,titlesBox2,namesBox,mailBox,titlesBox3,passBox,exportBtns;
 	@FXML
 	private Label textUser,textAccount,userName,firstNametxt,lastNametxt,txtBirthDay,txtMail,txtPassword,txtConfirmPass;
 	@FXML
-	private ImageView photoProfile,exportConf,exportApp;
+	private ImageView photoProfile,exportConf,exportApp,importConf;
 	@FXML
 	private ProgressBar progressEjer1,progressEjer2;
 	@FXML
@@ -90,6 +91,11 @@ public class Profile implements Initializable{
 		exportConf.setImage(new Image(getClass().getResourceAsStream("/images/exportConf.png"), 30, 30, true, true));
 		exportConf.getStyleClass().add("photoProfile");
 		
+		importConf.setImage(new Image(getClass().getResourceAsStream("/images/importConf.png"), 30, 30, true, true));
+		importConf.getStyleClass().add("photoProfile");
+		
+		
+		
 		photoBox.setAlignment(Pos.CENTER);
 		userName.getStyleClass().add("userName");
 		userName.setText(getUserName().getUsuario());
@@ -100,7 +106,7 @@ public class Profile implements Initializable{
 		
 		info1.setSpacing(5);
 		info2.setSpacing(5);
-		photoBox.setSpacing(7);
+		photoBox.setSpacing(12);
 		info1.setAlignment(Pos.CENTER);
 		info2.setAlignment(Pos.CENTER);
 		titlesBox.setAlignment(Pos.CENTER);
@@ -171,7 +177,8 @@ public class Profile implements Initializable{
 
 
 
-		
+		//setTooltip(new Tooltip("Selecciona el modo en el que desees ingresar los datos."));
+
 		//FXTextField ad = new FXTextField();
 		
 		//		System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer1());
@@ -179,6 +186,19 @@ public class Profile implements Initializable{
 		
 		//accountDetails.setPrefHeight(150);
 	
+		exportBtns.setAlignment(Pos.CENTER);
+		exportBtns1.setAlignment(Pos.CENTER);
+		exportBtns2.setAlignment(Pos.CENTER);
+		importBtns.setAlignment(Pos.CENTER);
+		
+		
+		if(!getUserName().getUsuario().equals("root")) {
+			exportBtns.getChildren().removeAll(exportBtns1,exportBtns2);
+		}else {
+			exportBtns.getChildren().remove(importBtns);
+
+		}
+		
 		
 
 	}

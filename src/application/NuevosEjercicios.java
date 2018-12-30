@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -48,17 +50,17 @@ public class NuevosEjercicios implements Initializable{
 	@FXML
 	Label titulo,texto,texto1,texto2,indicacionLbl,tipoLbl,vectLbl;
 	@FXML
-	HBox boxName;
+	HBox boxName,pesoBox;
 	@FXML
-	VBox  board,formData;
+	VBox  board,formData,form2;
 	@FXML
 	ImageView icoImg;
 	@FXML
 	private ChoiceBox<String> tipoEjercicio;
 	@FXML
-	private TextField numVect;
+	private TextField numVect,peso;
 	@FXML 
-	private TableView tablaDatos;
+	private TableView tablaDatos;//,tablaDatos2;
 	@FXML
 	ObservableList<ContenidoTabla> data;
 	
@@ -77,9 +79,7 @@ public class NuevosEjercicios implements Initializable{
 	      fuerzas.setMinWidth(160);
 	      TableColumn angulo = new TableColumn("Angulo");
 	      angulo.setMinWidth(160);
-	      
-	   
-	      
+	  
 	      tablaDatos.getColumns().addAll(fuerzas,angulo);
 	      tablaDatos.resizeColumn(fuerzas, 0);
 	      data=FXCollections.observableArrayList();
@@ -90,7 +90,22 @@ public class NuevosEjercicios implements Initializable{
 	      tablaDatos.setItems(data); 
 	      
 	      tablaDatos.resizeColumn(fuerzas, 28);
-			tablaDatos.resizeColumn(angulo, 28);
+		  tablaDatos.resizeColumn(angulo, 28);
+		  
+		  
+		  //Tabla para equilibrio
+		  TableColumn fuerzas2 = new TableColumn("Fuerzas(Nw)");
+	      fuerzas.setMinWidth(160);
+	      
+	      TableColumn showFuerza = new TableColumn("Visible");
+	      fuerzas.setMinWidth(160);
+	      
+	      TableColumn showAngulo = new TableColumn("Angulo");
+	      angulo.setMinWidth(160);
+	      
+	      
+	      TableColumn angulo2 = new TableColumn("Angulo");
+	      angulo.setMinWidth(160);
 			
 		
 		
@@ -242,6 +257,40 @@ public class NuevosEjercicios implements Initializable{
 		
 		add.getStyleClass().add("backgrounds");				
 		add.getStylesheets().add(NuevosEjercicios.class.getResource("/view/Estilos.css").toExternalForm());
+		
+		
+		
+		
+		tipoEjercicio.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			boolean band = true;
+
+			public void changed(ObservableValue ov, Number value, Number new_value) {
+
+				if (new_value.intValue() == 0) {
+					//formData.getChildren().remove(form2);	
+					//formData.getChildren().add(tablaDatos);
+					formData.getChildren().remove(pesoBox);					
+
+					band = false;
+
+				} else if (new_value.intValue() == 1) {
+						//formData.getChildren().remove(tablaDatos);
+						//formData.getChildren().add(form2);	
+					formData.getChildren().add(pesoBox);					
+
+
+				}
+
+			}
+
+		});
+		
+		if(tipoEjercicio.getSelectionModel().getSelectedIndex()==0) {//Equilibrio
+			//formData.getChildren().remove(form2);
+			formData.getChildren().remove(pesoBox);					
+
+		}
+		
 	}
 	
 	 private void agregarVector(){
@@ -308,6 +357,7 @@ public class NuevosEjercicios implements Initializable{
 			i++;
 
 		}
+		//=====Prueba====================
 		String strAngulos="",strFuerzas="";
 		for(int j=0;j<vects;j++) {
 			strAngulos=angulos[j]+"";
@@ -315,32 +365,60 @@ public class NuevosEjercicios implements Initializable{
 			System.out.println(strFuerzas+":"+strAngulos);
 
 		}	
+		//================================
 		
-		RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
-        int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;            		
+		if(tipoEjercicio.getSelectionModel().getSelectedIndex()==0) {
+			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
+	        int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;            		
 
-		int id = maxFiles+2;
-		try {
-		    file.seek(file.length());
-		    file.writeInt(id);
-			file.writeBytes(nameFile+"\n");
-			file.writeInt(tipo);
-			file.writeInt(vects);
-			for(int n=0;n<vects;n++) {
-				file.writeFloat(angulos[n]);
-				file.writeFloat(fuerzas[n]);
+			int id = maxFiles+2;
+			try {
+			    file.seek(file.length());
+			    file.writeInt(id);
+				file.writeBytes(nameFile+"\n");
+				file.writeInt(tipo);
+				file.writeInt(vects);
+				for(int n=0;n<vects;n++) {
+					file.writeFloat(angulos[n]);
+					file.writeFloat(fuerzas[n]);
+				}									
+				file.close();
+				Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			
+			
+			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+	        int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;            		
+
+			int id = maxFiles+1;
+			try {
+			    file.seek(file.length());
+			    file.writeInt(id);
+				file.writeBytes(nameFile+"\n");
+				file.writeInt(tipo);
+				file.writeInt(vects);
+				for(int n=0;n<vects;n++) {
+					file.writeFloat(angulos[n]);
+					file.writeFloat(fuerzas[n]);
+				}		
+				file.writeFloat(Float.parseFloat(peso.getText()));
+				file.close();
+				Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer"+(maxFiles+1)+".png"),StandardCopyOption.REPLACE_EXISTING);
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
-			
-			
-			file.close();
-			Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		
 		
 	}
 	

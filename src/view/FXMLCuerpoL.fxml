@@ -33,8 +33,23 @@
                     </HBox>
                 </children>
             </VBox>
-            <VBox fx:id="cajaDerecha">
-            <Label text="Ejercicio 1"/>
+            
+            <VBox fx:id="cajaDerecha" prefHeight="400.0"  prefWidth="554.0"> 
+                    <Label fx:id="tituloEjercicio2" maxHeight="Infinity"/>    
+                    <Label fx:id="fxTxt" />
+                    <TextField fx:id="sumFx"/>
+                    
+                    <Label fx:id="fyTxt" />
+                    <TextField fx:id="sumFy"/>
+                    
+                      <HBox fx:id="cajaBotones" spacing="15.0">
+                                <Button onAction="#ejercicioAnterior2" text="Ejercicio anterior" fx:id="btnAnterior" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />                            
+                                <Button onAction="#verificarDatos2" text="Calificar" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0"/>
+                                <Button onAction="#siguienteEjercicio2" text="Siguiente ejercicio" fx:id="btnSiguiente" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />
+
+                        </HBox>
+                    
+                 
             
             
             </VBox>

@@ -1,7 +1,9 @@
 package application;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,7 +34,7 @@ public class Window implements Initializable{
 
 	
 	@FXML
-	AnchorPane ventanaPrincipal,contenedor,VentanaCalc,ventanaEjer,titleBar,ventanaAdd,ventanaProfile,ventanaEjer2,recursos;
+	AnchorPane ventanaPrincipal,contenedor,VentanaCalc,ventanaEjer,titleBar,ventanaAdd,ventanaProfile,ventanaEjer2,recursos,sinEjercicios;
 	 @FXML
 	 private Label lblText;
 	static ActionEvent eventLog;
@@ -120,7 +122,26 @@ public class Window implements Initializable{
 	
 	public void abrirEjercicio2() {
 		//root3.getChildren().get(0).toFront();	
-		ventanaEjer2.toFront();		
+		try {
+			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+			if(file.length()!=0) {
+				if(ventanaEjer2==null) {
+					ventanaEjer2 = FXMLLoader.load(getClass().getResource("/view/FXMLCuerpoL.fxml"));
+				    contenedor.getChildren().addAll(ventanaEjer2);
+
+				}else {
+				    ventanaEjer2.toFront();
+
+				}
+		    
+			}else {
+				sinEjercicios.toFront();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void abrirCalculador() {
@@ -332,17 +353,20 @@ public class Window implements Initializable{
 	    	ventanaProfile		=	FXMLLoader.load(getClass().getResource("/view/FXMLProfile.fxml"));
 	    	ventanaEjer = FXMLLoader.load(getClass().getResource("/view/FXMLDocument.fxml"));
 	    	VentanaCalc = FXMLLoader.load(getClass().getResource("/view/FXMLCalculator.fxml"));
-	    	ventanaEjer2 = FXMLLoader.load(getClass().getResource("/view/FXMLCuerpoL.fxml"));
+	    	//ventanaEjer2 = FXMLLoader.load(getClass().getResource("/view/FXMLCuerpoL.fxml"));
 	    	ventanaAdd = FXMLLoader.load(getClass().getResource("/view/FXMLAdd.fxml"));
 	    	recursos=FXMLLoader.load(getClass().getResource("/view/FXMLResources.fxml"));
+	    	sinEjercicios=FXMLLoader.load(getClass().getResource("/view/FXMLSinEjercicios.fxml"));
 
-			
+	    	
+			contenedor.getChildren().addAll(sinEjercicios);
 			contenedor.getChildren().addAll(ventanaAdd);
 			contenedor.getChildren().addAll(VentanaCalc);			
 			contenedor.getChildren().addAll(ventanaEjer);
-			contenedor.getChildren().addAll(ventanaEjer2);
-			contenedor.getChildren().addAll(recursos);
+			//contenedor.getChildren().addAll(ventanaEjer2);
+			contenedor.getChildren().addAll(recursos);			
 			contenedor.getChildren().addAll(ventanaProfile);
+
 
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block

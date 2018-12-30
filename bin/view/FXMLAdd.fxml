@@ -14,6 +14,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.input.Dragboard?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextField?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.NuevosEjercicios" fx:id="add">
 
@@ -33,6 +34,7 @@
             	
             	<VBox spacing="15.0" fx:id="formData" layoutX="600.0" layoutY="90.0" prefHeight="390.0" prefWidth="390.0">
             		<Label fx:id="indicacionLbl">Ingresa la imagen del ejercicio a agregar junto con los datos de la misma y al finalizar oprime "Validar"</Label>
+            		
             		<HBox spacing="20.0">
             			<Label fx:id="tipoLbl">Selecciona el tipo de ejercicio a añadir: </Label>
             			<ChoiceBox fx:id="tipoEjercicio"></ChoiceBox>
@@ -41,7 +43,21 @@
             			<Label fx:id="vectLbl">Selecciona el numero de vectores: </Label>
             			<TextField fx:id="numVect" prefWidth="50.0"></TextField>
             		</HBox>
-            		<TableView fx:id="tablaDatos" prefHeight="200.0" prefWidth="320.0"/>            	
+            		
+            		<TableView fx:id="tablaDatos" prefHeight="200.0" prefWidth="320.0"/>
+            		<HBox fx:id="pesoBox">
+            			<Label text="Valor del Peso = "/>
+            			<TextField fx:id="peso"/>
+            		</HBox>
+            		    
+            	<!--	<VBox fx:id="form2" spacing="20.0">
+            			<TableView fx:id="tablaDatos2" prefHeight="200.0" prefWidth="320.0"/>    
+            			<HBox>
+            			<Label text="Valor del Peso = "/>
+            			<TextField fx:id="peso"/>
+            			</HBox>
+            			
+            		</VBox>  -->    	
             	
             		
             	</VBox>

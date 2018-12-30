@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.web.WebView?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.SinEjercicios" fx:id="sinEjercicios">
+	
+	
+	<VBox fx:id="anuncioError" layoutX="350.0" layoutY="110" prefHeight="300.0" prefWidth="400.0" >
+	<ImageView fx:id="sinEjer"/>
+	<Label fx:id="txtErrorEjercicios" text="Lo sentimos, no se ha encontrado ningun ejercicio."/>
+	</VBox>
+
+</AnchorPane>
+
