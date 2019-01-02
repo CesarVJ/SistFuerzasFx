@@ -96,11 +96,17 @@
 	-fx-background-color: #2ECC40;
 	-fx-font-size:15px;	
 }
-.btnLogin:hover{
+
+.btnGuardar{
+	-fx-pref-width: 300px;
+	-fx-background-color: #2ECC40;/* #88D317 */ 
+	-fx-font-size:15px;	
+}
+.btnLogin:hover, .btnGuardar:hover{
 	-fx-background-color: linear-gradient(#2ECC40, #45B649);	
 	-fx-cursor: hand;
 }
-.btnLogin:pressed{
+.btnLogin:pressed, .btnGuardar:pressed{
 	-fx-background-color: #2ECC40;
 	-fx-font-size:14px		
 }

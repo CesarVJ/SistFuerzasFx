@@ -67,6 +67,50 @@
 		<VBox fx:id="titleAccount" prefHeight="30.0">
 			<Label fx:id="textAccount" text="    Detalles de la cuenta  "></Label>
 		</VBox>
+		<VBox fx:id="cajaDatos" spacing="35">
+		<HBox fx:id="cajaH1" spacing="50">
+			<VBox fx:id="cajaNombre">
+				<Label fx:id="firstNametxt" text="Nombre(s):" />
+				<TextField fx:id="firstName"></TextField>
+			</VBox>
+			<VBox fx:id="cajaApellidos">
+				<Label fx:id="lastNametxt" text="Apellido(s):" />
+				<TextField fx:id="lastName"></TextField>					
+			</VBox>		
+		</HBox>
+		
+		<HBox fx:id="cajaH2" spacing="50">
+			<VBox fx:id="cajaCorreo">
+				<Label fx:id="txtMail" text="Correo:" />
+				<TextField fx:id="correoTF"></TextField>	
+			</VBox>
+			<VBox fx:id="cajaNacimiento">
+				<Label fx:id="txtBirthDay" text="Fecha de nacimiento:" />
+				<DatePicker fx:id="birthDay" maxWidth="325.0" />
+			</VBox>		
+		</HBox>
+		
+		<HBox fx:id="cajaH3" spacing="50">
+			<VBox fx:id="cajaContra">
+				<Label fx:id="txtPassword" text="Contraseña:" />
+				<PasswordField fx:id="password" maxWidth="325.0" />		
+			</VBox>
+			<VBox fx:id="cajaContraConfirm">
+				<Label fx:id="txtConfirmPass" text="Confirmar contraseña:" />
+				<PasswordField fx:id="passwordConfirm" maxWidth="325.0" />	
+			</VBox>		
+		</HBox>
+		
+		</VBox>
+		
+		
+		
+		
+		
+		
+		
+		
+		<!--  
 		<HBox spacing="130" fx:id="titlesBox">
 			<Label fx:id="firstNametxt" text="Nombre(s): " />
 			<Label fx:id="lastNametxt" text="Apellido(s): " />
@@ -96,7 +140,11 @@
 			<PasswordField fx:id="password" maxWidth="325.0" />
 			<PasswordField fx:id="passwordConfirm" maxWidth="325.0" />
 		</HBox>
-		<Button layoutX="900" text="Guardar" />
+		
+		-->
+		<HBox fx:id="cajaBoton">
+				<Button layoutX="900" text="Guardar Cambios" fx:id="btnGuardar"/>		
+		</HBox>
 
 	</VBox>
 

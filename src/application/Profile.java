@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -36,9 +37,9 @@ public class Profile implements Initializable{
 	//@FXML
 	//private HBox mainBox;
 	@FXML
-	private VBox picture,accountDetails,titlePic,titleAccount,photoBox,exportBtns1,exportBtns2,importBtns;
+	private VBox picture,accountDetails,titlePic,titleAccount,photoBox,exportBtns1,exportBtns2,importBtns,cajaNombre,cajaApellidos,cajaCorreo,cajaNacimiento,cajaContra,cajaContraConfirm,cajaDatos;
 	@FXML
-	private HBox info1,info2,titlesBox,titlesBox2,namesBox,mailBox,titlesBox3,passBox,exportBtns;
+	private HBox info1,info2,cajaH2,cajaH3,exportBtns,cajaBoton,cajaH1;
 	@FXML
 	private Label textUser,textAccount,userName,firstNametxt,lastNametxt,txtBirthDay,txtMail,txtPassword,txtConfirmPass;
 	@FXML
@@ -51,6 +52,8 @@ public class Profile implements Initializable{
 	DatePicker birthDay;
 	@FXML
 	PasswordField password,passwordConfirm;
+	@FXML
+	Button btnGuardar;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -68,6 +71,10 @@ public class Profile implements Initializable{
 		
 		exportApp.getStyleClass().add("boton");
 		exportConf.getStyleClass().add("boton");
+		
+		btnGuardar.getStyleClass().add("btnGuardar");
+		
+		cajaBoton.setAlignment(Pos.CENTER);
 
 		DropShadow ef = new DropShadow();
 		ef.setWidth(20);
@@ -77,7 +84,7 @@ public class Profile implements Initializable{
 	    ef.setRadius(10);
 		picture.setEffect(ef);
 		accountDetails.setEffect(ef);
-		accountDetails.setSpacing(10);
+		accountDetails.setSpacing(40);
 		picture.setSpacing(10);
 		exportBtns.setSpacing(15);
 
@@ -109,14 +116,20 @@ public class Profile implements Initializable{
 		photoBox.setSpacing(12);
 		info1.setAlignment(Pos.CENTER);
 		info2.setAlignment(Pos.CENTER);
-		titlesBox.setAlignment(Pos.CENTER);
-		titlesBox2.setAlignment(Pos.CENTER);
+		
+		cajaH1.setAlignment(Pos.CENTER);
+		cajaH2.setAlignment(Pos.CENTER);
+		cajaH3.setAlignment(Pos.CENTER);
 
-		namesBox.setAlignment(Pos.CENTER);
 		exportBtns.setAlignment(Pos.CENTER);
-		mailBox.setAlignment(Pos.CENTER);
-		titlesBox3.setAlignment(Pos.CENTER);
-		passBox.setAlignment(Pos.CENTER);
+		
+		cajaDatos.setAlignment(Pos.CENTER);
+		cajaNombre.setAlignment(Pos.CENTER);
+		cajaApellidos.setAlignment(Pos.CENTER);
+		cajaCorreo.setAlignment(Pos.CENTER);
+		cajaNacimiento.setAlignment(Pos.CENTER);
+		cajaContra.setAlignment(Pos.CENTER);
+		cajaContraConfirm.setAlignment(Pos.CENTER);
 
 		firstNametxt.getStyleClass().add("userName");
 		lastNametxt.getStyleClass().add("userName");
@@ -129,6 +142,9 @@ public class Profile implements Initializable{
 //		progressEjer.setCursor(//10);
 		lastName.setPrefWidth(170);
 		correoTF.setPrefWidth(170);
+		passwordConfirm.setPrefWidth(170);
+		password.setPrefWidth(170);
+		birthDay.setPrefWidth(170);
 		
 		firstName.setText(getUserName().getNombre());
 		lastName.setText(getUserName().getApellidos());
