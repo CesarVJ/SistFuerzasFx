@@ -39,19 +39,31 @@ public class TipoEjercicio2 implements Initializable{
 	private Label tituloEjercicio2,fxTxt,fyTxt;
 	@FXML
 	private Button btnAnterior,BtnSiguiente;
-	private static int vects=0;
+	private static int vects=0,numEjercicio=1,ejercicioMax = getUserName().getMaxEjer2();;
 	private static float[] fuerzas,angulos;
 	private static float peso=0;
+	
+	Image imgCuerpoContent;
 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		
 		//imgCuerpo.setImage(new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer1.png"), 500, 500, true, true));
 		if(leerEjercicio()) {
 			imgCuerpo.setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer1.png", 500, 355, false, false));// Ancho.alto
 		}
+		ejercicioMax = getUserName().getMaxEjer2();
+		numEjercicio=1;
+		if(ejercicioMax==1) {
+			BtnSiguiente.setDisable(true);
+		}
+		if (numEjercicio == 1) {
+			btnAnterior.setDisable(true);
+
+		}
+
 
 		//imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
 
@@ -156,16 +168,104 @@ public class TipoEjercicio2 implements Initializable{
 	}
 	@FXML
 	public void ejercicioAnterior2() {
+		numEjercicio -= 1;
+		
+		imgCuerpoContent = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+		imgCuerpo.setImage(imgCuerpoContent);
+		if (numEjercicio == 1) {
+			btnAnterior.setDisable(true);
+		}
+		BtnSiguiente.setDisable(false);
+		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
+		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length);
+
+
+		
+		
+		
 		
 	}
 	@FXML
 	private void siguienteEjercicio2(ActionEvent event) {
-		
+		btnAnterior.setDisable(false);
+		numEjercicio++;
+		if(numEjercicio==ejercicioMax || numEjercicio==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length) {
+			BtnSiguiente.setDisable(true);
+		}
+		imgCuerpoContent = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+		imgCuerpo.setImage(imgCuerpoContent);
+		tituloEjercicio2.setText("Estes es otro ejercicio..........");
+
+		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
+		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length);
+
 	}
 	
 	@FXML
 	private void verificarDatos2(ActionEvent event) {
+		//
+		///
+		////
+		//==========RESPUESTA CORRECTA====================================================
+		if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length && numEjercicio==ejercicioMax) {
+			BtnSiguiente.setDisable(true);
+		}
 		
+		if(BtnSiguiente.isDisabled()) {
+			if(ejercicioMax==numEjercicio && (ejercicioMax)<new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length) {
+			BtnSiguiente.setDisable(false);
+			ejercicioMax++;
+			System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer2());
+			getUserName().setMaxEjer2(ejercicioMax);
+			System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer2());
+			try {
+				aumentarMaximos(getUserName(),ejercicioMax);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+
+			}
+		}	
+		//==============================================================
+
+	}
+	
+	public void aumentarMaximos(Usuario user,int max) throws IOException {
+		
+		
+		RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+	  	boolean band = false;
+			String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
+			int maxEjer1=0,maxEjer2=0;
+			long pointer=0;
+		while(!band && file.getFilePointer()<file.length()) {
+			pointer=file.getFilePointer();
+			nombre = file.readLine();				
+			apellido = file.readLine();
+			nacimiento = file.readLine();
+			usuario = file.readLine();
+			password = file.readLine();
+			band = usuario.equals(user.getUsuario());
+			mail = file.readLine();
+			maxEjer1=file.readInt();
+			maxEjer2=file.readInt();
+
+		}
+		
+		if(band) {
+			file.seek(pointer);
+			file.writeBytes(nombre+"\n");
+			file.writeBytes(apellido+"\n");
+			file.writeBytes(nacimiento+"\n");			
+			file.writeBytes(usuario+"\n");	
+			file.writeBytes(password+"\n");			
+			file.writeBytes(mail+"\n");		
+			file.writeInt(maxEjer1);
+			file.writeInt(max);
+		}
+		file.close();
 	}
 	/*
 	

@@ -45,7 +45,7 @@
                       <HBox fx:id="cajaBotones" spacing="15.0">
                                 <Button onAction="#ejercicioAnterior2" text="Ejercicio anterior" fx:id="btnAnterior" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />                            
                                 <Button onAction="#verificarDatos2" text="Calificar" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0"/>
-                                <Button onAction="#siguienteEjercicio2" text="Siguiente ejercicio" fx:id="btnSiguiente" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />
+                                <Button onAction="#siguienteEjercicio2" text="Siguiente ejercicio" fx:id="BtnSiguiente" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />
 
                         </HBox>
                     
