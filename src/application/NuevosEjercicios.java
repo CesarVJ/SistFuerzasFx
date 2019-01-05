@@ -24,6 +24,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -63,6 +64,8 @@ public class NuevosEjercicios implements Initializable{
 	private TableView tablaDatos;//,tablaDatos2;
 	@FXML
 	ObservableList<ContenidoTabla> data;
+	@FXML
+	TextArea txtDescripcion;
 	
 	int contadorFilas=0;
 	int numFilasAnt=0;
@@ -74,6 +77,10 @@ public class NuevosEjercicios implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		
+		
+		  txtDescripcion.setWrapText(true);
 		
 		  TableColumn fuerzas = new TableColumn("Fuerzas(Nw)");
 	      fuerzas.setMinWidth(160);
@@ -381,7 +388,9 @@ public class NuevosEjercicios implements Initializable{
 				for(int n=0;n<vects;n++) {
 					file.writeFloat(angulos[n]);
 					file.writeFloat(fuerzas[n]);
-				}									
+				}
+				file.writeBytes(txtDescripcion.getText()+"\n");
+
 				file.close();
 				Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
 				
@@ -408,6 +417,7 @@ public class NuevosEjercicios implements Initializable{
 					file.writeFloat(fuerzas[n]);
 				}		
 				file.writeFloat(Float.parseFloat(peso.getText()));
+				file.writeBytes(txtDescripcion.getText()+"\n");
 				file.close();
 				Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer"+(maxFiles+1)+".png"),StandardCopyOption.REPLACE_EXISTING);
 				

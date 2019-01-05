@@ -15,12 +15,13 @@
 <?import javafx.scene.input.Dragboard?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.NuevosEjercicios" fx:id="add">
 
 
     <children>
-            	<VBox fx:id="board" layoutX="200.0" layoutY="100.0" prefHeight="280.0" prefWidth="350.0">
+            	<VBox fx:id="board" layoutX="160.0" layoutY="60.0" prefHeight="280.0" prefWidth="350.0">
             		<Label fx:id="texto1"/>
             		<ImageView fx:id="icoImg"/>
             		<Label text="" fx:id="texto"/> 
@@ -32,7 +33,7 @@
             	</VBox>   
             	
             	
-            	<VBox spacing="15.0" fx:id="formData" layoutX="600.0" layoutY="90.0" prefHeight="390.0" prefWidth="390.0">
+            	<VBox spacing="15.0" fx:id="formData" layoutX="560.0" layoutY="50.0" prefHeight="400.0" prefWidth="400.0">
             		<Label fx:id="indicacionLbl">Ingresa la imagen del ejercicio a agregar junto con los datos de la misma y al finalizar oprime "Validar"</Label>
             		
             		<HBox spacing="20.0">
@@ -44,11 +45,16 @@
             			<TextField fx:id="numVect" prefWidth="50.0"></TextField>
             		</HBox>
             		
-            		<TableView fx:id="tablaDatos" prefHeight="200.0" prefWidth="320.0"/>
+            		<TableView fx:id="tablaDatos" prefHeight="180.0" prefWidth="320.0"/>
+            		
             		<HBox fx:id="pesoBox">
             			<Label text="Valor del Peso = "/>
             			<TextField fx:id="peso"/>
             		</HBox>
+            		<VBox>
+            		   <Label text="Descripcion del ejercicio: "/>            		
+            			<TextArea fx:id="txtDescripcion" prefHeight="80.0" ></TextArea>
+            		</VBox>
             		    
             	<!--	<VBox fx:id="form2" spacing="20.0">
             			<TableView fx:id="tablaDatos2" prefHeight="200.0" prefWidth="320.0"/>    

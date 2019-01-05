@@ -47,7 +47,9 @@ public class TipoEjercicio1 implements Initializable {
 	@FXML
 	private VBox caja = new VBox(20);
 	@FXML
-	private Label textoInferior, tituloEjercicio1;
+	private Label textoInferior;
+	@FXML
+	private   Label tituloEjercicio1;
 	@FXML
 	private Button btnSiguiente, btnAnterior;
 	@FXML
@@ -236,7 +238,7 @@ public class TipoEjercicio1 implements Initializable {
 		// Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer"+numEjercicio+".png"),500,400,true,true));
 		grafica1.setImage(imgSistema);
 
-		tituloEjercicio1.setText("Estes es otro ejercicio");
+		//tituloEjercicio1.setText("Estes es otro ejercicio");
 		limpiarDatos();
 		
 		
@@ -323,6 +325,8 @@ public class TipoEjercicio1 implements Initializable {
 		
 		ObservableList<ContenidoTabla> dataRows = FXCollections.observableArrayList();
 		Resultados obj = new Resultados();
+		Alert resultado = new Alert(Alert.AlertType.WARNING);
+
 		int i = 0;
 		float[] angulos = new float[vects];
 		float[] fuerzas = new float[vects];
@@ -330,7 +334,7 @@ public class TipoEjercicio1 implements Initializable {
 		float[] fy = new float[vects];
 		int[] fun1 = new int[vects];
 		int[] fun2= new int[vects];
-
+		try {
 		for (ContenidoTabla bean : data) {
 			if (!bean.getFuerzas().getText().isEmpty()) {
 				dataRows.add(bean);
@@ -351,6 +355,7 @@ public class TipoEjercicio1 implements Initializable {
 			i++;
 
 		}
+	
 		
 		if(cambiarModo.getSelectionModel().getSelectedIndex()==0) {
 			obj.setSumFx(fuerzas, angulos, vects);
@@ -370,7 +375,6 @@ public class TipoEjercicio1 implements Initializable {
 		System.out.println("Vector resultante : " + String.format("%.3f", obj.getVR()));
 		System.out.println("Angulo resultante: " + String.format("%.3f", obj.getAnguloResult()));
 
-		Alert resultado = new Alert(Alert.AlertType.WARNING);
 
 		//VResultante.getText().equalsIgnoreCase(String.format("%.3f", obj.getVR()))
 		//AnguloResultante.getText().equalsIgnoreCase(String.format("%.3f", obj.getAnguloResult()))
@@ -424,6 +428,20 @@ public class TipoEjercicio1 implements Initializable {
 		}
 		resultado.setHeaderText(null);
 		resultado.showAndWait();
+		
+		}catch(Exception e){
+			resultado.setTitle("Respuesta incorrecta");
+			resultado.setContentText(
+					"Alguno de tus resultados es incorrecto, verifica tus operaciones y vuelve a intentarlo");
+			ImageView incorrecta = new ImageView(
+				new Image(getClass().getResourceAsStream("/images/respuesta_incorrecta.png"), 50, 50, true, true));
+			resultado.setGraphic(incorrecta);
+        	new Shake(table).play();
+        	resultado.setHeaderText(null);
+        	resultado.showAndWait();
+        	return;
+			
+		}
 
 	}
 	public void aumentarMaximos(Usuario user,int max) throws IOException {
@@ -463,9 +481,13 @@ public class TipoEjercicio1 implements Initializable {
 	}
 	
 	static Resultados oficiales= new Resultados(); 
-	public static int leerEjercicio(int idEjer) {
+	public  int leerEjercicio(int idEjer) {
 		if(idEjer==1) {
+			tituloEjercicio1.setText(
+					"EJERCICIO 1 \nDado este sistema de fuerzas determina el Vector Resultante. Rellena la siguiente tabla con los datos requeridos"
+							+ " y realiza tus operaciones en un papel con ayuda de tu calculadora.(Anotar solo 3 decimales)");
 			return 3;
+
 		}
 		
 		int id=0,tipo=0;
@@ -475,8 +497,8 @@ public class TipoEjercicio1 implements Initializable {
 			//file.seek(file.length());
 		    try {
 		    	boolean band=false;
-		    	
-		    	while(file.getFilePointer()<file.length() || !band) {
+		    	String descripcion="";
+		    	while(file.getFilePointer()<file.length() && !band) {
 		    		id=file.readInt();System.out.println(id);
 		    		band = id==idEjer ? true:false;
 		    		String name= file.readLine();System.out.println(name);
@@ -492,11 +514,15 @@ public class TipoEjercicio1 implements Initializable {
 						fuerzas[n]=fuerza;
 						System.out.println("Angulo: "+angulo+"=> Fuerza: "+fuerza);
 					}
+					descripcion=file.readLine();
+					
 					oficiales.setSumFx(fuerzas, angulos, vects);
 					oficiales.setSumFy(fuerzas, angulos, vects);
 					System.out.println("Resultados oficiales: SUmFx= "+oficiales.getSumFx()+" SumFy= "+oficiales.getSumFy());
 
 		    	}
+				tituloEjercicio1.setText(descripcion);
+
 				
 				
 				

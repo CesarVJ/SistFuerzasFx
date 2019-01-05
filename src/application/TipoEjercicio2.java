@@ -36,7 +36,11 @@ public class TipoEjercicio2 implements Initializable{
 	@FXML
 	private TextField tanB,tanA,sumFx,sumFy;
 	@FXML
-	private Label tituloEjercicio2,fxTxt,fyTxt;
+	private  Label tituloEjercicio2;
+	@FXML
+	private Label fxTxt;
+	@FXML
+	private Label fyTxt;
 	@FXML
 	private Button btnAnterior,BtnSiguiente;
 	private static int vects=0,numEjercicio=1,ejercicioMax = getUserName().getMaxEjer2();;
@@ -51,7 +55,7 @@ public class TipoEjercicio2 implements Initializable{
 
 		
 		//imgCuerpo.setImage(new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer1.png"), 500, 500, true, true));
-		if(leerEjercicio()) {
+		if(leerEjercicio(1)) {
 			imgCuerpo.setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer1.png", 500, 355, false, false));// Ancho.alto
 		}
 		ejercicioMax = getUserName().getMaxEjer2();
@@ -77,10 +81,10 @@ public class TipoEjercicio2 implements Initializable{
 		cajaDerecha.setPadding(new Insets(10, 10, 0, 2));
 		cajaDerecha.setSpacing(20);
 		
-		tituloEjercicio2.setText(
+		/*tituloEjercicio2.setText(
 				"EJERCICIO EQUILIBRIO \nDado este sistema de fuerzas...................................................bla bla"
 						+ " y realiza tus operaciones en un papel con ayuda de tu calculadora.(Anotar solo 3 decimales)");
-
+*/
 		tituloEjercicio2.setWrapText(true);		
 		
 		fxTxt.setText("\u03A3"+"Fx = 0 ");
@@ -106,7 +110,7 @@ public class TipoEjercicio2 implements Initializable{
 
 	}
 	@FXML
-	public static boolean leerEjercicio() {
+	public  boolean leerEjercicio(int idEjer) {
 	
 		int id=0,tipo=0;
 
@@ -122,10 +126,11 @@ public class TipoEjercicio2 implements Initializable{
 			}
 		    try {
 		    	boolean band=false;
-		    	
-		    	while(file.getFilePointer()<file.length()) {
+		    	String descripcion="";
+
+		    	while(file.getFilePointer()<file.length() && !band) {
 		    		id=file.readInt();System.out.println(id);
-		    		//band = id==idEjer ? true:false;
+		    		band = id==idEjer ? true:false;
 		    		String name= file.readLine();System.out.println(name);
 		    		tipo= file.readInt();System.out.println(tipo);
 		    		vects = file.readInt();System.out.println(vects);
@@ -140,12 +145,17 @@ public class TipoEjercicio2 implements Initializable{
 						System.out.println("Angulo: "+angulo+"=> Fuerza: "+fuerza);
 					}
 					peso=file.readFloat();
+					descripcion=file.readLine();
+
+					
 					System.out.println("Peso = "+peso);
 					//oficiales.setSumFx(fuerzas, angulos, vects);
 					//oficiales.setSumFy(fuerzas, angulos, vects);
 					//System.out.println("Resultados oficiales: SUmFx= "+oficiales.getSumFx()+" SumFy= "+oficiales.getSumFy());
 
 		    	}
+				tituloEjercicio2.setText("EJERCICIO EQUILIBRIO \n"+descripcion);
+
 				
 				
 				
@@ -178,7 +188,7 @@ public class TipoEjercicio2 implements Initializable{
 		BtnSiguiente.setDisable(false);
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length);
-
+		leerEjercicio(numEjercicio);
 
 		
 		
@@ -198,6 +208,7 @@ public class TipoEjercicio2 implements Initializable{
 
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length);
+		leerEjercicio(numEjercicio);
 
 	}
 	
