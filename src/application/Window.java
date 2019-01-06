@@ -120,6 +120,24 @@ public class Window implements Initializable{
 		ventanaEjer.toFront();		
 	}
 	
+	public void abrirPerfil() {
+		VBSub.getChildren().remove(btnEjercicios1);
+		VBSub.getChildren().remove(btnEjercicios2);
+		contenedor.getChildren().remove(ventanaProfile);
+		try {
+			ventanaProfile = FXMLLoader.load(getClass().getResource("/view/FXMLProfile.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		contenedor.getChildren().add(ventanaProfile);
+
+		ventanaProfile.toFront();
+		
+
+
+	}
+	
 	public void abrirEjercicio2() {
 		//root3.getChildren().get(0).toFront();	
 		try {
@@ -152,14 +170,7 @@ public class Window implements Initializable{
 		
 	}
 	
-	public void abrirPerfil() {
-		VBSub.getChildren().remove(btnEjercicios1);
-		VBSub.getChildren().remove(btnEjercicios2);
-		ventanaProfile.toFront();
-		
 
-
-	}
 	
 	@FXML
 	public void minVentana() {

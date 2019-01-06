@@ -3,6 +3,7 @@ import model.Zipper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,7 +42,7 @@ public class Profile implements Initializable{
 	@FXML
 	private HBox info1,info2,cajaH2,cajaH3,exportBtns,cajaBoton,cajaH1;
 	@FXML
-	private Label textUser,textAccount,userName,firstNametxt,lastNametxt,txtBirthDay,txtMail,txtPassword,txtConfirmPass;
+	private Label textUser,textAccount,userName,firstNametxt,lastNametxt,txtBirthDay,txtMail,txtPassword,txtConfirmPass,progressText2,progressText1;
 	@FXML
 	private ImageView photoProfile,exportConf,exportApp,importConf;
 	@FXML
@@ -108,8 +109,13 @@ public class Profile implements Initializable{
 		userName.setText(getUserName().getUsuario());
 		
 		//ProgressBar bar = new ProgressBar(0);
-		progressEjer1.setProgress(0.50);
-		progressEjer2.setProgress(0.80);
+		//progressEjer1.setProgress(0.50);
+		//progressEjer2.setProgress(0.80);
+		setMaxEjercicios();
+
+		setProgressEjer();
+		
+		
 		
 		info1.setSpacing(5);
 		info2.setSpacing(5);
@@ -218,6 +224,60 @@ public class Profile implements Initializable{
 		
 
 	}
+	
+	public void setProgressEjer() {
+		try {
+			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+			boolean band = false;
+			String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
+			int maxEjer1=0,maxEjer2=0;
+			long pointer=0;
+		while(!band && file.getFilePointer()<file.length()) {
+			pointer=file.getFilePointer();
+			nombre = file.readLine();				
+			apellido = file.readLine();
+			nacimiento = file.readLine();
+			usuario = file.readLine();
+			password = file.readLine();
+			band = usuario.equals(getUserName().getUsuario());
+			mail = file.readLine();
+			maxEjer1=file.readInt();
+			maxEjer2=file.readInt();
+
+		}
+		
+		
+		float porcentaje1=(maxEjer1*100)/(Float.parseFloat(progressText1.getText()));
+		float porcentaje2=(maxEjer2*100)/(Float.parseFloat(progressText2.getText()));
+
+
+		progressEjer1.setProgress(((float)(porcentaje1))/100);
+		progressEjer2.setProgress(((float)(porcentaje2))/100);
+		
+		
+		progressText1.setText(maxEjer1+"/"+progressText1.getText());
+		progressText2.setText(maxEjer2+"/"+progressText2.getText());
+
+
+		file.close();
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public  void setMaxEjercicios() {
+		int sizeFile1= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;
+		int sizeFile2= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;
+
+		progressText1.setText((sizeFile1+1)+"");
+		progressText2.setText(sizeFile2+"");
+		
+
+	}
+
 	
 	
 

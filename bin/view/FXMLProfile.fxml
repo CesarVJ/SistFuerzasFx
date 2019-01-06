@@ -35,12 +35,12 @@
 			<HBox fx:id="info1">
 				<Label text="Vect. por Componente: " />
 				<ProgressBar fx:id="progressEjer1" />
-				<Label text=" 5/10 " />
+				<Label fx:id="progressText1" />
 			</HBox>
 			<HBox fx:id="info2">
 				<Label text="Diagram. Cuerpo Libre:  " />
 				<ProgressBar fx:id="progressEjer2" />
-				<Label text=" 8/10 " />
+				<Label fx:id="progressText2" />
 
 			</HBox>
 			<HBox fx:id="exportBtns">
