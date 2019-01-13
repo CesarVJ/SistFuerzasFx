@@ -46,6 +46,8 @@ public class TipoEjercicio2 implements Initializable{
 	private static int vects=0,numEjercicio=1,ejercicioMax = getUserName().getMaxEjer2();;
 	private static float[] fuerzas,angulos;
 	private static float peso=0;
+	private static String ecuacionSumX1="",ecuacionSumX2="",ecuacionSumY1="",ecuacionSumY2="";
+
 	
 	Image imgCuerpoContent;
 
@@ -218,9 +220,18 @@ public class TipoEjercicio2 implements Initializable{
 		///
 		////
 		//==========RESPUESTA CORRECTA====================================================
+		getEcuacionFx();
+		getEcuacionFy();
+		System.out.println("Ecuaciones de sumatoria de Fx:\n"+ecuacionSumX1+"\n"+ecuacionSumX2);
+		System.out.println("Ecuaciones de sumatoria de Fy:\n"+ecuacionSumY1+"\n"+ecuacionSumY2);
+
+		
+
 		if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length && numEjercicio==ejercicioMax) {
 			BtnSiguiente.setDisable(true);
 		}
+		
+	
 		
 		if(BtnSiguiente.isDisabled()) {
 			if(ejercicioMax==numEjercicio && (ejercicioMax)<new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length) {
@@ -231,13 +242,30 @@ public class TipoEjercicio2 implements Initializable{
 			System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer2());
 			try {
 				aumentarMaximos(getUserName(),ejercicioMax);
+				
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			
 		
 
 			}
+			//==============================
+			if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length) {
+				ejercicioMax++;
+				getUserName().setMaxEjer2(ejercicioMax);
+				try {
+					aumentarMaximos(getUserName(),ejercicioMax);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+			//=====================================
 		}	
 		//==============================================================
 
@@ -277,6 +305,96 @@ public class TipoEjercicio2 implements Initializable{
 			file.writeInt(max);
 		}
 		file.close();
+	}
+	
+	
+	public void getEcuacionFx() {
+		ecuacionSumX1="";
+		ecuacionSumX2="";
+		char tension='A';
+		boolean positivo=true;
+		
+		for(int i=0;i<angulos.length;i++) {
+			String ecuTemp1="",ecuTemp2="";
+			if(angulos[i]>=0 && angulos[i]<=90) {
+				ecuTemp1=tension+"Cos"+angulos[i];
+				ecuTemp2=tension+"Sen"+(90-angulos[i]);
+				positivo=true;
+			}else if(angulos[i]>90 && angulos[i]<=180) {
+				ecuTemp1=tension+"Cos"+(180-angulos[i]);
+				ecuTemp2=tension+"Sen"+(angulos[i]-90);
+				positivo=false;
+			}else if(angulos[i]>180 && angulos[i]<=270) {
+				ecuTemp1=tension+"Cos"+(angulos[i]-180);
+				ecuTemp2=tension+"Sen"+(270-angulos[i]);
+				positivo=false;
+			}else if(angulos[i]>270 && angulos[i]<=360) {
+				ecuTemp1=tension+"Cos"+(360-angulos[i]);
+				ecuTemp2=tension+"Sen"+(angulos[i]-270);
+				positivo=true;
+			}
+			if(i!=0) {
+				ecuacionSumX1+=positivo?"+":"-";
+				ecuacionSumX2+=positivo?"+":"-";	
+			}else {
+				ecuacionSumX1+=positivo?"":"-";
+				ecuacionSumX2+=positivo?"":"-";	
+			}
+			//if(i==0 && ecuacionSum1.equals("+")); ecuacionSum1="";
+			//if(i==0 && ecuacionSum1.equals("+")); ecuacionSum2="";
+
+			
+			
+			ecuacionSumX1+=ecuTemp1;
+			ecuacionSumX2+=ecuTemp2;
+			tension++;
+			
+		}
+		
+	}
+	
+	
+	public void getEcuacionFy() {
+		ecuacionSumY1="";
+		ecuacionSumY2="";
+		char tension='A';
+		boolean positivo=true;
+		
+		for(int i=0;i<angulos.length;i++) {
+			String ecuTemp1="",ecuTemp2="";
+			if(angulos[i]>=0 && angulos[i]<=90) {
+				ecuTemp1=tension+"Sen"+angulos[i];
+				ecuTemp2=tension+"Cos"+(90-angulos[i]);
+			}else if(angulos[i]>90 && angulos[i]<=180) {
+				ecuTemp1=tension+"Sen"+(180-angulos[i]);
+				ecuTemp2=tension+"Cos"+(angulos[i]-90);
+			}else if(angulos[i]>180 && angulos[i]<=270) {
+				ecuTemp1=tension+"Sen"+(angulos[i]-180);
+				ecuTemp2=tension+"Cos"+(270-angulos[i]);
+				positivo=false;
+			}else if(angulos[i]>270 && angulos[i]<=360) {
+				ecuTemp1=tension+"Sen"+(360-angulos[i]);
+				ecuTemp2=tension+"Cos"+(angulos[i]-270);
+				positivo=false;
+			}
+			if(i!=0) {
+				ecuacionSumY1+=positivo?"+":"-";
+				ecuacionSumY2+=positivo?"+":"-";	
+			}else {
+				ecuacionSumY1+=positivo?"":"-";
+				ecuacionSumY2+=positivo?"":"-";	
+			}
+			//if(i==0 && ecuacionSum1.equals("+")); ecuacionSum1="";
+			//if(i==0 && ecuacionSum1.equals("+")); ecuacionSum2="";
+
+			
+			
+			ecuacionSumY1+=ecuTemp1+"-"+peso;
+			ecuacionSumY2+=ecuTemp2+"-"+peso;
+			tension++;
+			
+		}
+		
 	}
 	/*
 	

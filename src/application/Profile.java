@@ -247,16 +247,16 @@ public class Profile implements Initializable{
 		}
 		
 		
-		float porcentaje1=(maxEjer1*100)/(Float.parseFloat(progressText1.getText()));
-		float porcentaje2=(maxEjer2*100)/(Float.parseFloat(progressText2.getText()));
+		float porcentaje1=((maxEjer1-1)*100)/(Float.parseFloat(progressText1.getText()));
+		float porcentaje2=((maxEjer2-1)*100)/(Float.parseFloat(progressText2.getText()));
 
 
 		progressEjer1.setProgress(((float)(porcentaje1))/100);
 		progressEjer2.setProgress(((float)(porcentaje2))/100);
 		
 		
-		progressText1.setText(maxEjer1+"/"+progressText1.getText());
-		progressText2.setText(maxEjer2+"/"+progressText2.getText());
+		progressText1.setText((maxEjer1-1)+"/"+progressText1.getText());
+		progressText2.setText((maxEjer2-1)+"/"+progressText2.getText());
 
 
 		file.close();

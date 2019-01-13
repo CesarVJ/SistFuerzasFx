@@ -393,7 +393,7 @@ public class TipoEjercicio1 implements Initializable {
 			
 			System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 			
-			if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length && numEjercicio==ejercicioMax) {
+			if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1 && numEjercicio==ejercicioMax) {
 				btnSiguiente.setDisable(true);
 			}
 				if(btnSiguiente.isDisabled()) {
@@ -404,6 +404,7 @@ public class TipoEjercicio1 implements Initializable {
 					getUserName().setMaxEjer1(ejercicioMax);
 					System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer1());
 					try {
+						
 						aumentarMaximos(getUserName(),ejercicioMax);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -412,6 +413,14 @@ public class TipoEjercicio1 implements Initializable {
 				
 
 					}
+					//========================
+					if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1) {
+						ejercicioMax++;
+						getUserName().setMaxEjer1(ejercicioMax);
+						aumentarMaximos(getUserName(),ejercicioMax);
+
+					}
+					//==========================================
 				}	
 				
 				System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
