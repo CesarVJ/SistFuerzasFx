@@ -7,13 +7,21 @@ import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import animatefx.animation.Shake;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +34,7 @@ public class TipoEjercicio2 implements Initializable{
 	@FXML
 	private AnchorPane ejercicios2;
 	@FXML
-	private HBox mainBox,cajaResultante,cajaBotones;
+	private HBox mainBox,cajaResultante,cajaBotones,cajaTabla;
 	@FXML
 	private VBox cajaIzquierda,cajaDerecha;
 	@FXML
@@ -47,6 +55,16 @@ public class TipoEjercicio2 implements Initializable{
 	private static float[] fuerzas,angulos;
 	private static float peso=0;
 	private static String ecuacionSumX1="",ecuacionSumX2="",ecuacionSumY1="",ecuacionSumY2="";
+	@FXML
+	private TableView tablaTensiones;
+	@FXML
+	ObservableList<ContenidoTabla> data;
+	@FXML
+	private AnchorPane ejercicios1;
+	private int contadorFilas;
+	private char letra='A';
+
+
 
 	
 	Image imgCuerpoContent;
@@ -58,7 +76,7 @@ public class TipoEjercicio2 implements Initializable{
 		
 		//imgCuerpo.setImage(new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer1.png"), 500, 500, true, true));
 		if(leerEjercicio(1)) {
-			imgCuerpo.setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer1.png", 500, 355, false, false));// Ancho.alto
+			imgCuerpo.setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer1.png", 500, 400, false, false));// Ancho.alto
 		}
 		ejercicioMax = getUserName().getMaxEjer2();
 		numEjercicio=1;
@@ -69,7 +87,37 @@ public class TipoEjercicio2 implements Initializable{
 			btnAnterior.setDisable(true);
 
 		}
+		tablaTensiones.setMaxWidth(430);
+		tablaTensiones.setPrefWidth(430);
+		cajaTabla.setAlignment(Pos.CENTER);
 
+		  TableColumn nombres = new TableColumn("Tension");
+		  TableColumn fuerzas = new TableColumn("Fuerzas(Nw)");
+	      fuerzas.setMinWidth(160);
+	      TableColumn angulo = new TableColumn("Angulo");
+	      angulo.setMinWidth(160);
+	      
+	      nombres.setMaxWidth(50);
+	      nombres.setStyle( "-fx-alignment: CENTER;");
+
+	  
+	      tablaTensiones.getColumns().addAll(nombres,fuerzas,angulo);
+	      tablaTensiones.resizeColumn(fuerzas, 0);
+	      tablaTensiones.resizeColumn(angulo, 0);
+
+	      data=FXCollections.observableArrayList();
+	        
+	      fuerzas.setCellValueFactory(new PropertyValueFactory<ContenidoTabla,TextField>("fuerzas"));
+	      angulo.setCellValueFactory(new PropertyValueFactory<ContenidoTabla,TextField>("angulo"));
+	      nombres.setCellValueFactory(new PropertyValueFactory<ContenidoTabla,TextField>("nombres"));
+
+	       
+	      tablaTensiones.setItems(data); 	      
+	      tablaTensiones.resizeColumn(fuerzas, 24);
+	      tablaTensiones.resizeColumn(angulo, 24);
+	      tablaTensiones.resizeColumn(nombres, 2);
+
+		  
 
 		//imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
 
@@ -93,7 +141,7 @@ public class TipoEjercicio2 implements Initializable{
 		fxTxt.getStyleClass().add("textForm");
 		sumFx.setPrefHeight(40);
 		sumFx.setPrefWidth(200);
-		Label promptFx=new Label("Escribe la ecuacion correspondiente. Ej. ACos"+"\u03B8"+" + BSen"+"\u03B8"+" - W");
+		Label promptFx=new Label("Escribe la ecuacion correspondiente. Ej. ACos"+"\u03B8"+" + BSen"+"\u03B8");
 		promptFx.getStyleClass().add("textForm");
 		
 		sumFx.setPromptText(promptFx.getText()+"");
@@ -105,9 +153,22 @@ public class TipoEjercicio2 implements Initializable{
 		fyTxt.getStyleClass().add("textForm");
 		sumFy.setPrefHeight(40);
 		
-		sumFy.setPromptText(promptFx.getText()+"");
+		sumFy.setPromptText(promptFx.getText()+" - W");
 		sumFy.getStyleClass().add("textForm");
 
+		
+		
+		contadorFilas=tablaTensiones.getItems().size();		
+		int sizeTab=tablaTensiones.getItems().size();
+		if(vects>sizeTab) {
+			for(int i=0;i<(vects-sizeTab);i++) {
+				agregarVector();				
+			}
+		}else if(vects<sizeTab){
+			for(int i=0;i<(sizeTab-vects);i++) {
+				eliminarVector();				
+			}
+		}
 		
 
 	}
@@ -191,6 +252,18 @@ public class TipoEjercicio2 implements Initializable{
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length);
 		leerEjercicio(numEjercicio);
+		
+		contadorFilas=tablaTensiones.getItems().size();		
+		int sizeTab=tablaTensiones.getItems().size();
+		if(vects>sizeTab) {
+			for(int i=0;i<(vects-sizeTab);i++) {
+				agregarVector();				
+			}
+		}else if(vects<sizeTab){
+			for(int i=0;i<(sizeTab-vects);i++) {
+				eliminarVector();				
+			}
+		}
 
 		
 		
@@ -211,22 +284,53 @@ public class TipoEjercicio2 implements Initializable{
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length);
 		leerEjercicio(numEjercicio);
+		
+		
+		//limpiarDatos();
+		
+		
+		contadorFilas=tablaTensiones.getItems().size();
+
+		
+		int sizeTab=tablaTensiones.getItems().size();
+		if(vects>sizeTab) {
+			for(int i=0;i<(vects-sizeTab);i++) {
+				agregarVector();				
+			}
+		}else if(vects<sizeTab){
+			for(int i=0;i<(sizeTab-vects);i++) {
+				eliminarVector();				
+			}
+		}
+		
 
 	}
+	
+	 private void agregarVector(){
+         contadorFilas++;
+         data.add(new ContenidoTabla((letra++)+"","",""));
+   }
+     private void eliminarVector(){
+         data.remove(--contadorFilas);          
+         tablaTensiones.getItems().removeAll(tablaTensiones.getSelectionModel().getSelectedItems());
+         letra--;
+   }
 	
 	@FXML
 	private void verificarDatos2(ActionEvent event) {
 		//
 		///
 		////
+		Alert resultado = new Alert(Alert.AlertType.WARNING);
+
 		//==========RESPUESTA CORRECTA====================================================
-		getEcuacionFx();
+		System.out.println("Sumatorio de X="+getEcuacionFx());//Tiene que dar cero
 		getEcuacionFy();
 		System.out.println("Ecuaciones de sumatoria de Fx:\n"+ecuacionSumX1+"\n"+ecuacionSumX2);
 		System.out.println("Ecuaciones de sumatoria de Fy:\n"+ecuacionSumY1+"\n"+ecuacionSumY2);
 
 		
-
+		if(ecuacionSumX1.equalsIgnoreCase(sumFx.getText()) && ecuacionSumY1.equalsIgnoreCase(sumFy.getText())) {
 		if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length && numEjercicio==ejercicioMax) {
 			BtnSiguiente.setDisable(true);
 		}
@@ -266,7 +370,30 @@ public class TipoEjercicio2 implements Initializable{
 
 			}
 			//=====================================
-		}	
+		}
+		
+		resultado.setTitle("Respuesta correcta");
+		resultado.setContentText("Tus resultados han sido los correctos, puedes pasar al siguiente ejercicio.");
+		ImageView correcta = new ImageView(
+				new Image(getClass().getResourceAsStream("/images/respuesta_correcta.png"), 50, 50, true, true));
+		resultado.setGraphic(correcta);
+		resultado.setHeaderText(null);
+    	resultado.showAndWait();
+		
+	}else {
+		resultado.setTitle("Respuesta incorrecta");
+		resultado.setContentText(
+				"Alguno de tus resultados es incorrecto, verifica tus operaciones y vuelve a intentarlo");
+		ImageView incorrecta = new ImageView(
+			new Image(getClass().getResourceAsStream("/images/respuesta_incorrecta.png"), 50, 50, true, true));
+		resultado.setGraphic(incorrecta);
+    	new Shake(tablaTensiones).play();
+    	resultado.setHeaderText(null);
+    	resultado.showAndWait();
+		System.out.println("Respuesta incorrecta");
+    	return;
+
+	}
 		//==============================================================
 
 	}
@@ -308,7 +435,8 @@ public class TipoEjercicio2 implements Initializable{
 	}
 	
 	
-	public void getEcuacionFx() {
+	public int getEcuacionFx() {
+		int resultado=0;
 		ecuacionSumX1="";
 		ecuacionSumX2="";
 		char tension='A';
@@ -317,21 +445,33 @@ public class TipoEjercicio2 implements Initializable{
 		for(int i=0;i<angulos.length;i++) {
 			String ecuTemp1="",ecuTemp2="";
 			if(angulos[i]>=0 && angulos[i]<=90) {
-				ecuTemp1=tension+"Cos"+angulos[i];
-				ecuTemp2=tension+"Sen"+(90-angulos[i]);
+				ecuTemp1=tension+"Cos"+Math.round(angulos[i]);
+				ecuTemp2=tension+"Sen"+(90-Math.round(angulos[i]));
 				positivo=true;
+				
+				resultado+=fuerzas[i]*Math.cos(Math.toRadians(angulos[i]));
+				
 			}else if(angulos[i]>90 && angulos[i]<=180) {
-				ecuTemp1=tension+"Cos"+(180-angulos[i]);
-				ecuTemp2=tension+"Sen"+(angulos[i]-90);
+				ecuTemp1=tension+"Cos"+(180-Math.round(angulos[i]));
+				ecuTemp2=tension+"Sen"+(Math.round(angulos[i])-90);
 				positivo=false;
+				
+				resultado-=fuerzas[i]*Math.cos(Math.toRadians(180-angulos[i]));
+
 			}else if(angulos[i]>180 && angulos[i]<=270) {
-				ecuTemp1=tension+"Cos"+(angulos[i]-180);
-				ecuTemp2=tension+"Sen"+(270-angulos[i]);
+				ecuTemp1=tension+"Cos"+(Math.round(angulos[i])-180);
+				ecuTemp2=tension+"Sen"+(270-Math.round(angulos[i]));
 				positivo=false;
+				
+				resultado-=fuerzas[i]*Math.cos(Math.toRadians(angulos[i]-180));
+
 			}else if(angulos[i]>270 && angulos[i]<=360) {
-				ecuTemp1=tension+"Cos"+(360-angulos[i]);
-				ecuTemp2=tension+"Sen"+(angulos[i]-270);
+				ecuTemp1=tension+"Cos"+(360-Math.round(angulos[i]));
+				ecuTemp2=tension+"Sen"+(Math.round(angulos[i])-270);
 				positivo=true;
+				
+				resultado+=fuerzas[i]*Math.cos(Math.toRadians(angulos[i]-270));
+
 			}
 			if(i!=0) {
 				ecuacionSumX1+=positivo?"+":"-";
@@ -351,6 +491,8 @@ public class TipoEjercicio2 implements Initializable{
 			
 		}
 		
+		return resultado;
+		
 	}
 	
 	
@@ -363,18 +505,18 @@ public class TipoEjercicio2 implements Initializable{
 		for(int i=0;i<angulos.length;i++) {
 			String ecuTemp1="",ecuTemp2="";
 			if(angulos[i]>=0 && angulos[i]<=90) {
-				ecuTemp1=tension+"Sen"+angulos[i];
-				ecuTemp2=tension+"Cos"+(90-angulos[i]);
+				ecuTemp1=tension+"Sen"+Math.round(angulos[i]);
+				ecuTemp2=tension+"Cos"+(90-Math.round(angulos[i]));
 			}else if(angulos[i]>90 && angulos[i]<=180) {
-				ecuTemp1=tension+"Sen"+(180-angulos[i]);
-				ecuTemp2=tension+"Cos"+(angulos[i]-90);
+				ecuTemp1=tension+"Sen"+(180-Math.round(angulos[i]));
+				ecuTemp2=tension+"Cos"+(Math.round(angulos[i])-90);
 			}else if(angulos[i]>180 && angulos[i]<=270) {
-				ecuTemp1=tension+"Sen"+(angulos[i]-180);
-				ecuTemp2=tension+"Cos"+(270-angulos[i]);
+				ecuTemp1=tension+"Sen"+(Math.round(angulos[i])-180);
+				ecuTemp2=tension+"Cos"+(270-Math.round((angulos[i])));
 				positivo=false;
 			}else if(angulos[i]>270 && angulos[i]<=360) {
-				ecuTemp1=tension+"Sen"+(360-angulos[i]);
-				ecuTemp2=tension+"Cos"+(angulos[i]-270);
+				ecuTemp1=tension+"Sen"+(360-Math.round(angulos[i]));
+				ecuTemp2=tension+"Cos"+(Math.round(angulos[i])-270);
 				positivo=false;
 			}
 			if(i!=0) {
@@ -386,15 +528,14 @@ public class TipoEjercicio2 implements Initializable{
 			}
 			//if(i==0 && ecuacionSum1.equals("+")); ecuacionSum1="";
 			//if(i==0 && ecuacionSum1.equals("+")); ecuacionSum2="";
-
-			
-			
-			ecuacionSumY1+=ecuTemp1+"-"+peso;
-			ecuacionSumY2+=ecuTemp2+"-"+peso;
+						
+			ecuacionSumY1+=ecuTemp1;
+			ecuacionSumY2+=ecuTemp2;
 			tension++;
 			
 		}
-		
+		ecuacionSumY1+="-"+Math.round(peso);
+		ecuacionSumY2+="-"+Math.round(peso);
 	}
 	/*
 	

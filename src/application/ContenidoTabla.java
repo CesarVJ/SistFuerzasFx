@@ -6,6 +6,7 @@
 package application;
 
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -14,6 +15,8 @@ import javafx.scene.control.TextField;
  */
 public class ContenidoTabla {
      TextField fuerzas,angulo;
+ 
+	Label nombres;
     private ChoiceBox<String> funcion = new ChoiceBox<>();
     private ChoiceBox<String> funcion2 = new ChoiceBox<>();
     
@@ -36,6 +39,12 @@ public class ContenidoTabla {
                 this.angulo=new TextField(angulo);
 
     }
+    public ContenidoTabla(String nombres,String fuerzas,String angulo){
+        this.fuerzas=new TextField(fuerzas);  
+        this.angulo=new TextField(angulo);
+        this.nombres=new Label(nombres);
+
+}
     
     public void setFuerzas(TextField fuerzas){
         this.fuerzas= fuerzas;
@@ -79,5 +88,13 @@ public class ContenidoTabla {
     public TextField getFy(){
         return this.Fy;
     }
+    
+    public Label getNombres() {
+		return nombres;
+	}
+
+	public void setNombres(Label nombres) {
+		this.nombres = nombres;
+	}
     
 }

@@ -20,17 +20,17 @@
                 <children>
                     <ImageView fx:id="imgCuerpo" layoutX="400.0" layoutY="400.0"/>
                     <Label fx:id="textoInferior"/>
-                    <HBox fx:id="cajaVResultante">
+                    <!--<HBox fx:id="cajaVResultante">
                         <children>
                             <Label text="Tan A: "/><TextField id="tanA" fx:id="tanA" layoutX="120.0" layoutY="64.0" promptText="0°"/>
 
                         </children>
-                    </HBox>
-                    <HBox fx:id="cajaAnguloResultante">
+                    </HBox> -->
+                   <!--   <HBox fx:id="cajaAnguloResultante">
                         <children>
                             <Label text="TanB:  "/><TextField id="tanB" fx:id="tanB" layoutX="120.0" layoutY="64.0" promptText="0°"/>
                         </children>
-                    </HBox>
+                    </HBox>  -->
                 </children>
             </VBox>
             
@@ -48,7 +48,10 @@
                                 <Button onAction="#siguienteEjercicio2" text="Siguiente ejercicio" fx:id="BtnSiguiente" layoutX="185.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" />
 
                         </HBox>
-                    
+                        <HBox fx:id="cajaTabla">
+                   			<TableView fx:id="tablaTensiones" prefHeight="180.0" prefWidth="220.0"/>                       
+                        </HBox>
+                   
                  
             
             
