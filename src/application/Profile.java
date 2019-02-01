@@ -28,6 +28,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import model.Unzipper;
 import model.Usuario;
 
 
@@ -72,6 +75,7 @@ public class Profile implements Initializable{
 		
 		exportApp.getStyleClass().add("boton");
 		exportConf.getStyleClass().add("boton");
+		importConf.getStyleClass().add("boton");
 		
 		btnGuardar.getStyleClass().add("btnGuardar");
 		
@@ -196,6 +200,34 @@ public class Profile implements Initializable{
 
 			
 		});
+		
+		importConf.setOnMouseClicked(e->{
+			
+			FileChooser select = new FileChooser();
+			select.setTitle("Elegir imagen");
+			Stage stage = (Stage)profile.getScene().getWindow();
+			
+			File file = select.showOpenDialog(stage);
+			file.setWritable(true);
+			Unzipper unz= new Unzipper();
+			try {
+				unz.Descomprimir(file.getPath(),System.getProperty("user.home")+"\\SistFuerzasFiles");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 
