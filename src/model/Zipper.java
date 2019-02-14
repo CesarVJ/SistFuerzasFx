@@ -21,9 +21,11 @@ public class Zipper {
 
     private boolean zipFile(File file){
         try {
+        	if(file.getName().equals("users.dat")) {
+        		return false;
+        	}
             byte[] buf = new byte[1024];
-            if(file.getParentFile().getName().equals(folderName)) {
-            	
+            if(file.getParentFile().getName().equals(folderName)) {            	
                 output.putNextEntry(new ZipEntry(file.getName()));
             }else {
                 output.putNextEntry(new ZipEntry(file.getParentFile().getName()+"\\"+file.getName()));

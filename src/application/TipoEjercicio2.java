@@ -316,6 +316,18 @@ public class TipoEjercicio2 implements Initializable{
          letra--;
    }
 	
+     
+     
+     public boolean compareTables(float[] angu, float[] fuer) {
+    	 
+    	 for(int i=0;i<angulos.length;i++) {
+    		 if((Math.floor(angulos[i])!=Math.floor(angu[i])) || (Math.floor(fuerzas[i])!=Math.floor(fuer[i]))) {
+    			 return false;
+    		 }
+    	 }
+    	 return true;
+    	 
+     }
 	@FXML
 	private void verificarDatos2(ActionEvent event) {
 		//
@@ -328,9 +340,38 @@ public class TipoEjercicio2 implements Initializable{
 		getEcuacionFy();
 		System.out.println("Ecuaciones de sumatoria de Fx:\n"+ecuacionSumX1+"\n"+ecuacionSumX2);
 		System.out.println("Ecuaciones de sumatoria de Fy:\n"+ecuacionSumY1+"\n"+ecuacionSumY2);
-
 		
-		if(ecuacionSumX1.equalsIgnoreCase(sumFx.getText()) && ecuacionSumY1.equalsIgnoreCase(sumFy.getText())) {
+		ObservableList<ContenidoTabla> dataRows = FXCollections.observableArrayList();
+
+		int i = 0;
+		float[] angu = new float[vects];
+		float[] fuer = new float[vects];
+
+		for (ContenidoTabla bean : data) {
+			if (!bean.getFuerzas().getText().isEmpty()) {
+				dataRows.add(bean);
+				angu[i] = Float.parseFloat(bean.getAngulo().getText());
+				fuer[i] = Float.parseFloat(bean.getFuerzas().getText());			
+			}
+			System.out.println(fuer[i] + "," + angu[i]);
+			i++;
+		}
+		
+		boolean iguales = compareTables(angu,fuer);
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		if(ecuacionSumX1.equalsIgnoreCase(sumFx.getText()) && ecuacionSumY1.equalsIgnoreCase(sumFy.getText()) && iguales) {
 		if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length && numEjercicio==ejercicioMax) {
 			BtnSiguiente.setDisable(true);
 		}
