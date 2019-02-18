@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -173,18 +174,37 @@ public class Profile implements Initializable{
 		
 		exportConf.setOnMouseClicked(e->{
 			//SistFuerzasFiles
-			Path files= Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\users.dat");
-			Path destino= Paths.get(System.getProperty("user.home")+"\\Desktop\\Export");			
-			File fil = new File(System.getProperty("user.home")+"\\Desktop\\Export");
+			Path files=null;
+			
+			Path destino= null;
+			File fil =null;
+			
+			try {
+			files= Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\users.dat");
+			destino=Paths.get(System.getProperty("user.home")+"\\Desktop\\Export");			
+			fil=new File(System.getProperty("user.home")+"\\Desktop\\Export");
+			}catch(Exception ex) {
+				files= Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/users.dat");
+				destino=Paths.get(System.getProperty("user.home")+"/Desktop/Export");			
+				fil=new File(System.getProperty("user.home")+"/Desktop/Export");
+			}
+
+			
 			
 		     try {
 		    	 	//Ubicacion destino del zip
+		    	 try {
 		            Zipper z = new Zipper(new File(System.getProperty("user.home")+"\\Desktop\\Export\\FisicaFiles.zip"));
-		            //z.zip(new File(System.getProperty("user.home")+"\\Desktop\\Export\\prueba"));
-		            
+		            //z.zip(new File(System.getProperty("user.home")+"\\Desktop\\Export\\prueba"));		            
 		            //Ruta a zippear
 		            z.zip(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\"));
-
+		    	 }catch(Exception ex2) {
+		    		 Zipper z = new Zipper(new File(System.getProperty("user.home")+"/Desktop/Export/FisicaFiles.zip"));
+			            //z.zip(new File(System.getProperty("user.home")+"\\Desktop\\Export\\prueba"));		            
+			            //Ruta a zippear
+			            z.zip(new File(System.getProperty("user.home")+"/SistFuerzasFiles/"));
+		    	 }
+		            
 		            System.out.println("Listo");
 		        } catch (FileNotFoundException e2) {
 		            e2.printStackTrace();
@@ -197,6 +217,19 @@ public class Profile implements Initializable{
 			//Files.copy(files, Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Export.rar"), StandardCopyOption.REPLACE_EXISTING);
 			//Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
 
+		     
+		 	Alert resultado = new Alert(Alert.AlertType.WARNING);
+
+			resultado.setTitle("Exportacion exitosa");
+			resultado.setContentText("La configuracion de su aplicacion se ha realizado correctamente");
+			ImageView correcta = new ImageView(
+					new Image(getClass().getResourceAsStream("/images/respuesta_correcta.png"), 50, 50, true, true));
+			resultado.setGraphic(correcta);
+			resultado.setHeaderText(null);
+	    	resultado.showAndWait();
+		     
+		     
+		     
 
 			
 		});
@@ -214,8 +247,27 @@ public class Profile implements Initializable{
 				unz.Descomprimir(file.getPath(),System.getProperty("user.home")+"\\SistFuerzasFiles");
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				try {
+					unz.Descomprimir(file.getPath(),System.getProperty("user.home")+"/SistFuerzasFiles");
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 			}
+			
+			
+			
+			
+			
+			Alert resultado = new Alert(Alert.AlertType.WARNING);
+
+			resultado.setTitle("Importacion exitosa");
+			resultado.setContentText("Importación exitosa, vuelva a iniciar sesion para aplicar los cambios correctamente");
+			ImageView correcta = new ImageView(
+					new Image(getClass().getResourceAsStream("/images/respuesta_correcta.png"), 50, 50, true, true));
+			resultado.setGraphic(correcta);
+			resultado.setHeaderText(null);
+	    	resultado.showAndWait();
 			
 			
 			
@@ -259,7 +311,16 @@ public class Profile implements Initializable{
 	
 	public void setProgressEjer() {
 		try {
-			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+			RandomAccessFile file =null;
+			try {
+			file= new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+			}catch(Exception ee) {
+				file= new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
+
+			}
+			
+			
+			
 			boolean band = false;
 			String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
 			int maxEjer1=0,maxEjer2=0;
@@ -301,8 +362,21 @@ public class Profile implements Initializable{
 	}
 	
 	public  void setMaxEjercicios() {
-		int sizeFile1= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;
-		int sizeFile2= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;
+		
+		
+		int sizeFile1= 0;
+		int sizeFile2= 0;
+		
+		try {
+		sizeFile1=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;	
+		sizeFile2=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;
+		}catch(Exception eee) {
+			if(!System.getProperty("os.name").contains("Windows")) {				
+				sizeFile1=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length;	
+				sizeFile2=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicio2").listFiles().length;
+			}
+		
+		}
 
 		progressText1.setText((sizeFile1+1)+"");
 		progressText2.setText(sizeFile2+"");

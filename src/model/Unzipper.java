@@ -25,17 +25,41 @@ public class Unzipper {
 	              new FileInputStream(ficheroZip)));
 	      ZipEntry entrada;
 	      while ((entrada = flujo.getNextEntry()) != null) {
+	    	  
+	    	  
 	        String nombreSalida = directorioSalida + File.separator
 	                + entrada.getName();
+	        
+	        if(!System.getProperty("os.name").contains("Windows")) {
+	        	nombreSalida= directorioSalida + "/"
+		                + entrada.getName();
+	        }
+	        
+	        
+	        
 	        System.out.println(entrada.isDirectory()+" => "+entrada.getName());
 	        //entrada.dire
-	        if (entrada.isDirectory() ||entrada.getName().charAt(entrada.getName().length()-1)==92) {
-	          File directorio = new File(nombreSalida);
+	        
+	        if (entrada.isDirectory() ||entrada.getName().charAt(entrada.getName().length()-1)==92 || entrada.getName().charAt(entrada.getName().length()-1)=='/' ) {
+	        	System.out.println("Is a directory");
+	          File directorio =null;
+	          
+	          
+	          if(!System.getProperty("os.name").contains("Windows")) {
+	        	  directorio= new File(nombreSalida.substring(0, nombreSalida.length()-1));
+	          }else {
+	        	  directorio= new File(nombreSalida);
+	          }
 	          directorio.mkdir();
+	          System.out.println(directorio.getPath());
+	          
 	        } else {
+	        	System.out.println("Not Is a directory");
+
 	          BufferedOutputStream salida = null;
 	          try {
 	            int leido;
+	            nombreSalida=nombreSalida.replace("\\", "/");
 	            salida = new BufferedOutputStream(
 	                    new FileOutputStream(nombreSalida), TAM_BUFFER);
 	            while ((leido = flujo.read(buffer, 0, TAM_BUFFER)) != -1) {

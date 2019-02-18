@@ -64,11 +64,31 @@ public class Tabs extends Application{
 		try {
 			File dirc = new File(username);
 			dirc.setWritable(true, true);
-	    new File (username+"\\SistFuerzasFiles\\imgEjercicios1").mkdirs();
-	    new File (username+"\\SistFuerzasFiles\\imgEjercicio2").mkdirs();
+	
+			
+			System.out.println(System.getProperty("os.name"));
+			System.out.println(System.getProperty("os.arch"));
+			System.out.println(System.getProperty("os.version"));
+			
+			
+			if(System.getProperty("os.name").contains("Windows")) {
+				System.out.println("THE FILES HAS BEEN CREATED");
+
+				new File (username+"\\SistFuerzasFiles\\imgEjercicios1").mkdirs();
+				new File (username+"\\SistFuerzasFiles\\imgEjercicio2").mkdirs();
+			}else {
+				System.out.println("THE FILES HAS BEEN CREATED LINUX" );
+				new File (username+"/SistFuerzasFiles/imgEjercicios1").mkdirs();
+			    new File (username+"/SistFuerzasFiles/imgEjercicio2").mkdirs();
+			}
+	
+
+	    
+	    
 		}catch(Exception e) {
 			File dirc = new File(username);
 			dirc.setWritable(true, true);
+			System.out.println("THE FILES HAS BEEN CREATED LINUX" );
 			new File (username+"/SistFuerzasFiles/imgEjercicios1").mkdirs();
 		    new File (username+"/SistFuerzasFiles/imgEjercicio2").mkdirs();
 		}
@@ -312,8 +332,16 @@ public class Tabs extends Application{
     	boolean band = false;
 		String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
 		int maxEjer1=0,maxEjer2=0;
-		RandomAccessFile file = new RandomAccessFile(
+		RandomAccessFile file=null;
+		try {
+		 file= new RandomAccessFile(
 				 System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+		}catch(Exception e) {
+			 file= new RandomAccessFile(
+					 System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
+		}
+		
+		
 			try {
 				while(!band && file.getFilePointer()<file.length()) {
 					nombre = file.readLine();				

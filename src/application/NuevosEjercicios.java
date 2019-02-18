@@ -154,7 +154,16 @@ public class NuevosEjercicios implements Initializable{
                 boolean success = false;
                 if (db.hasFiles()) {
                     texto.setText(db.getFiles().get(0).getAbsolutePath());
-                    int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;            		
+                    
+                    int maxFiles= 0;
+                    try {
+                    maxFiles=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;
+                    }catch(Exception ee ) {
+                        maxFiles=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length;
+
+                    }
+                    
+                    
             		try {
 						//Path temp = Files.move(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
 						ruta= texto.getText();
@@ -328,9 +337,23 @@ public class NuevosEjercicios implements Initializable{
 		File file = select.showOpenDialog(stage);
 		file.setWritable(true);
 		
-		int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length;
+	       
+        int maxFiles= 0;
+        try {
+        maxFiles=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length;
+        }catch(Exception ee ) {
+            maxFiles=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios").listFiles().length;
+
+        }
+        Path temp=null;
+        try {
+		temp = Files.copy(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+        }catch(Exception ep) {
+    	temp = Files.copy(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+
+        }
 		
-		Path temp = Files.copy(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+		
 		System.out.println(temp.getParent());
 		//JOptionPane.showMessageDialog(null,"El archivo se ha guardado en "+new File("..\\SistFuerzasFiles\\imgEjercicios\\Ejer"+(maxFiles+1)+".png").getAbsolutePath());
 				
@@ -375,8 +398,17 @@ public class NuevosEjercicios implements Initializable{
 		//================================
 		
 		if(tipoEjercicio.getSelectionModel().getSelectedIndex()==0) {
-			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
-	        int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;            		
+			
+			
+			RandomAccessFile file =null;
+			int maxFiles=0;
+			try {
+			file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
+	         maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length; 
+			}catch(Exception op) {
+				file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo.dat", "rw");
+		         maxFiles= new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length; 
+			}
 
 			int id = maxFiles+2;
 			try {
@@ -392,8 +424,12 @@ public class NuevosEjercicios implements Initializable{
 				file.writeBytes(txtDescripcion.getText()+"\n");
 
 				file.close();
+				try {
 				Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
-				
+				}catch(Exception je) {
+					Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+
+				}
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -402,8 +438,20 @@ public class NuevosEjercicios implements Initializable{
 		}else {
 			
 			
-			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
-	        int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;            		
+			//RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+	        //int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;  
+	        
+	        
+	        RandomAccessFile file =null;
+			int maxFiles=0;
+			try {
+			file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+	         maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length; 
+			}catch(Exception op) {
+				file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo2.dat", "rw");
+		         maxFiles= new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicio2").listFiles().length; 
+			}
+
 
 			int id = maxFiles+1;
 			try {
@@ -419,8 +467,12 @@ public class NuevosEjercicios implements Initializable{
 				file.writeFloat(Float.parseFloat(peso.getText()));
 				file.writeBytes(txtDescripcion.getText()+"\n");
 				file.close();
-				Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer"+(maxFiles+1)+".png"),StandardCopyOption.REPLACE_EXISTING);
 				
+				try {
+				Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2\\Ejer"+(maxFiles+1)+".png"),StandardCopyOption.REPLACE_EXISTING);
+				}catch(Exception nm) {
+					Files.copy(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicio2/Ejer"+(maxFiles+1)+".png"),StandardCopyOption.REPLACE_EXISTING);
+				}
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

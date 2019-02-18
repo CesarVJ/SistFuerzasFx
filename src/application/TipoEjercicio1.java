@@ -231,10 +231,43 @@ public class TipoEjercicio1 implements Initializable {
 		//if (numEjercicio == ejercicioMax || ejercicioMax == 1) {
 			//ejercicioMax++;
 		//}
-		if(numEjercicio==ejercicioMax || numEjercicio==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1) {
+		
+		
+		
+		int lengthFile=0;
+		if(System.getProperty("os.name").contains("Windows")) {
+			lengthFile=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1;
+		}else {
+			lengthFile=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length+1;
+
+		}
+		
+		
+		
+		if(numEjercicio==ejercicioMax || numEjercicio==lengthFile) {
 			btnSiguiente.setDisable(true);
 		}
+		
+		/*try {
 		imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+		}catch(Exception ex){
+			System.out.println("IMAGE LINUX");
+		imgSistema = new Image(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+		}
+		*/
+		
+		 if(System.getProperty("os.name").contains("Windows")) {
+				imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+		 }else {
+				System.out.println("IMAGE LINUX");
+				imgSistema = new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto				
+		 }
+		
+		
+		
+		
+		
+		
 		// grafica1.setImage(new
 		// Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer"+numEjercicio+".png"),500,400,true,true));
 		grafica1.setImage(imgSistema);
@@ -260,7 +293,20 @@ public class TipoEjercicio1 implements Initializable {
 		
 		
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
+	/*	try {
 		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
+		}catch(Exception exp) {
+			System.out.println(new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length);
+
+		}*/
+		
+		
+		
+		 if(System.getProperty("os.name").contains("Windows")) {
+				System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
+         }else {
+ 			System.out.println(new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length);
+         }
 
 
 	}
@@ -270,7 +316,30 @@ public class TipoEjercicio1 implements Initializable {
 		if(numEjercicio==1) {
 			imgSistema= new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer1.png"), 500, 500, true, true);
 		}else {
+			
+			
+			/*try {
 		imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+			}catch(Exception pp) {
+				System.out.println("IMAGE LINUX");
+
+				imgSistema = new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+
+			}*/
+			
+			 if(System.getProperty("os.name").contains("Windows")) {
+					imgSistema = new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+			 }else {
+					System.out.println("IMAGE LINUX");
+
+					imgSistema = new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto
+
+			 }
+			
+			
+			
+			
+		
 		}
 		// grafica1.setImage(new
 		// Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer"+(numEjercicio)+".png"),500,400,true,true));
@@ -292,7 +361,13 @@ public class TipoEjercicio1 implements Initializable {
 		}
 		btnSiguiente.setDisable(false);
 		System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
+		
+		try {
 		System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
+		}catch(Exception nop) {
+			System.out.println(new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length);
+
+		}
 
 
 	}
@@ -394,11 +469,21 @@ public class TipoEjercicio1 implements Initializable {
 			
 			System.out.println("Maximos:" + ejercicioMax+" Actual "+numEjercicio);
 			
-			if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1 && numEjercicio==ejercicioMax) {
+			
+			
+			int tam=0;
+			try {
+			tam=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1;
+			}catch(Exception bb) {
+				tam=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length+1;
+
+			}
+			
+			if((ejercicioMax)==tam && numEjercicio==ejercicioMax) {
 				btnSiguiente.setDisable(true);
 			}
 				if(btnSiguiente.isDisabled()) {
-					if(ejercicioMax==numEjercicio && (ejercicioMax)<new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1 ) {
+					if(ejercicioMax==numEjercicio && (ejercicioMax)<tam ) {
 					btnSiguiente.setDisable(false);
 					ejercicioMax++;
 					System.out.println(getUserName().getCorreo()+" "+getUserName().getNacimiento()+" "+getUserName().getPassword()+" Max = "+getUserName().getMaxEjer1());
@@ -415,7 +500,7 @@ public class TipoEjercicio1 implements Initializable {
 
 					}
 					//========================
-					if((ejercicioMax)==new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+1) {
+					if((ejercicioMax)==tam) {
 						ejercicioMax++;
 						getUserName().setMaxEjer1(ejercicioMax);
 						aumentarMaximos(getUserName(),ejercicioMax);
@@ -424,7 +509,7 @@ public class TipoEjercicio1 implements Initializable {
 					//==========================================
 				}	
 				
-				System.out.println(new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length);
+				System.out.println(tam-1);
 			
 		} else {
 			resultado.setTitle("Respuesta incorrecta");
@@ -456,7 +541,15 @@ public class TipoEjercicio1 implements Initializable {
 	}
 	public void aumentarMaximos(Usuario user,int max) throws IOException {
 		
-		RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+		RandomAccessFile file=null;
+		try {
+		file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+		}catch(Exception exp) {
+			file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
+		}
+		
+		
+		
 	  	boolean band = false;
 			String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
 			int maxEjer1=0,maxEjer2=0;
@@ -502,8 +595,13 @@ public class TipoEjercicio1 implements Initializable {
 		
 		int id=0,tipo=0;
 		try {
-			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
-			
+			RandomAccessFile file=null;
+			try {
+			file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
+			}catch(Exception ej) {
+				file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo.dat", "rw");
+
+			}
 			//file.seek(file.length());
 		    try {
 		    	boolean band=false;

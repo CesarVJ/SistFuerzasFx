@@ -125,8 +125,14 @@ public class Formulario implements Initializable {
 						emailError.showAndWait();
 						return;
 					}
-					RandomAccessFile file = new RandomAccessFile(
+					RandomAccessFile file =null;
+					try {
+					file=new RandomAccessFile(
 							 System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+					}catch(Exception eee) {
+						file=new RandomAccessFile(
+								 System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
+					}
 
 					
 					//ACA VA EL REGISTRO EN EL ARCHIVO y abrir la ventana
@@ -191,8 +197,17 @@ public class Formulario implements Initializable {
 		boolean band = false;
 		String nombre,apellido,nacimiento,usuario,password,mail;
 		int maxEjer1,maxEjer2;
-		RandomAccessFile file = new RandomAccessFile(
-				 System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+		RandomAccessFile file=null;
+		
+		try {
+			file=new RandomAccessFile(
+					 System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+			}catch(Exception eee) {
+				file=new RandomAccessFile(
+						 System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
+			}
+		
+		
 			while(!band && file.getFilePointer()<file.length()) {
 				nombre = file.readLine();				
 				apellido = file.readLine();
@@ -228,8 +243,16 @@ public class Formulario implements Initializable {
 	
 	public void registrarUsuario(Usuario user) throws IOException {
 		try {
-			RandomAccessFile file = new RandomAccessFile(
-					 System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+			RandomAccessFile file = null;
+			
+			
+			try {
+				file=new RandomAccessFile(
+						 System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+				}catch(Exception eee) {
+					file=new RandomAccessFile(
+							 System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
+				}
 			
 			
 			file.seek(file.length());

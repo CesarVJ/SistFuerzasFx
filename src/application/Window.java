@@ -141,7 +141,19 @@ public class Window implements Initializable{
 	public void abrirEjercicio2() {
 		//root3.getChildren().get(0).toFront();	
 		try {
-			RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+			RandomAccessFile file = null;
+			
+			try {
+				file= new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+			}catch(Exception ee) {
+				file= new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo2.dat", "rw");
+
+			}
+			
+			
+			
+			
+			
 			if(file.length()!=0) {
 				if(ventanaEjer2==null) {
 					ventanaEjer2 = FXMLLoader.load(getClass().getResource("/view/FXMLCuerpoL.fxml"));
@@ -218,8 +230,13 @@ public class Window implements Initializable{
 		
 		String username = System.getProperty("user.home");
 	    System.out.println("username = " + username);
-	    new File (username+"\\SistFuerzasFiles\\imgEjercicios1").mkdirs();
 	    
+	    try {
+	    new File (username+"\\SistFuerzasFiles\\imgEjercicios1").mkdirs();
+	    }catch(Exception er) {
+		    new File (username+"/SistFuerzasFiles/imgEjercicios1").mkdirs();
+
+	    }
 		//imgSistema2 = new Image("file:///"+username+"\\SistFuerzasFiles\\imgEjercicios\\Ejer1.png", 500, 355, true, true);// Ancho.alto
 //C:\Users\alberto\SistFuerzasFiles\imgEjercicios
 
