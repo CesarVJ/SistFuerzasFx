@@ -265,6 +265,13 @@
  	-fx-border-radius: 10px;   
  }
  
+  .profileBox1{
+ 	-fx-background-color:white;
+ 	-fx-border-insets: 1,1,1;
+ 	-fx-border-width: 1px 1px 1px 1px;
+ 	-fx-border-radius: 1px;   
+ }
+ 
  .titlesProf{
  	 	-fx-background-color:#88D317;
  	 	-fx-spacing:5px;
@@ -297,19 +304,22 @@
 		-fx-text-align: JUSTIFY;
  }
  
- .resourcesBox:pressed{
+ .resourcesBox:pressed {
  	     -fx-pref-width: 160px; 	
  	     -fx-pref-height: 160px; 	 	 	 	     	
  }
- .resourcesBox:hover{
- 		-fx-cursor: hand;
- 	
- }
- .boton:hover{
+
+ .resourcesBox:hover {
  		-fx-cursor: hand; 	
- 	
+ }
+
+ .boton:hover{
+ 		-fx-cursor: hand; 	 	
  }
  
+  .profileBox2:hover{
+ 		-fx-cursor: hand; 	 	
+ }
  
  
 

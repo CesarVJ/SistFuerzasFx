@@ -136,6 +136,8 @@ public class NuevosEjercicios implements Initializable{
 		
 		icoImg.setImage(new Image(getClass().getResourceAsStream("/images/up.png"), 100, 100, true, true));
 		icoImg.getStyleClass().add("imageViewIco");
+		
+		
 		board.setOnDragOver(new EventHandler<DragEvent>() { 
 	            public void handle(DragEvent event) {
             if (event.getGestureSource() != board && event.getDragboard().hasFiles()) {
@@ -144,7 +146,6 @@ public class NuevosEjercicios implements Initializable{
             event.consume();
         }
     });
-		
 		
 		board.setOnDragDropped(new EventHandler<DragEvent>() {
 
@@ -328,7 +329,43 @@ public class NuevosEjercicios implements Initializable{
 
 			
      }
-	
+	/*
+	 * 
+	 * 
+	 * board.setOnDragDropped(new EventHandler<DragEvent>() {
+
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasFiles()) {
+                    texto.setText(db.getFiles().get(0).getAbsolutePath());
+                    
+                    int maxFiles= 0;
+                    try {
+                    maxFiles=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;
+                    }catch(Exception ee ) {
+                        maxFiles=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length;
+
+                    }
+                    
+                    
+            		try {
+						//Path temp = Files.move(Paths.get(texto.getText()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+						ruta= texto.getText();
+						nameFile = db.getFiles().get(0).getName();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                    success = true;
+                }
+
+                event.setDropCompleted(success);
+
+                event.consume();
+            }
+        });
+	 */
 	public void agregarGrafica() throws IOException {
 		FileChooser select = new FileChooser();
 		select.setTitle("Elegir imagen");
@@ -337,27 +374,32 @@ public class NuevosEjercicios implements Initializable{
 		File file = select.showOpenDialog(stage);
 		file.setWritable(true);
 		
+		texto.setText(file.getAbsolutePath());
+		ruta= texto.getText();
+		nameFile = file.getName();
 	       
         int maxFiles= 0;
         try {
-        maxFiles=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios").listFiles().length;
+        maxFiles=new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1").listFiles().length;
         }catch(Exception ee ) {
-            maxFiles=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios").listFiles().length;
+            maxFiles=new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1").listFiles().length;
 
         }
+        
+        
         Path temp=null;
         try {
-		temp = Files.copy(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+		//temp = Files.copy(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicios1\\Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
         }catch(Exception ep) {
-    	temp = Files.copy(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
+    	//temp = Files.copy(Paths.get(file.getPath()),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+(maxFiles+2)+".png"),StandardCopyOption.REPLACE_EXISTING);
 
         }
 		
-		
-		System.out.println(temp.getParent());
+		System.out.println("Se agrego correctamente");
+		//System.out.println(temp.getParent());
 		//JOptionPane.showMessageDialog(null,"El archivo se ha guardado en "+new File("..\\SistFuerzasFiles\\imgEjercicios\\Ejer"+(maxFiles+1)+".png").getAbsolutePath());
 				
-		System.out.println(file.getAbsolutePath());
+		//System.out.println(file.getAbsolutePath());
 	}
 	
 	public void validarEjercicio() throws FileNotFoundException {

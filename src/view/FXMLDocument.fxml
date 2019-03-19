@@ -57,9 +57,14 @@
 
                             </children>
                         </HBox>
+                                                                        
                     </children>
             </VBox>   
         </HBox> 
+       
     </children>
+         <VBox fx:id="btnAyuda" layoutX="999.0" layoutY="435.0" prefHeight="30.0" prefWidth="30.0" >
+                       		<ImageView fx:id="imgAyuda"/>	                       
+                       </VBox>   
     
 </AnchorPane>

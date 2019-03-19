@@ -22,6 +22,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -31,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -62,9 +65,9 @@ public class TipoEjercicio1 implements Initializable {
 	@FXML
 	private TextField AnguloResultante;
 	@FXML
-	private ImageView grafica1;
+	private ImageView grafica1,imgAyuda;
 	@FXML
-	private VBox cajaIzquierda, cajaDerecha;
+	private VBox cajaIzquierda, cajaDerecha,btnAyuda;
 	@FXML
 	private HBox cajaVResultante, cajaAnguloResultante;
 	@FXML
@@ -87,6 +90,10 @@ public class TipoEjercicio1 implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		
+		
+		
+		
 		ejercicioMax = getUserName().getMaxEjer1();
 		numEjercicio=1;
 		ejercicios1.getStyleClass().add("backgrounds");
@@ -145,6 +152,37 @@ public class TipoEjercicio1 implements Initializable {
 		table.resizeColumn(funcion2, 10);
 		table.resizeColumn(Fx, 10);
 		table.resizeColumn(Fy, 10);
+		
+		//btnAyuda.getStyleClass().addAll("profileBox2");
+		DropShadow ef = new DropShadow();
+		ef.setWidth(20);
+	    ef.setHeight(20);
+	    ef.setOffsetX(0);
+	    ef.setOffsetY(0);
+	    ef.setRadius(10);
+	    btnAyuda.setEffect(ef);
+		//btnAyuda.setSpacing(2);
+		btnAyuda.setAlignment(Pos.CENTER);
+		btnAyuda.setPrefWidth(30);
+		
+		imgAyuda.setImage(new Image(getClass().getResourceAsStream("/images/ayuda.png"), 30, 30, true, true));
+		imgAyuda.getStyleClass().addAll("photoProfile","profileBox2");
+		btnAyuda.getStyleClass().addAll("profileBox2");
+		
+		btnAyuda.setOnMouseClicked(e->{
+			Alert existencia = new Alert(Alert.AlertType.INFORMATION);
+			existencia.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/avatar.png"),80,100,true,true)));
+			existencia.setTitle("AYUDA");		
+			existencia.setContentText("Se deberan colocar los datos con 3 decimales");
+           // ImageView error = new ImageView(new Image(getClass().getResourceAsStream("/images/ayuda.png"),30,30,true,true));
+            //existencia.setGraphic(error);
+            existencia.setHeaderText(null);
+            existencia.showAndWait();	
+			
+			System.out.println("AYUDA");
+
+		});
+
 
 		cambiarModo.getItems().addAll("Angulo real", "Angulo complementario");
 		cambiarModo.getStylesheets().add(Tabs.class.getResource("/view/Estilos.css").toExternalForm());
@@ -394,6 +432,9 @@ public class TipoEjercicio1 implements Initializable {
 
 	}
 
+	
+
+	
 	@FXML
 	private void verificarDatos(ActionEvent event) {
 		

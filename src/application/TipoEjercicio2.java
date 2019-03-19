@@ -386,9 +386,24 @@ public class TipoEjercicio2 implements Initializable{
      public boolean compareTables(float[] angu, float[] fuer) {
     	 
     	 for(int i=0;i<angulos.length;i++) {
+    		 
+			 System.out.println(fuerzas[i]+" "+angulos[i]);
+			 //System.out.println(fuerzas[i+1]+" "+angulos[i+1]);
+			 if(angulos[i]>=0 && angulos[i]<=90) {
+				 
+			 }else if(angulos[i]>90 && angulos[i]<=180) {
+				 angu[i]=180-angu[i];
+			 }else if(angulos[i]>180 && angulos[i]<=270) {
+				 angu[i]=angu[i]-180;
+			 }else if(angulos[i]>270 && angulos[i]<=360) {
+				 angu[i]=360-angu[i];
+			 }
     		 if((Math.floor(angulos[i])!=Math.floor(angu[i])) || (Math.floor(fuerzas[i])!=Math.floor(fuer[i]))) {
+    			 System.out.println("Incorrecta");
     			 return false;
     		 }
+			 System.out.println("Correcta");
+
     	 }
     	 return true;
     	 

@@ -52,10 +52,10 @@
 					<ImageView fx:id="importConf" />
 					<Label text="Import.Config"/>				
 				</VBox>
-				<VBox fx:id="exportBtns2">
+				<!--<VBox fx:id="exportBtns2">
 					<ImageView fx:id="exportApp" />	
 					<Label text="Exp.Applicacion"/>												
-				</VBox>
+				</VBox>-->
 			</HBox>
 		</VBox>
 

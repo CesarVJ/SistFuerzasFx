@@ -42,13 +42,13 @@ public class Profile implements Initializable{
 	//@FXML
 	//private HBox mainBox;
 	@FXML
-	private VBox picture,accountDetails,titlePic,titleAccount,photoBox,exportBtns1,exportBtns2,importBtns,cajaNombre,cajaApellidos,cajaCorreo,cajaNacimiento,cajaContra,cajaContraConfirm,cajaDatos;
+	private VBox picture,accountDetails,titlePic,titleAccount,photoBox,exportBtns1,importBtns,cajaNombre,cajaApellidos,cajaCorreo,cajaNacimiento,cajaContra,cajaContraConfirm,cajaDatos;
 	@FXML
 	private HBox info1,info2,cajaH2,cajaH3,exportBtns,cajaBoton,cajaH1;
 	@FXML
 	private Label textUser,textAccount,userName,firstNametxt,lastNametxt,txtBirthDay,txtMail,txtPassword,txtConfirmPass,progressText2,progressText1;
 	@FXML
-	private ImageView photoProfile,exportConf,exportApp,importConf;
+	private ImageView photoProfile,exportConf,importConf;
 	@FXML
 	private ProgressBar progressEjer1,progressEjer2;
 	@FXML
@@ -74,7 +74,7 @@ public class Profile implements Initializable{
 		textUser.getStyleClass().add("titlesText");
 		textAccount.getStyleClass().add("titlesText");
 		
-		exportApp.getStyleClass().add("boton");
+		//exportApp.getStyleClass().add("boton");
 		exportConf.getStyleClass().add("boton");
 		importConf.getStyleClass().add("boton");
 		
@@ -98,8 +98,8 @@ public class Profile implements Initializable{
 		photoProfile.setImage(new Image(getClass().getResourceAsStream("/images/avatar.png"), 260, 200, true, true));
 		photoProfile.getStyleClass().add("photoProfile");
 		
-		exportApp.setImage(new Image(getClass().getResourceAsStream("/images/exportApp.png"), 30, 30, true, true));
-		exportApp.getStyleClass().add("photoProfile");
+		//exportApp.setImage(new Image(getClass().getResourceAsStream("/images/exportApp.png"), 30, 30, true, true));
+		//exportApp.getStyleClass().add("photoProfile");
 		
 		exportConf.setImage(new Image(getClass().getResourceAsStream("/images/exportConf.png"), 30, 30, true, true));
 		exportConf.getStyleClass().add("photoProfile");
@@ -234,6 +234,60 @@ public class Profile implements Initializable{
 			
 		});
 		
+		
+		btnGuardar.setOnMouseClicked(e->{
+			
+			RandomAccessFile file=null;
+			try {
+			file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+			}catch(Exception exp) {
+				try {
+					file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			boolean band = false;
+			String nombre="",apellido="",nacimiento="",usuario="",password1="",mail="";
+			int maxEjer1=0,maxEjer2=0;
+			long pointer=0;
+		try {
+			while(!band && file.getFilePointer()<file.length()) {
+				pointer=file.getFilePointer();
+				nombre = file.readLine();				
+				apellido = file.readLine();
+				nacimiento = file.readLine();
+				usuario = file.readLine();
+				password1 = file.readLine();
+				band = usuario.equals(getUserName().getUsuario());
+				mail = file.readLine();
+				maxEjer1=file.readInt();
+				maxEjer2=file.readInt();
+
+			}
+			
+			
+			if(band) {
+				file.seek(pointer);
+				file.writeBytes((firstName.getText().equals("")?nombre:firstName.getText())+"\n");
+				file.writeBytes((lastName.getText().equals("")?apellido:lastName.getText())+"\n");
+				file.writeBytes(nacimiento+"\n");			
+				file.writeBytes(usuario+"\n");	
+				file.writeBytes((!password.getText().equals("")&&password.getText().equals(passwordConfirm.getText())?password.getText():password1)+"\n");			
+				file.writeBytes((correoTF.getText().equals("")?mail:correoTF.getText())+"\n");		
+				file.writeInt(maxEjer1);
+				file.writeInt(maxEjer2);
+			}
+			file.close();
+			
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		});
+		
 		importConf.setOnMouseClicked(e->{
 			
 			FileChooser select = new FileChooser();
@@ -294,12 +348,12 @@ public class Profile implements Initializable{
 	
 		exportBtns.setAlignment(Pos.CENTER);
 		exportBtns1.setAlignment(Pos.CENTER);
-		exportBtns2.setAlignment(Pos.CENTER);
+		//exportBtns2.setAlignment(Pos.CENTER);
 		importBtns.setAlignment(Pos.CENTER);
 		
 		
 		if(!getUserName().getUsuario().equals("root")) {
-			exportBtns.getChildren().removeAll(exportBtns1,exportBtns2);
+			exportBtns.getChildren().removeAll(exportBtns1);
 		}else {
 			exportBtns.getChildren().remove(importBtns);
 

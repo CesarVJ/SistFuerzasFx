@@ -107,17 +107,17 @@ public class Tabs extends Application{
         
         
         //Estilo del boton Salir
-        Button btnSalir = new Button("Salir");
+      /*  Button btnSalir = new Button("Salir");
             btnSalir.setOnAction(e-> ventana.close());
-            btnSalir.getStyleClass().add("button-raised");
+            btnSalir.getStyleClass().add("button-raised");*/
             
             
         //Estilo del boton Entrar
-        Button btnEntrar = new Button("Entrar");
+       /* Button btnEntrar = new Button("Entrar");
         btnEntrar.getStyleClass().add("button-raised");
         btnEntrar.setOnAction(e-> {
             ventana.setScene(escena2);
-        });
+        });*/
         
         
         
@@ -136,7 +136,7 @@ public class Tabs extends Application{
         
         HBox cajaBotones = new HBox(40);  //Eliminar-----------   
         
-        VBox cajaFields = new VBox(10);//Almacenara los textFields de correo,contraseña y el boton de iniciar sesion
+        VBox cajaFields = new VBox(20);//Almacenara los textFields de correo,contraseña y el boton de iniciar sesion
         
         
         //Diseñando el boton de iniciar sesion
@@ -150,7 +150,7 @@ public class Tabs extends Application{
         cajaFields.getChildren().addAll(mail,pass,btnIniciar);
         
         
-        cajaBotones.getChildren().addAll(btnSalir,btnEntrar);//----Eliminar
+        //cajaBotones.getChildren().addAll(btnSalir,btnEntrar);//----Eliminar
         cajaBotones.setPadding(new Insets(1,5,5,5));//ELiminar
 
         
