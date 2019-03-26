@@ -231,7 +231,7 @@ public class TipoEjercicio2 implements Initializable{
 					//System.out.println("Resultados oficiales: SUmFx= "+oficiales.getSumFx()+" SumFy= "+oficiales.getSumFy());
 
 		    	}
-				tituloEjercicio2.setText("EJERCICIO EQUILIBRIO \n"+descripcion);
+				tituloEjercicio2.setText(descripcion);
 
 				
 				

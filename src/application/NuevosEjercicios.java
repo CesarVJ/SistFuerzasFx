@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -437,6 +438,16 @@ public class NuevosEjercicios implements Initializable{
 			System.out.println(strFuerzas+":"+strAngulos);
 
 		}	
+		
+		Alert resultado = new Alert(Alert.AlertType.WARNING);
+
+		resultado.setTitle("Ejercicio agregado");
+		resultado.setContentText("El ejercicio se ha agregado correctamente");
+		ImageView correcta = new ImageView(
+				new Image(getClass().getResourceAsStream("/images/respuesta_correcta.png"), 50, 50, true, true));
+		resultado.setGraphic(correcta);
+		resultado.setHeaderText(null);
+    	resultado.showAndWait();
 		//================================
 		
 		if(tipoEjercicio.getSelectionModel().getSelectedIndex()==0) {
@@ -522,6 +533,9 @@ public class NuevosEjercicios implements Initializable{
 			}
 			
 		}
+		
+		
+		
 		
 		
 	}
