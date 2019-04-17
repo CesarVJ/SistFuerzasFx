@@ -34,7 +34,7 @@ public class Window implements Initializable{
 
 	
 	@FXML
-	AnchorPane ventanaPrincipal,contenedor,VentanaCalc,ventanaEjer,titleBar,ventanaAdd,ventanaProfile,ventanaEjer2,recursos,sinEjercicios;
+	AnchorPane ventanaPrincipal,contenedor,VentanaCalc,ventanaEjer,titleBar,ventanaAdd,ventanaProfile,ventanaEjer2,recursos,sinEjercicios,ventanaEstadist,ventanaPanel;
 	 @FXML
 	 private Label lblText;
 	static ActionEvent eventLog;
@@ -43,7 +43,7 @@ public class Window implements Initializable{
 	@FXML
 	private VBox VBMenu,VBMenu2,menuPrincipal,VBSub,exit;
 	@FXML
-	private Button btnRegresar,btnPerfil,btnEjercicios,btnCalculador,btnCerrar,btnMin,btnAgregar,btnEjercicios1,btnEjercicios2,btnRecursos;
+	private Button btnRegresar,btnPerfil,btnEjercicios,btnCalculador,btnCerrar,btnMin,btnAgregar,btnEjercicios1,btnEjercicios2,btnRecursos,btnEstadisticas,btnPanelEjercicios;
 	static Stage stage=null;
 	
 	@FXML
@@ -98,6 +98,14 @@ public class Window implements Initializable{
 		VBSub.getChildren().remove(btnEjercicios2);		
 		ventanaAdd.toFront();
 
+	}
+	public void estadisticas() {
+		ventanaEstadist.toFront();
+
+	}
+	
+	public void admonEjercicios(){	
+		ventanaPanel.toFront();
 	}
 	
 	public void recursosDidacticos() {
@@ -257,6 +265,9 @@ public class Window implements Initializable{
 
 
 		btnAgregar.setDisable(false);
+		btnEstadisticas.setDisable(false);
+		btnPanelEjercicios.setDisable(false);
+
 		
 		
 		titleBar.setPrefWidth(1250);
@@ -301,6 +312,12 @@ public class Window implements Initializable{
 		btnAgregar.setPrefHeight(60);
 		btnAgregar.setPrefWidth(150);
 		
+		btnEstadisticas.setPrefHeight(60);
+		btnEstadisticas.setPrefWidth(150);
+		
+		btnPanelEjercicios.setPrefHeight(60);
+		btnPanelEjercicios.setPrefWidth(150);
+		
 		
 		btnPerfil.setPrefHeight(60);
 		btnPerfil.setPrefWidth(150);
@@ -331,6 +348,8 @@ public class Window implements Initializable{
 		VBMenu.getStyleClass().add("VBMenu");
 		
 		btnAgregar.getStyleClass().add("btns");		
+		btnEstadisticas.getStyleClass().add("btns");	
+		btnPanelEjercicios.getStyleClass().add("btns");	
 		btnRegresar.getStyleClass().add("btns");
 		btnPerfil.getStyleClass().add("btns");
 		btnEjercicios.getStyleClass().add("btns");
@@ -351,19 +370,27 @@ public class Window implements Initializable{
 		btnEjercicios2.setGraphic(new ImageView("/images/dcl.png"));
 		btnCalculador.setGraphic(new ImageView("/images/calculador.png"));
 		btnAgregar.setGraphic(new ImageView("/images/add.png"));
+		btnEstadisticas.setGraphic(new ImageView("/images/estadisticas2.png"));
+		btnPanelEjercicios.setGraphic(new ImageView("/images/panel.png"));
 		btnRecursos.setGraphic(new ImageView("/images/resources.png"));
 		
 		try {
 			Tabs valid = new Tabs();		
 			if(!valid.user.getUsuario().equals("root")) {
 				//btnAgregar.setDisable(true);
+				exit.getChildren().remove(0);	
 				exit.getChildren().remove(0);				
+				exit.getChildren().remove(0);				
+
 			}
 			}catch(Exception e) {
 				Formulario form = new Formulario();
 				if(!form.cuenta.getUsuario().equals("root")) {
 					//btnAgregar.setDisable(true);
+					exit.getChildren().remove(0);	
 					exit.getChildren().remove(0);				
+					exit.getChildren().remove(0);				
+
 
 				}
 				
@@ -383,12 +410,16 @@ public class Window implements Initializable{
 	    	VentanaCalc = FXMLLoader.load(getClass().getResource("/view/FXMLCalculator.fxml"));
 	    	//ventanaEjer2 = FXMLLoader.load(getClass().getResource("/view/FXMLCuerpoL.fxml"));
 	    	ventanaAdd = FXMLLoader.load(getClass().getResource("/view/FXMLAdd.fxml"));
+	    	ventanaPanel = FXMLLoader.load(getClass().getResource("/view/FXMLPanelEjercicios.fxml"));
+	    	ventanaEstadist = FXMLLoader.load(getClass().getResource("/view/FXMLEstadisticas.fxml"));
 	    	recursos=FXMLLoader.load(getClass().getResource("/view/FXMLResources.fxml"));
 	    	sinEjercicios=FXMLLoader.load(getClass().getResource("/view/FXMLSinEjercicios.fxml"));
 
 	    	
 			contenedor.getChildren().addAll(sinEjercicios);
 			contenedor.getChildren().addAll(ventanaAdd);
+			contenedor.getChildren().addAll(ventanaPanel);
+			contenedor.getChildren().addAll(ventanaEstadist);
 			contenedor.getChildren().addAll(VentanaCalc);			
 			contenedor.getChildren().addAll(ventanaEjer);
 			//contenedor.getChildren().addAll(ventanaEjer2);

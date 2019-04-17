@@ -312,6 +312,15 @@
  .resourcesBox:hover {
  		-fx-cursor: hand; 	
  }
+ 
+  .resourcesBox2:pressed {
+ 	     -fx-pref-width: 359px; 	
+ 	     -fx-pref-height: 410px; 	 	 	 	     	
+ }
+
+ .resourcesBox2:hover {
+ 		-fx-cursor: hand; 	
+ }
 
  .boton:hover{
  		-fx-cursor: hand; 	 	

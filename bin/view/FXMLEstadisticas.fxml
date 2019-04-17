@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"  prefHeight="580.0" prefWidth="1100.0" fx:controller="application.Estadisticas" fx:id="ventanaEstadist">
+	<!-- TODO Add Nodes -->
+</AnchorPane>
+
