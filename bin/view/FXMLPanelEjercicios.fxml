@@ -52,6 +52,32 @@
 	</children>
      
       </AnchorPane>
+      
+      <AnchorPane   fx:id="editorEjercicios">
+	<children>
+		  <ImageView layoutX="30.0" layoutY="15" fx:id="btnAtrasEditor"/>
+		        	<VBox spacing="15.0" fx:id="formData" layoutX="560.0" layoutY="50.0" prefHeight="400.0" prefWidth="400.0">
+            		<Label fx:id="indicacionLbl">Ingresa la imagen del ejercicio a agregar junto con los datos de la misma y al finalizar oprime "Validar"</Label>
+            		
+            	
+            		<HBox spacing="20.0">
+            			<Label fx:id="vectLbl">Selecciona el numero de vectores: </Label>
+            			<TextField fx:id="numVect" prefWidth="50.0"></TextField>
+            		</HBox>
+            		
+            		<TableView fx:id="tablaDatos" prefHeight="180.0" prefWidth="320.0"/>
+            		
+
+            		<VBox>
+            		   <Label text="Descripcion del ejercicio: "/>            		
+            			<TextArea fx:id="txtDescripcion" prefHeight="80.0" ></TextArea>
+            		</VBox>
+	
+            	</VBox>	
+		  
+	</children>
+     
+      </AnchorPane>
 
 </AnchorPane>
 

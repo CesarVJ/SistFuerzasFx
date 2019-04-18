@@ -116,10 +116,6 @@ public class NuevosEjercicios implements Initializable{
 	      angulo.setMinWidth(160);
 			
 		
-		
-		
-		
-		
 		indicacionLbl.setWrapText(true);
 		tipoEjercicio.getItems().addAll("Vectores por componentes","Diagramas de CL");
 		tipoEjercicio.getSelectionModel().select(0);
