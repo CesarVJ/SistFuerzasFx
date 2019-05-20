@@ -25,11 +25,11 @@ public class Recursos implements Initializable {
 	@FXML
 	AnchorPane recursos,contenedor2,contenedor1;
 	@FXML
-	VBox btnApuntes,btnVideos,btnWikis,btnEjemplos,btnCuestionarios,btnObjetivo,btnPropuestos;
+	VBox btnApuntes,btnVideos,btnWikis,btnEjemplos,btnCuestionarios,btnObjetivo,btnPropuestos,btnAgregar;
 	@FXML
-	ImageView imgApuntes,imgVideos,imgWikis,imgEjemplos,imgCuestionarios,imgObjetivo,imgPropuestos,btnAtras;
+	ImageView imgApuntes,imgVideos,imgWikis,imgEjemplos,imgCuestionarios,imgObjetivo,imgPropuestos,btnAtras,imgAgregar;
 	@FXML
-	Label txtApuntes,txtVideos,txtWikis,txtEjemplos,txtCuestionarios,txtObjetivo,txtPropuestos;
+	Label txtApuntes,txtVideos,txtWikis,txtEjemplos,txtCuestionarios,txtObjetivo,txtPropuestos,txtAgregar;
 	@FXML
 	Hyperlink myHyperlink;
 	@FXML
@@ -49,6 +49,7 @@ public class Recursos implements Initializable {
 		btnVideos.getStyleClass().addAll("profileBox","resourcesBox");
 		btnPropuestos.getStyleClass().addAll("profileBox","resourcesBox");
 		btnObjetivo.getStyleClass().addAll("profileBox","resourcesBox");
+		btnAgregar.getStyleClass().addAll("profileBox","resourcesBox");
 
 		txtApuntes.getStyleClass().add("textForm");
 		txtVideos.getStyleClass().add("textForm");
@@ -57,6 +58,8 @@ public class Recursos implements Initializable {
 		txtCuestionarios.getStyleClass().add("textForm");
 		txtPropuestos.getStyleClass().add("textForm");
 		txtObjetivo.getStyleClass().add("textForm");
+		txtAgregar.getStyleClass().add("textForm");
+
 		
 
 		
@@ -84,11 +87,17 @@ public class Recursos implements Initializable {
 		btnObjetivo.setEffect(ef);
 		btnObjetivo.setSpacing(10);
 		
+		btnAgregar.setEffect(ef);
+		btnAgregar.setSpacing(10);
+		
 		btnPropuestos.setEffect(ef);
 		btnPropuestos.setSpacing(10);
 		txtPropuestos.setWrapText(true);
 		txtObjetivo.setText("Objetivo de\naprendizaje");
 		txtPropuestos.setText(" Ejercicios\nPropuestos");
+		txtAgregar.setText(" Añadir Recursos");
+
+
 
 		
 		
@@ -116,6 +125,9 @@ public class Recursos implements Initializable {
 		btnAtras.setImage(new Image(getClass().getResourceAsStream("/images/back.png"), 50, 50, true, true));
 		btnAtras.getStyleClass().addAll("photoProfile","boton");
 
+		imgAgregar.setImage(new Image(getClass().getResourceAsStream("/images/addResources.png"), 100, 100, true, true));
+		imgAgregar.getStyleClass().addAll("photoProfile");
+
 		
 		
 		
@@ -129,6 +141,7 @@ public class Recursos implements Initializable {
 		btnCuestionarios.setAlignment(Pos.CENTER);
 		btnPropuestos.setAlignment(Pos.CENTER);
 		btnObjetivo.setAlignment(Pos.CENTER);
+		btnAgregar.setAlignment(Pos.CENTER);
 		
 		
 		contenedor2.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());

@@ -45,6 +45,10 @@
 		<ImageView fx:id="imgPropuestos"/>
 			<Label fx:id="txtPropuestos" />		
 	</VBox>
+	<VBox fx:id="btnAgregar" layoutX="850.0" layoutY="300" prefHeight="150.0" prefWidth="150.0" >
+		<ImageView fx:id="imgAgregar"/>
+			<Label fx:id="txtAgregar" />		
+	</VBox>
 	
 	
 	

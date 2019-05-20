@@ -105,6 +105,16 @@ public class Window implements Initializable{
 	}
 	
 	public void admonEjercicios(){	
+		contenedor.getChildren().remove(ventanaPanel);
+		
+		try {
+			ventanaPanel = FXMLLoader.load(getClass().getResource("/view/FXMLPanelEjercicios.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		contenedor.getChildren().add(ventanaPanel);
+
 		ventanaPanel.toFront();
 	}
 	

@@ -16,22 +16,26 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"  prefHeight="580.0" prefWidth="1100.0" fx:controller="application.PanelEjercicios" fx:id="ventanaPanel">
 	<AnchorPane   fx:id="ejercicios">
 	<VBox fx:id="picture" layoutX="100.0" layoutY="50"
-		prefHeight="420.0" prefWidth="365.0">
+		prefHeight="400.0" prefWidth="365.0">
 		<VBox fx:id="titlePanel" prefHeight="30.0">
 		<Label fx:id="textTitle" text="     Ejercicios tipo 1  "></Label>			
 		</VBox>
 		<VBox fx:id="photoBox" prefHeight="200.0">
 			<ImageView fx:id="photoProfile" />
+			<Label text="Ejercicios de Sistemas de Fuerzas" fx:id="txtEjercicio1"></Label>
+			<Label text="Total de ejercicios: " fx:id="totalEjer1"></Label>
 		</VBox>
 	</VBox>
 	
 	<VBox fx:id="picture2" layoutX="530.0" layoutY="50"
-		prefHeight="420.0" prefWidth="365.0">
+		prefHeight="400.0" prefWidth="365.0">
 		<VBox fx:id="titlePanel2" prefHeight="30.0">
 		<Label fx:id="textTitle2" text="     Ejercicios tipo 2  "></Label>			
 		</VBox>
-		<VBox fx:id="photoBox2" prefHeight="200.0">
+		<VBox fx:id="photoBox2" prefHeight="180.0">
 			<ImageView fx:id="photoProfile2" />
+			<Label text="Ejercicios de Equilibrio" fx:id="txtEjercicio2"></Label>
+			<Label text="Total de ejercicios: " fx:id="totalEjer2"></Label>
 		</VBox>
 	</VBox>
 	</AnchorPane>
@@ -52,10 +56,17 @@
 	</children>
      
       </AnchorPane>
+      <AnchorPane   fx:id="ejerciciosT2">
+	<children>
+		  <ImageView layoutX="30.0" layoutY="15" fx:id="btnAtras2"/>		
+	</children>
+     
+      </AnchorPane>
       
       <AnchorPane   fx:id="editorEjercicios">
 	<children>
 		  <ImageView layoutX="30.0" layoutY="15" fx:id="btnAtrasEditor"/>
+		  			<ImageView fx:id="imgEjercicio" layoutX="70.0" layoutY="70.0"/>		  			
 		        	<VBox spacing="15.0" fx:id="formData" layoutX="560.0" layoutY="50.0" prefHeight="400.0" prefWidth="400.0">
             		<Label fx:id="indicacionLbl">Ingresa la imagen del ejercicio a agregar junto con los datos de la misma y al finalizar oprime "Validar"</Label>
             		

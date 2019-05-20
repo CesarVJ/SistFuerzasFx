@@ -31,16 +31,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class PanelEjercicios implements Initializable {
 	@FXML
-	AnchorPane ventanaPanel, ejerciciosT1, ejercicios, editorEjercicios;
+	AnchorPane ventanaPanel, ejerciciosT1,ejerciciosT2, ejercicios, editorEjercicios;
 	@FXML
 	VBox titlePanel, photoBox, picture, titlePanel2, photoBox2, picture2, formData;
 	@FXML
-	Label textTitle, textTitle2, indicacionLbl, vectLbl;
+	Label textTitle, textTitle2, indicacionLbl, vectLbl,txtEjercicio1,totalEjer1,totalEjer2,txtEjercicio2;
 	@FXML
-	ImageView photoProfile, photoProfile2, btnAtras, btnAtrasEditor;
+	ImageView photoProfile, photoProfile2, btnAtras, btnAtrasEditor,btnAtras2,imgEjercicio;
 	@FXML
 	TextField numVect;
 	@FXML
@@ -61,6 +63,14 @@ public class PanelEjercicios implements Initializable {
 	float initialLayoutX = 90;
 	float initialLayoutY = 70;
 	static int idEjer;
+	
+	
+	int size2;
+	VBox btnEjercicios2[];
+	ImageView imgEjercicios2[];
+	float initialLayoutX2 = 90;
+	float initialLayoutY2 = 70;
+	static int idEjer2;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -75,8 +85,21 @@ public class PanelEjercicios implements Initializable {
 		btnAtras.setImage(new Image(getClass().getResourceAsStream("/images/back.png"), 50, 50, true, true));
 		btnAtras.getStyleClass().addAll("photoProfile", "boton");
 
+		btnAtras2.setImage(new Image(getClass().getResourceAsStream("/images/back.png"), 50, 50, true, true));
+		btnAtras2.getStyleClass().addAll("photoProfile", "boton");
 		btnAtrasEditor.setImage(new Image(getClass().getResourceAsStream("/images/back.png"), 50, 50, true, true));
 		btnAtrasEditor.getStyleClass().addAll("photoProfile", "boton");
+		//txtEjercicio1.getStyleClass().add("textForm");
+		totalEjer1.getStyleClass().add("textForm");  
+		totalEjer2.getStyleClass().add("textForm");    
+
+		
+		
+
+		txtEjercicio1.setFont(Font.font("Verdana", FontWeight.BOLD, 17));
+		txtEjercicio2.setFont(Font.font("Verdana", FontWeight.BOLD, 17));
+
+		
 
 		ventanaPanel.getStyleClass().add("backgrounds");
 		ventanaPanel.getStyleClass().add("profileBackground");
@@ -84,10 +107,10 @@ public class PanelEjercicios implements Initializable {
 		textTitle.getStyleClass().add("titlesText");
 
 		photoBox.setAlignment(Pos.CENTER);
-		photoBox.setSpacing(12);
+		photoBox.setSpacing(18);
 
 		photoProfile.setImage(
-				new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer1.png"), 330, 330, true, true));
+				new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer1.png"), 350, 350, true, true));
 		photoProfile.getStyleClass().add("photoProfile");
 		picture.getStyleClass().addAll("profileBox", "resourcesBox2");
 
@@ -95,10 +118,10 @@ public class PanelEjercicios implements Initializable {
 		textTitle2.getStyleClass().add("titlesText");
 
 		photoBox2.setAlignment(Pos.CENTER);
-		photoBox2.setSpacing(12);
+		photoBox2.setSpacing(18);
 
 		photoProfile2.setImage(
-				new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer2.png"), 330, 330, true, true));
+				new Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer2.png"), 300, 250, true, true));
 		photoProfile2.getStyleClass().add("photoProfile");
 		picture2.getStyleClass().addAll("profileBox", "resourcesBox2");
 
@@ -107,6 +130,16 @@ public class PanelEjercicios implements Initializable {
 
 		ejerciciosT1.setPrefWidth(1100);
 		ejerciciosT1.setPrefHeight(580);
+		
+		
+		ejerciciosT2.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());
+		ejerciciosT2.getStyleClass().add("backgrounds");
+
+		ejerciciosT2.setPrefWidth(1100);
+		ejerciciosT2.setPrefHeight(580);
+		
+		
+		
 
 		editorEjercicios.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());
 		editorEjercicios.getStyleClass().add("backgrounds");
@@ -119,6 +152,13 @@ public class PanelEjercicios implements Initializable {
 
 		ejercicios.setPrefWidth(1100);
 		ejercicios.setPrefHeight(580);
+		
+		int total1  = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicios1").listFiles().length
+				+ 1;
+		totalEjer1.setText(totalEjer1.getText()+total1);
+		
+		int total2  = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;
+		totalEjer2.setText(totalEjer2.getText()+total2);
 
 		/*
 		 * btnEjer.getStyleClass().addAll("profileBox","resourcesBox");
@@ -257,7 +297,7 @@ public class PanelEjercicios implements Initializable {
 					//String texto=((Label)btnEjercicios[idEjer].getChildren().get(1)).getText();
 					String texto=((Label)((VBox)(er.getSource())).getChildren().get(1)).getText();				
 					int num= Integer.parseInt(texto.substring(10));
-					abrirEditor(num);
+					abrirEditor(num,1);
 				});
 			}
 			
@@ -265,6 +305,156 @@ public class PanelEjercicios implements Initializable {
 			//System.out.println("ID DEL NODO= "+ ((Label)btnEjercicios[3].getChildren().get(1)).getText());
 
 		});// ??
+		
+		
+		picture2.setOnMouseClicked(e -> {
+
+			if (!ejerciciosT2.getChildren().contains(btnAtras2)) {
+				ejerciciosT2.getChildren().add(btnAtras2);
+
+			}
+
+			size2 = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicio2").listFiles().length
+					;
+			btnEjercicios2 = new VBox[size2];
+			imgEjercicios2 = new ImageView[size2];
+			initialLayoutX2 = 90;
+			initialLayoutY2 = 70;
+
+			for (int i = 0; i < size2; i++) {
+				btnEjercicios2[i] = new VBox();
+				imgEjercicios2[i] = new ImageView();
+				imgEjercicios2[i].getStyleClass().add("photoProfile");
+				Label text = new Label("Ejercicio");
+				text.getStyleClass().add("textForm");
+
+				
+					RandomAccessFile file = null;
+					int id = 0, tipo = 0, vects1 = 0;
+					String nameImage = "", descripcion = "";
+
+					try {
+						file = new RandomAccessFile(
+								System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+						boolean band = false;
+
+						while (!band && file.getFilePointer() < file.length()) {
+							id = file.readInt();
+							band = (i + 1) == id ? true : false;
+							nameImage = file.readLine();
+							tipo = file.readInt();
+							vects1 = file.readInt();
+							float angulos[] = new float[vects1];
+							float fuerzas[] = new float[vects1];
+
+							for (int n = 0; n < angulos.length; n++) {
+								angulos[n] = file.readFloat();
+								fuerzas[n] = file.readFloat();
+							}
+							descripcion = file.readLine();
+						}
+						file.close();
+						System.out.println(nameImage);
+						imgEjercicios2[i].setImage(new Image(
+								"file:///" + System.getProperty("user.home")
+										+ "\\SistFuerzasFiles\\imgEjercicio2\\Ejer" + id + ".png",
+								150, 150, true, true));
+
+						// imgEjercicios[i].setImage(new
+						// Image(getClass().getResourceAsStream(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer3.png"),
+						// 100, 100, true, true));
+
+					} catch (Exception e1) {
+						System.out.println("Error1");
+						try {
+							file = new RandomAccessFile(
+									System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo2.dat", "rw");
+						} catch (FileNotFoundException e2) {
+							System.out.println("Error2");
+
+						}
+
+					}
+
+		
+
+				btnEjercicios2[i].setLayoutX(initialLayoutX2);
+				btnEjercicios2[i].setLayoutY(initialLayoutY2);
+				btnEjercicios2[i].setPrefHeight(180);
+				btnEjercicios2[i].setPrefWidth(180);
+				btnEjercicios2[i].getStyleClass().addAll("profileBox", "resourcesBox");
+
+				btnEjercicios2[i].setEffect(ef);
+				btnEjercicios2[i].setSpacing(10);
+				btnEjercicios2[i].setAlignment(Pos.CENTER);
+
+				btnEjercicios2[i].getChildren().add(imgEjercicios2[i]);
+
+				ejerciciosT2.getChildren().add(btnEjercicios2[i]);
+
+				if (initialLayoutX2 <= 800) {
+					initialLayoutX2 += 200;
+				} else {
+					initialLayoutY2 = 300;
+					initialLayoutX2 = 90;
+
+				}
+				text.setText(text.getText() + " " + (i + 1));
+				btnEjercicios2[i].getChildren().add(text);
+
+			}
+			ejerciciosT2.toFront();
+
+			for (idEjer2 = 0; idEjer2 < btnEjercicios2.length; idEjer2++) {
+				
+				btnEjercicios2[idEjer2].setOnMouseClicked(er -> {
+					//String texto=((Label)btnEjercicios[idEjer].getChildren().get(1)).getText();
+					String texto=((Label)((VBox)(er.getSource())).getChildren().get(1)).getText();				
+					int num= Integer.parseInt(texto.substring(10));
+					abrirEditor(num,2);
+				});
+			}
+			
+			
+			//System.out.println("ID DEL NODO= "+ ((Label)btnEjercicios[3].getChildren().get(1)).getText());
+
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		btnAtrasEditor.setOnMouseClicked(e -> {
 			// editorEjercicios.getChildren().clear();
@@ -289,6 +479,10 @@ public class PanelEjercicios implements Initializable {
 		btnAtras.setOnMouseClicked(e -> {
 			ejerciciosT1.getChildren().clear();
 			ejerciciosT1.toBack();
+		});
+		btnAtras2.setOnMouseClicked(e -> {
+			ejerciciosT2.getChildren().clear();
+			ejerciciosT2.toBack();
 		});
 		
 		
@@ -409,7 +603,7 @@ public class PanelEjercicios implements Initializable {
 		
 	}
 
-	public void abrirEditor(int i) {
+	public void abrirEditor(int i, int tipoEjercicio) {
 		EjercicioAct=i;
 		
 		System.out.println("ID del ejercicio: "+i);
@@ -423,7 +617,7 @@ public class PanelEjercicios implements Initializable {
 		
 
 		
-		rellenarDatos(i);
+		rellenarDatos(i,tipoEjercicio);
 		
 		
 
@@ -434,7 +628,7 @@ public class PanelEjercicios implements Initializable {
 	
 	
 
-	public void rellenarDatos(int idE) {
+	public void rellenarDatos(int idE, int tipoEjercicio) {
 		
 		
 		numVect.requestFocus();
@@ -446,27 +640,47 @@ public class PanelEjercicios implements Initializable {
 		RandomAccessFile file = null;
 		int maxFiles = 0;
 		try {
-			file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
-			maxFiles = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicios1")
-					.listFiles().length;
+			if(tipoEjercicio==1) {
+				file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
+				maxFiles = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicios1")
+						.listFiles().length;
+			}else if(tipoEjercicio ==2) {
+				file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+				maxFiles = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicio2")
+						.listFiles().length;
+				
+			}
+			
 		} catch (Exception op) {
 			try {
-				file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo.dat",
-						"rw");
-				maxFiles = new File(System.getProperty("user.home") + "/SistFuerzasFiles/imgEjercicios1")
-						.listFiles().length;
+				
+				if(tipoEjercicio==1) {
+					file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo.dat",
+							"rw");
+					maxFiles = new File(System.getProperty("user.home") + "/SistFuerzasFiles/imgEjercicios1")
+							.listFiles().length;
+				}else if(tipoEjercicio==2) {
+					file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo2.dat",
+							"rw");
+					maxFiles = new File(System.getProperty("user.home") + "/SistFuerzasFiles/imgEjercicio2")
+							.listFiles().length;
+				}
+				
 
 			} catch (FileNotFoundException e) {
 
 			}
 		}
+		
+		
 		boolean band = false;
 		int vects2=0;
+		int id=0;
 		String descripcion2="";
 		float[] angulos2=null,fuerzas2=null;
 		  try {
 			while(!band && file.getFilePointer()<file.length()) { 
-				  int id=file.readInt();
+				  id=file.readInt();
 				  band=(id)==idE?true:false;
 			  		file.readLine(); 
 			  		file.readInt();
@@ -479,6 +693,19 @@ public class PanelEjercicios implements Initializable {
 			  		}
 			  descripcion2=file.readLine(); 
 			  }
+			
+			if(tipoEjercicio==1) {
+				imgEjercicio.setImage(new Image(
+						"file:///" + System.getProperty("user.home")
+								+ "\\SistFuerzasFiles\\imgEjercicios1\\Ejer" + id + ".png",
+						400, 300, false, false));
+			}else {
+				imgEjercicio.setImage(new Image(
+						"file:///" + System.getProperty("user.home")
+								+ "\\SistFuerzasFiles\\imgEjercicio2\\Ejer" + id + ".png",
+						300, 300, false, false));
+			}
+			
 			  file.close();
 		} catch (IOException e) {
 			e.printStackTrace();

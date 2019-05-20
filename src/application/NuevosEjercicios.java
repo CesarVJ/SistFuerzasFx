@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -67,6 +68,8 @@ public class NuevosEjercicios implements Initializable{
 	ObservableList<ContenidoTabla> data;
 	@FXML
 	TextArea txtDescripcion;
+	@FXML
+	CheckBox esCociente;
 	
 	int contadorFilas=0;
 	int numFilasAnt=0;
@@ -82,7 +85,6 @@ public class NuevosEjercicios implements Initializable{
 		
 		
 		  txtDescripcion.setWrapText(true);
-		
 		  TableColumn fuerzas = new TableColumn("Fuerzas(Nw)");
 	      fuerzas.setMinWidth(160);
 	      TableColumn angulo = new TableColumn("Angulo");
@@ -126,7 +128,8 @@ public class NuevosEjercicios implements Initializable{
 		btnAgregar.getStyleClass().add("filesButtons");
 		btnValidar.getStyleClass().add("filesButtons");
 
-		
+		pesoBox.setSpacing(17);
+
 		board.setSpacing(20);
 		board.setCenterShape(true);
 		board.setAlignment(Pos.CENTER);
@@ -486,6 +489,12 @@ public class NuevosEjercicios implements Initializable{
 			}
 		}else {
 			
+			
+			if(esCociente.isSelected()) {
+				tipo=1;
+			}else {
+				tipo=0;
+			}
 			
 			//RandomAccessFile file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
 	        //int maxFiles= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;  

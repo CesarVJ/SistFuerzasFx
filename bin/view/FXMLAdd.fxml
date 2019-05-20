@@ -16,6 +16,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.CheckBox?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.NuevosEjercicios" fx:id="add">
 
@@ -48,8 +49,9 @@
             		<TableView fx:id="tablaDatos" prefHeight="180.0" prefWidth="320.0"/>
             		
             		<HBox fx:id="pesoBox">
-            			<Label text="Valor del Peso = "/>
-            			<TextField fx:id="peso"/>
+            			<Label text="Peso = "/>
+            			<TextField fx:id="peso"/>            		
+            			<CheckBox text="Tomar como cociente" fx:id="esCociente"></CheckBox>
             		</HBox>
             		<VBox>
             		   <Label text="Descripcion del ejercicio: "/>            		
