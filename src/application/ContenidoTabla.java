@@ -14,10 +14,99 @@ import javafx.scene.control.TextField;
  * @author Cesar
  */
 public class ContenidoTabla {
-     TextField fuerzas,angulo;
- 
-	Label nombres;
-    private ChoiceBox<String> funcion = new ChoiceBox<>();
+   private TextField fuerzas,angulo; 
+	public Label getCarrera() {
+	return carrera;
+}
+	
+	
+
+public void setCarrera(Label carrera) {
+	this.carrera = carrera;
+}
+
+public Label getVisitas() {
+	return visitas;
+}
+
+
+
+public void setVisitas(Label visitas) {
+	this.visitas = visitas;
+}
+
+	private Label nombres,nombre,noControl, carrera, visitas,numEjercicio,intentos,errores,numEjercicio2,intentos2,errores2;
+    public Label getNumEjercicio2() {
+		return numEjercicio2;
+	}
+
+
+
+	public void setNumEjercicio2(Label numEjercicio2) {
+		this.numEjercicio2 = numEjercicio2;
+	}
+
+
+
+	public Label getIntentos2() {
+		return intentos2;
+	}
+
+
+
+	public void setIntentos2(Label intentos2) {
+		this.intentos2 = intentos2;
+	}
+
+
+
+	public Label getErrores2() {
+		return errores2;
+	}
+
+
+
+	public void setErrores2(Label errores2) {
+		this.errores2 = errores2;
+	}
+
+
+
+	public Label getNumEjercicio() {
+		return numEjercicio;
+	}
+
+
+
+	public void setNumEjercicio(Label numEjercicio) {
+		this.numEjercicio = numEjercicio;
+	}
+
+
+
+	public Label getIntentos() {
+		return intentos;
+	}
+
+
+
+	public void setIntentos(Label intentos) {
+		this.intentos = intentos;
+	}
+
+
+
+	public Label getErrores() {
+		return errores;
+	}
+
+
+
+	public void setErrores(Label errores) {
+		this.errores = errores;
+	}
+
+	private ChoiceBox<String> funcion = new ChoiceBox<>();
     private ChoiceBox<String> funcion2 = new ChoiceBox<>();
     
 
@@ -43,6 +132,28 @@ public class ContenidoTabla {
         this.fuerzas=new TextField(fuerzas);  
         this.angulo=new TextField(angulo);
         this.nombres=new Label(nombres);
+        
+        
+        this.numEjercicio=new Label(nombres);
+        this.intentos=new Label(fuerzas);
+        this.errores=new Label(angulo);
+        
+        
+        this.numEjercicio2=new Label(nombres);
+        this.intentos2=new Label(fuerzas);
+        this.errores2=new Label(angulo);
+
+        
+        
+
+}
+    
+    public ContenidoTabla(String noControl,String nombre,String carrera,String visitas){
+  
+        this.nombre=new Label(nombre);
+        this.noControl=new Label(noControl);
+        this.carrera=new Label(carrera);
+        this.visitas=new Label(visitas);
 
 }
     
@@ -96,5 +207,22 @@ public class ContenidoTabla {
 	public void setNombres(Label nombres) {
 		this.nombres = nombres;
 	}
+	
+	
+	  public Label getNombre() {
+			return nombre;
+		}
+
+		public void setNombre(Label nombre) {
+			this.nombre = nombre;
+		}
+		
+		  public Label getNoControl() {
+				return noControl;
+			}
+
+			public void setNoControl(Label noControl) {
+				this.noControl = noControl;
+			}
     
 }

@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableView?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"  prefHeight="580.0" prefWidth="1100.0" fx:controller="application.Estadisticas" fx:id="ventanaEstadist">
-	<!-- TODO Add Nodes -->
+
+<AnchorPane fx:id="vistaUsuarios">
+<children>
+
+</children>
+
+
+</AnchorPane>
+
+<AnchorPane fx:id="vistaEstadisticos" >
+<children>
+		  <ImageView layoutX="30.0" layoutY="15" fx:id="btnAtras"/>	
+		  <TableView fx:id="datosAlumno" layoutX="150" layoutY="40" prefHeight="80.0" prefWidth="450.0"/>
+		  <TableView fx:id="datosEjercicios1" layoutX="50" layoutY="150" prefHeight="350.0" prefWidth="335.0"> </TableView>
+		  <TableView fx:id="datosEjercicios2" layoutX="400" layoutY="150" prefHeight="350.0" prefWidth="335.0"> </TableView>
+		  
+</children>
+
+</AnchorPane>
+
+
 </AnchorPane>
 

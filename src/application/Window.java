@@ -100,6 +100,15 @@ public class Window implements Initializable{
 
 	}
 	public void estadisticas() {
+		contenedor.getChildren().remove(ventanaEstadist);
+
+		try {
+			ventanaEstadist = FXMLLoader.load(getClass().getResource("/view/FXMLEstadisticas.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		contenedor.getChildren().add(ventanaEstadist);
+
 		ventanaEstadist.toFront();
 
 	}
