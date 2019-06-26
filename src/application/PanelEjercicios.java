@@ -20,6 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -36,7 +38,9 @@ import javafx.scene.text.FontWeight;
 
 public class PanelEjercicios implements Initializable {
 	@FXML
-	AnchorPane ventanaPanel, ejerciciosT1,ejerciciosT2, ejercicios, editorEjercicios;
+	AnchorPane ventanaPanel,ejerciciosT1,ejerciciosT2, ejercicios, editorEjercicios;
+	@FXML
+	ScrollPane ejerciciosT1Scroll,ejerciciosT2Scroll;
 	@FXML
 	VBox titlePanel, photoBox, picture, titlePanel2, photoBox2, picture2, formData;
 	@FXML
@@ -75,6 +79,19 @@ public class PanelEjercicios implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		
+		ejerciciosT1Scroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+		ejerciciosT1Scroll.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
+
+		ejerciciosT1Scroll.setPannable(true);
+		
+
+		ejerciciosT2Scroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+		ejerciciosT2Scroll.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
+
+		ejerciciosT2Scroll.setPannable(true);
+		
+		
 		DropShadow ef = new DropShadow();
 		ef.setWidth(20);
 		ef.setHeight(20);
@@ -129,14 +146,28 @@ public class PanelEjercicios implements Initializable {
 		ejerciciosT1.getStyleClass().add("backgrounds");
 
 		ejerciciosT1.setPrefWidth(1100);
-		ejerciciosT1.setPrefHeight(580);
+		ejerciciosT1.setPrefHeight(2000);
+		
+		
+		ejerciciosT1Scroll.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());
+		ejerciciosT1Scroll.getStyleClass().add("backgrounds");
+
+		ejerciciosT1Scroll.setPrefWidth(1100);
+		ejerciciosT1Scroll.setPrefHeight(600);
+		
+		
+		ejerciciosT2Scroll.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());
+		ejerciciosT2Scroll.getStyleClass().add("backgrounds");
+
+		ejerciciosT2Scroll.setPrefWidth(1100);
+		ejerciciosT2Scroll.setPrefHeight(600);
 		
 		
 		ejerciciosT2.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());
 		ejerciciosT2.getStyleClass().add("backgrounds");
 
 		ejerciciosT2.setPrefWidth(1100);
-		ejerciciosT2.setPrefHeight(580);
+		ejerciciosT2.setPrefHeight(2000);
 		
 		
 		
@@ -281,7 +312,7 @@ public class PanelEjercicios implements Initializable {
 				if (initialLayoutX <= 800) {
 					initialLayoutX += 200;
 				} else {
-					initialLayoutY = 300;
+					initialLayoutY += 230;
 					initialLayoutX = 90;
 
 				}
@@ -289,7 +320,7 @@ public class PanelEjercicios implements Initializable {
 				btnEjercicios[i].getChildren().add(text);
 
 			}
-			ejerciciosT1.toFront();
+			ejerciciosT1Scroll.toFront();
 
 			for (idEjer = 0; idEjer < btnEjercicios.length; idEjer++) {
 				
@@ -395,7 +426,7 @@ public class PanelEjercicios implements Initializable {
 				if (initialLayoutX2 <= 800) {
 					initialLayoutX2 += 200;
 				} else {
-					initialLayoutY2 = 300;
+					initialLayoutY2 += 230;
 					initialLayoutX2 = 90;
 
 				}
@@ -403,7 +434,9 @@ public class PanelEjercicios implements Initializable {
 				btnEjercicios2[i].getChildren().add(text);
 
 			}
-			ejerciciosT2.toFront();
+			
+			ejerciciosT2Scroll.toFront();
+
 
 			for (idEjer2 = 0; idEjer2 < btnEjercicios2.length; idEjer2++) {
 				
@@ -478,11 +511,11 @@ public class PanelEjercicios implements Initializable {
 
 		btnAtras.setOnMouseClicked(e -> {
 			ejerciciosT1.getChildren().clear();
-			ejerciciosT1.toBack();
+			ejerciciosT1Scroll.toBack();
 		});
 		btnAtras2.setOnMouseClicked(e -> {
 			ejerciciosT2.getChildren().clear();
-			ejerciciosT2.toBack();
+			ejerciciosT2Scroll.toBack();
 		});
 		
 		

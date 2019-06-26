@@ -12,6 +12,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ScrollPane?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"  prefHeight="580.0" prefWidth="1100.0" fx:controller="application.PanelEjercicios" fx:id="ventanaPanel">
 	<AnchorPane   fx:id="ejercicios">
@@ -41,10 +42,11 @@
 	</AnchorPane>
 	
 	
-	
+	<ScrollPane fx:id="ejerciciosT1Scroll" >
 	<AnchorPane   fx:id="ejerciciosT1">
 	<children>
 		  <ImageView layoutX="30.0" layoutY="15" fx:id="btnAtras"/>	
+		  
 		  <!-- 
 		  <VBox fx:id="btnEjer" layoutX="100.0" layoutY="70" prefHeight="150.0" prefWidth="150.0" >
 			<ImageView fx:id="imgEjer"/>
@@ -56,12 +58,16 @@
 	</children>
      
       </AnchorPane>
+        
+ </ScrollPane>
+ <ScrollPane fx:id="ejerciciosT2Scroll" >
       <AnchorPane   fx:id="ejerciciosT2">
 	<children>
 		  <ImageView layoutX="30.0" layoutY="15" fx:id="btnAtras2"/>		
 	</children>
      
       </AnchorPane>
+  </ScrollPane>
       
       <AnchorPane   fx:id="editorEjercicios">
 	<children>

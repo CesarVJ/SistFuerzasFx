@@ -458,14 +458,15 @@ public class Estadisticas implements Initializable {
 			}
 
 		}*/
-		
-		for (ContenidoTabla bean : dataEjercicios2) {
-			if (!bean.getNumEjercicio2().getText().isEmpty()) {
-				bean.getNumEjercicio2().setText("");
-				bean.getIntentos2().setText("");;
-				bean.getErrores2().setText("");;
-			}
+		if(dataEjercicios2!=null) {
+			for (ContenidoTabla bean : dataEjercicios2) {
+				if (!bean.getNumEjercicio2().getText().isEmpty()) {
+					bean.getNumEjercicio2().setText("");
+					bean.getIntentos2().setText("");;
+					bean.getErrores2().setText("");;
+				}
 
+			}
 		}
 		
 		
