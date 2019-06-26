@@ -19,6 +19,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -32,6 +35,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -42,19 +46,25 @@ public class PanelEjercicios implements Initializable {
 	@FXML
 	ScrollPane ejerciciosT1Scroll,ejerciciosT2Scroll;
 	@FXML
-	VBox titlePanel, photoBox, picture, titlePanel2, photoBox2, picture2, formData;
+	VBox titlePanel, photoBox, picture, titlePanel2, photoBox2, picture2, formData,adicionales;
+	@FXML
+	HBox pesoBox;
 	@FXML
 	Label textTitle, textTitle2, indicacionLbl, vectLbl,txtEjercicio1,totalEjer1,totalEjer2,txtEjercicio2;
 	@FXML
 	ImageView photoProfile, photoProfile2, btnAtras, btnAtrasEditor,btnAtras2,imgEjercicio;
 	@FXML
-	TextField numVect;
+	TextField numVect,peso;
+	@FXML
+	CheckBox esCociente;
 	@FXML
 	private TableView tablaDatos;
 	@FXML
 	TextArea txtDescripcion;
 	@FXML
 	ObservableList<ContenidoTabla> data;
+	@FXML
+	Button btnGuardar;
 
 	static int EjercicioAct=0,numVectActual=0;
 	int contadorFilas = 0;
@@ -639,26 +649,25 @@ public class PanelEjercicios implements Initializable {
 	public void abrirEditor(int i, int tipoEjercicio) {
 		EjercicioAct=i;
 		
+		if(tipoEjercicio==2) {
+			if(!adicionales.getChildren().contains(pesoBox)) {
+				adicionales.getChildren().remove(btnGuardar);
+				adicionales.getChildren().add(pesoBox);
+				adicionales.getChildren().add(btnGuardar);
+			}
+		}else {
+			if(adicionales.getChildren().contains(pesoBox)) {
+				adicionales.getChildren().remove(pesoBox);
+			}
+		}
 		System.out.println("ID del ejercicio: "+i);
 		editorEjercicios.toFront();
-
-		
 		
 		if (!editorEjercicios.getChildren().contains(btnAtrasEditor)) {
 			editorEjercicios.getChildren().add(btnAtrasEditor);
 		}
-		
-
-		
 		rellenarDatos(i,tipoEjercicio);
-		
-		
-
 	}
-	
-	
-	
-	
 	
 
 	public void rellenarDatos(int idE, int tipoEjercicio) {
@@ -667,9 +676,6 @@ public class PanelEjercicios implements Initializable {
 		numVect.requestFocus();
 	
 		//rellenarDatos(idEjer);
-		
-		
-
 		RandomAccessFile file = null;
 		int maxFiles = 0;
 		try {
@@ -708,7 +714,8 @@ public class PanelEjercicios implements Initializable {
 		
 		boolean band = false;
 		int vects2=0;
-		int id=0;
+		int id=0,tipo=0;
+		float peso1=0;
 		String descripcion2="";
 		float[] angulos2=null,fuerzas2=null;
 		  try {
@@ -716,7 +723,7 @@ public class PanelEjercicios implements Initializable {
 				  id=file.readInt();
 				  band=(id)==idE?true:false;
 			  		file.readLine(); 
-			  		file.readInt();
+			  		tipo=file.readInt();//tipo
 			  		vects2=file.readInt();
 			  		 angulos2= new float[vects2]; 
 			  		 fuerzas2= new float[vects2];		  
@@ -724,6 +731,9 @@ public class PanelEjercicios implements Initializable {
 			  			angulos2[n]=file.readFloat();
 			  			fuerzas2[n]=file.readFloat(); 
 			  		}
+			  	if(tipoEjercicio==2) {
+			  		peso1=file.readFloat();
+			  	}
 			  descripcion2=file.readLine(); 
 			  }
 			
@@ -764,6 +774,12 @@ public class PanelEjercicios implements Initializable {
 			}
 			
 			txtDescripcion.setText(descripcion2);
+			peso.setText(peso1+"");
+			if(tipoEjercicio==2) {
+				if(tipo==1)
+					esCociente.fire();
+			}
+			
 	}
 	
 	

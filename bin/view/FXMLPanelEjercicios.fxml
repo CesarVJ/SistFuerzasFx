@@ -82,13 +82,19 @@
             			<TextField fx:id="numVect" prefWidth="50.0"></TextField>
             		</HBox>
             		
-            		<TableView fx:id="tablaDatos" prefHeight="180.0" prefWidth="320.0"/>
-            		
+            		<TableView fx:id="tablaDatos" prefHeight="180.0" prefWidth="320.0"/>            		
 
-            		<VBox>
+            		<VBox fx:id="adicionales" spacing="12.0">
             		   <Label text="Descripcion del ejercicio: "/>            		
             			<TextArea fx:id="txtDescripcion" prefHeight="80.0" ></TextArea>
+            		<HBox fx:id="pesoBox" spacing="12.0">
+            			<Label text="Peso = "/>
+            			<TextField fx:id="peso"/>            		
+            			<CheckBox text="Tomar como cociente" fx:id="esCociente"></CheckBox>
+            		</HBox>
+            		<Button text="Guardar Cambios" fx:id="btnGuardar"></Button>
             		</VBox>
+            	
 	
             	</VBox>	
 		  
