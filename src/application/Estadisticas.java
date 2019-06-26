@@ -17,7 +17,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TableColumn;
@@ -47,6 +52,19 @@ public class Estadisticas implements Initializable {
 	ObservableList<ContenidoTabla> data;
 	ObservableList<ContenidoTabla> dataEjercicios1;
 	ObservableList<ContenidoTabla> dataEjercicios2;
+	
+	
+	final CategoryAxis xAxis = new CategoryAxis ();
+    final NumberAxis  yAxis = new NumberAxis ();
+    
+    
+    
+    final NumberAxis xAxis2 = new NumberAxis();
+    final NumberAxis yAxis2 = new NumberAxis();
+    
+	final LineChart<String, Number> lineChart = new LineChart<String,Number>(xAxis,yAxis);	
+	final LineChart<Number,Number> lineChart2 = new LineChart<Number,Number>(xAxis2,yAxis2);	
+
 
 	
 	
@@ -184,7 +202,6 @@ public class Estadisticas implements Initializable {
 		numEjercicio.setMinWidth(0);
 		
 		TableColumn intentos = new TableColumn("Intentos");
-		//nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 		intentos.setCellValueFactory(new PropertyValueFactory<>("intentos"));
 		intentos.setMinWidth(0);
 		
@@ -192,17 +209,19 @@ public class Estadisticas implements Initializable {
 		errores.setCellValueFactory(new PropertyValueFactory<>("errores"));
 		errores.setMinWidth(0);
 		
-		datosEjercicios1.resizeColumn(numEjercicio, 33);
-		datosEjercicios1.resizeColumn(intentos, 33);
-		datosEjercicios1.resizeColumn(errores, 33);
+		datosEjercicios1.resizeColumn(numEjercicio, 5);
+		datosEjercicios1.resizeColumn(intentos, 5);
+		datosEjercicios1.resizeColumn(errores, 5);
 		
 	
 		
 		datosEjercicios1.getColumns().addAll(numEjercicio,intentos,errores);
 		datosEjercicios1.getStylesheets().add(Tabs.class.getResource("/view/Estilos.css").toExternalForm());
 
-		dataEjercicios1 = FXCollections.observableArrayList(new ContenidoTabla("1", "5", "4"));
-		datosEjercicios1.setItems(dataEjercicios1);
+		/*dataEjercicios1 = FXCollections.observableArrayList(new ContenidoTabla("1", "5", "4"));
+		dataEjercicios1.add(new ContenidoTabla("10","15","4"));
+
+		datosEjercicios1.setItems(dataEjercicios1);*/
 		
 		numEjercicio.setStyle( "-fx-alignment: CENTER;");
 		intentos.setStyle( "-fx-alignment: CENTER;");
@@ -221,9 +240,9 @@ public class Estadisticas implements Initializable {
 		errores2.setCellValueFactory(new PropertyValueFactory<>("errores2"));
 		errores2.setMinWidth(0);
 		
-		datosEjercicios2.resizeColumn(numEjercicio2, 33);
-		datosEjercicios2.resizeColumn(intentos2, 33);
-		datosEjercicios2.resizeColumn(errores2, 33);
+		datosEjercicios2.resizeColumn(numEjercicio2, 5);
+		datosEjercicios2.resizeColumn(intentos2, 5);
+		datosEjercicios2.resizeColumn(errores2, 5);
 		
 	
 		
@@ -234,10 +253,7 @@ public class Estadisticas implements Initializable {
 
 		datosEjercicios2.getStylesheets().add(Tabs.class.getResource("/view/Estilos.css").toExternalForm());
 
-		//dataEjercicios2 = FXCollections.observableArrayList(new ContenidoTabla("1", "5", "4"));
-		//datosEjercicios2.setItems(dataEjercicios2);
-		
-		
+	
 		
 		
 		btnAtras.setImage(new Image(getClass().getResourceAsStream("/images/back.png"), 50, 50, true, true));
@@ -380,6 +396,8 @@ public class Estadisticas implements Initializable {
 					System.out.println(texto);
 					
 					abrirEstadisticos(texto);
+					vaciarTablas();
+					rellenarTablaEjer1(texto);
 					rellenarTablaEjer2(texto);
 
 				});
@@ -390,10 +408,23 @@ public class Estadisticas implements Initializable {
 			e.printStackTrace();
 		}
 		
+		
+		
+
+		
+
+		
+		
 		//data = FXCollections.observableArrayList();
 		//dataEjercicios1= FXCollections.observableArrayList();
         //datosEjercicios1.setItems(dataEjercicios1);       
 
+	}
+	
+	public void vaciarTablas() {
+		if(dataEjercicios1!=null) {
+			dataEjercicios1.clear();
+		}
 	}
 	
 	public void limpiarDatos() {
@@ -434,6 +465,7 @@ public class Estadisticas implements Initializable {
 		//dataEjercicios1.add(new ContenidoTabla("Zlacko","ee","aaaa"));
 		vistaEstadisticos.toFront();
 		leerUsuario(nombUsuario);
+		
 
 	
 		
@@ -500,7 +532,107 @@ public class Estadisticas implements Initializable {
 		//}
 	}
 	
+	
+	public void rellenarTablaEjer1(String user) {
+		ArrayList<Integer> intentosChart= new ArrayList(),erroresChart= new ArrayList(),numEjercicio1Chart= new ArrayList();
+		
+		System.out.println("ESTE usuario= "+user);
+		RandomAccessFile file=null;
+		try {
+			 file= new RandomAccessFile(
+					 System.getProperty("user.home") + "\\SistFuerzasFiles\\intentos1.dat", "rw");
+		}catch(Exception e) {
+
+			try {
+				file= new RandomAccessFile(
+						 System.getProperty("user.home") + "/SistFuerzasFiles/intentos1.dat", "rw");
+			} catch (FileNotFoundException e1) {
+			}
+			
+		}
+			boolean band =false;
+			String usuario="";
+			int idEjer=0,intentos=0;
+			boolean completado=false;
+		try {
+			int contador=0;
+			while(file.getFilePointer()<file.length()) {
+		
+				usuario=file.readLine();
+				idEjer=file.readInt();
+				intentos=file.readInt();
+				completado=file.readBoolean();
+
+				band=(user.equals(usuario));	
+				if(band) {
+					
+					if(contador==0) {
+						dataEjercicios1 = FXCollections.observableArrayList(new ContenidoTabla(idEjer+"",((completado)?(intentos+1):(intentos))+"",intentos+""));
+					}else {
+						dataEjercicios1.add(new ContenidoTabla(idEjer+"",((completado)?(intentos+1):(intentos))+"",intentos+""));
+					}
+					numEjercicio1Chart.add(idEjer);
+					intentosChart.add(((completado)?(intentos+1):(intentos)));
+					erroresChart.add(intentos);
+					
+					//System.out.println(usuario+","+idEjer+", "+completado+","+intentos);
+					
+
+					contador++;
+					
+					//dataEjercicios1 = FXCollections.observableArrayList(new ContenidoTabla(idEjer+"",((completado)?(intentos+1):(intentos))+"",intentos+""));
+			         //data.add(new ContenidoTabla("","","","",""));
+
+				//	dataEjercicios1.add(new ContenidoTabla(idEjer+"",((completado)?(intentos+1):(intentos))+"",intentos+""));
+					//datosEjercicios1.setItems(dataEjercicios1);
+
+				}
+			}	
+			datosEjercicios1.setItems(dataEjercicios1);
+
+			file.close();
+			
+			XYChart.Series series = new XYChart.Series();
+			XYChart.Series series2 = new XYChart.Series();
+			
+			if(vistaEstadisticos.getChildren().contains(lineChart)) {
+				lineChart.getData().clear();
+				series.setName("Intentos");
+				series2.setName("Errores");
+			}
+
+			
+			for(int i=0;i<numEjercicio1Chart.size();i++) {
+				series.getData().add(new XYChart.Data(numEjercicio1Chart.get(i)+"",intentosChart.get(i)));
+				series2.getData().add(new XYChart.Data(numEjercicio1Chart.get(i)+"",erroresChart.get(i)));
+
+			}
+			
+		
+			lineChart.setTitle("Ejercicios Tipo 1");
+			lineChart.getData().addAll(series,series2);
+			lineChart.setLayoutY(20);
+			lineChart.setLayoutX(650);
+			lineChart.setPrefSize(380,250);
+			//lineChart.setLegendSide(Side.RIGHT);
+			//lineChart.setLegendVisible(false);
+			vistaEstadisticos.getChildren().add(lineChart);
+			series.setName("Intentos");
+			series2.setName("Errores");
+
+			yAxis.setMinorTickLength(0);
+			yAxis.setMinorTickVisible(false);
+			yAxis.setMinorTickCount(0);
+			xAxis.setLabel("No. Ejercicio");
+
+
+		}catch(Exception e2) {
+			System.out.println("Error1");
+		}	
+	}
 	public void rellenarTablaEjer2(String user) {
+		ArrayList<Integer> intentosChart= new ArrayList(),erroresChart= new ArrayList(),numEjercicio2Chart= new ArrayList();
+
 		System.out.println("ESTE usuario= "+user);
 		RandomAccessFile file=null;
 		try {
@@ -520,6 +652,7 @@ public class Estadisticas implements Initializable {
 			int idEjer=0,intentos=0;
 			boolean completado=false;
 		try {
+			int contador=0;
 			while(file.getFilePointer()<file.length()) {
 				usuario=file.readLine();
 				idEjer=file.readInt();
@@ -528,12 +661,47 @@ public class Estadisticas implements Initializable {
 
 				band=(user.equals(usuario));	
 				if(band) {
-					dataEjercicios2 = FXCollections.observableArrayList(new ContenidoTabla(idEjer+"",((completado)?(intentos+1):(intentos))+"",intentos+""));
-					datosEjercicios2.setItems(dataEjercicios2);
+					if(contador==0) {
+						dataEjercicios2 = FXCollections.observableArrayList(new ContenidoTabla(idEjer+"",((completado)?(intentos+1):(intentos))+"",intentos+""));
+					}else {
+						dataEjercicios2.add(new ContenidoTabla(idEjer+"",((completado)?(intentos+1):(intentos))+"",intentos+""));
+					}
+					numEjercicio2Chart.add(idEjer);
+					intentosChart.add(((completado)?(intentos+1):(intentos)));
+					erroresChart.add(intentos);
+					contador++;
 				}
 			}		
+			datosEjercicios2.setItems(dataEjercicios2);
+
 			file.close();
+
+			XYChart.Series series = new XYChart.Series();
+			XYChart.Series series2 = new XYChart.Series();
+
+
 			
+			for(int i=0;i<numEjercicio2Chart.size();i++) {
+				series.getData().add(new XYChart.Data(numEjercicio2Chart.get(i),intentosChart.get(i)));
+				series2.getData().add(new XYChart.Data(numEjercicio2Chart.get(i),erroresChart.get(i)));
+
+			}
+			
+		if(vistaEstadisticos.getChildren().contains(lineChart2)) {
+			lineChart2.getData().clear();
+			series.setName("Intentos");
+			series2.setName("Errores");
+		}
+			lineChart2.setTitle("Ejercicios Tipo 2");
+			lineChart2.getData().addAll(series,series2);
+			lineChart2.setLayoutY(280);
+			lineChart2.setLayoutX(650);
+			lineChart2.setPrefSize(380,250);
+			vistaEstadisticos.getChildren().add(lineChart2);
+			series.setName("Intentos");
+			series2.setName("Errores");
+			xAxis2.setLabel("No. Ejercicio");
+
 			
 			
 		}catch(Exception e2) {

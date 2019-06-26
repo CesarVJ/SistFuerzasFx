@@ -551,8 +551,12 @@ public class TipoEjercicio1 implements Initializable {
 				}	
 				
 				System.out.println(tam-1);
+				registrarCompletado(getUserName().getUsuario(),numEjercicio);
+
 			
 		} else {
+			registrarIntento(getUserName().getUsuario(),numEjercicio);
+
 			resultado.setTitle("Respuesta incorrecta");
 			resultado.setContentText(
 					"Alguno de tus resultados es incorrecto, verifica tus operaciones y vuelve a intentarlo");
@@ -566,6 +570,8 @@ public class TipoEjercicio1 implements Initializable {
 		resultado.showAndWait();
 		
 		}catch(Exception e){
+			registrarIntento(getUserName().getUsuario(),numEjercicio);
+
 			resultado.setTitle("Respuesta incorrecta");
 			resultado.setContentText(
 					"Alguno de tus resultados es incorrecto, verifica tus operaciones y vuelve a intentarlo");
@@ -698,6 +704,123 @@ public class TipoEjercicio1 implements Initializable {
          data.remove(--contadorFilas);          
          table.getItems().removeAll(table.getSelectionModel().getSelectedItems());
    }
+     
+     
+     public void registrarIntento(String user,int idEjercicio) {
+ 		RandomAccessFile file=null;
+ 		try {
+ 			 file= new RandomAccessFile(
+ 					 System.getProperty("user.home") + "\\SistFuerzasFiles\\intentos1.dat", "rw");
+ 		}catch(Exception e) {
+ 			System.out.println("Error0");
+
+ 			try {
+ 				file= new RandomAccessFile(
+ 						 System.getProperty("user.home") + "/SistFuerzasFiles/intentos1.dat", "rw");
+ 			} catch (FileNotFoundException e1) {
+ 				System.out.println("Error1");
+ 			}
+ 			
+ 		}
+ 			boolean band =false;
+ 			String usuario="";
+ 			int idEjer=0,intentos=0;
+ 			long posInicial=0,posFinal=0;
+ 			boolean completado=false;
+ 		try {
+ 			while(!band && file.getFilePointer()<file.length()) {
+
+ 				posInicial=file.getFilePointer();
+ 				usuario=file.readLine();
+ 				idEjer=file.readInt();
+ 				intentos=file.readInt();
+ 				completado=file.readBoolean();
+
+ 				band=(user.equals(usuario) && idEjer==idEjercicio);	
+ 				System.out.println("["+usuario+","+idEjer+","+intentos+","+completado+"]");
+ 			}
+ 			
+ 			if(band) {//Aumentar el num Intentos
+ 				file.seek(posInicial);
+ 				file.writeBytes(usuario+"\n");
+ 				file.writeInt(idEjer);
+ 				file.writeInt(intentos+1);
+ 				file.writeBoolean(completado);
+ 			}else {//primer intento
+ 				file.seek(file.length());
+ 				file.writeBytes(user+"\n");
+ 				file.writeInt(idEjercicio);
+ 				file.writeInt(1);	
+ 				file.writeBoolean(false);
+ 			}
+ 			file.close();
+ 			
+ 			
+ 			
+ 		}catch(Exception e2) {
+ 			System.out.println("Error2");
+ 		}
+ 	}
+ 	
+ 	public void registrarCompletado(String user,int idEjercicio) {
+ 		
+ 		RandomAccessFile file=null;
+ 		try {
+ 			 file= new RandomAccessFile(
+ 					 System.getProperty("user.home") + "\\SistFuerzasFiles\\intentos1.dat", "rw");
+ 		}catch(Exception e) {
+ 			System.out.println("Error0");
+
+ 			try {
+ 				file= new RandomAccessFile(
+ 						 System.getProperty("user.home") + "/SistFuerzasFiles/intentos1.dat", "rw");
+ 			} catch (FileNotFoundException e1) {
+ 				System.out.println("Error1");
+ 			}
+ 			
+ 		}
+ 			boolean band =false;
+ 			String usuario="";
+ 			int idEjer=0,intentos=0;
+ 			long posInicial=0,posFinal=0;
+ 			boolean completado=false;
+ 		try {
+ 			while(!band && file.getFilePointer()<file.length()) {
+
+ 				posInicial=file.getFilePointer();
+ 				usuario=file.readLine();
+ 				idEjer=file.readInt();
+ 				intentos=file.readInt();
+ 				completado=file.readBoolean();
+
+ 				band=(user.equals(usuario) && idEjer==idEjercicio);	
+ 				System.out.println("["+usuario+","+idEjer+","+intentos+","+completado+"]");
+ 			}
+ 			
+ 			if(band) {//Aumentar el num Intentos
+ 				file.seek(posInicial);
+ 				file.writeBytes(usuario+"\n");
+ 				file.writeInt(idEjer);
+ 				file.writeInt(intentos);
+ 				file.writeBoolean(true);
+ 			}else {//primer intento
+ 				file.seek(file.length());
+ 				file.writeBytes(user+"\n");
+ 				file.writeInt(idEjercicio);
+ 				file.writeInt(0);	
+ 				file.writeBoolean(true);
+ 			}
+ 			file.close();
+ 			
+ 			
+ 			
+ 		}catch(Exception e2) {
+ 			System.out.println("Error1");
+ 		}
+ 	
+ 		
+ 	}
+ 	
 	
 	
 	
