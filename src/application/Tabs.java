@@ -331,7 +331,7 @@ public class Tabs extends Application{
     public boolean ingresar(Usuario user) throws FileNotFoundException {
     	boolean band = false;
 		String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
-		int maxEjer1=0,maxEjer2=0;
+		int maxEjer1=0,maxEjer2=0,visitas=0;
 		RandomAccessFile file=null;
 		try {
 		 file= new RandomAccessFile(
@@ -343,7 +343,9 @@ public class Tabs extends Application{
 		
 		
 			try {
+				long pointer=0;
 				while(!band && file.getFilePointer()<file.length()) {
+					pointer=file.getFilePointer();
 					nombre = file.readLine();				
 					apellido = file.readLine();
 					nacimiento = file.readLine();
@@ -353,6 +355,7 @@ public class Tabs extends Application{
 					mail = file.readLine();
 					maxEjer1=file.readInt();
 					maxEjer2=file.readInt();
+					visitas=file.readInt();
 
 				}
 				
@@ -363,6 +366,23 @@ public class Tabs extends Application{
 				user.setCorreo(mail);
 				user.setMaxEjer1(maxEjer1);
 				user.setMaxEjer2(maxEjer2);
+				user.setVisitas(visitas+1);
+				
+				
+				
+				file.seek(pointer);
+				file.writeBytes(nombre+"\n");
+				file.writeBytes(apellido+"\n");
+				file.writeBytes(nacimiento+"\n");			
+				file.writeBytes(usuario+"\n");	
+				file.writeBytes(password+"\n");			
+				file.writeBytes(mail+"\n");		
+				file.writeInt(maxEjer1);
+				file.writeInt(maxEjer2);
+				file.writeInt(visitas+1);
+				
+				
+				
 				System.out.println("Ejercicios max:"+user.getMaxEjer1());
 				}
 		

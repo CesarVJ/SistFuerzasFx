@@ -250,7 +250,7 @@ public class Profile implements Initializable{
 			
 			boolean band = false;
 			String nombre="",apellido="",nacimiento="",usuario="",password1="",mail="";
-			int maxEjer1=0,maxEjer2=0;
+			int maxEjer1=0,maxEjer2=0,visitas=0;
 			long pointer=0;
 		try {
 			while(!band && file.getFilePointer()<file.length()) {
@@ -264,6 +264,7 @@ public class Profile implements Initializable{
 				mail = file.readLine();
 				maxEjer1=file.readInt();
 				maxEjer2=file.readInt();
+				visitas=file.readInt();
 
 			}
 			
@@ -278,6 +279,7 @@ public class Profile implements Initializable{
 				file.writeBytes((correoTF.getText().equals("")?mail:correoTF.getText())+"\n");		
 				file.writeInt(maxEjer1);
 				file.writeInt(maxEjer2);
+				file.writeInt(visitas);
 			}
 			file.close();
 			
@@ -377,7 +379,7 @@ public class Profile implements Initializable{
 			
 			boolean band = false;
 			String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
-			int maxEjer1=0,maxEjer2=0;
+			int maxEjer1=0,maxEjer2=0,visitas=0;
 			long pointer=0;
 		while(!band && file.getFilePointer()<file.length()) {
 			pointer=file.getFilePointer();
@@ -390,6 +392,7 @@ public class Profile implements Initializable{
 			mail = file.readLine();
 			maxEjer1=file.readInt();
 			maxEjer2=file.readInt();
+			visitas=file.readInt();
 
 		}
 		

@@ -90,7 +90,7 @@ public class Estadisticas implements Initializable {
 
 		//datosAlumno.setItems(data);
 		
-		TableColumn noControlColumn = new TableColumn("No. Control");
+		TableColumn noControlColumn = new TableColumn("Usuario");
 		noControlColumn.setCellValueFactory(new PropertyValueFactory<>("noControl"));
 		noControlColumn.setMinWidth(0);
 		
@@ -100,7 +100,7 @@ public class Estadisticas implements Initializable {
 
 		nombreColumn.setMinWidth(0);
 		
-		TableColumn carreraColumn = new TableColumn("Carrera");
+		TableColumn carreraColumn = new TableColumn("Correo");
 		carreraColumn.setCellValueFactory(new PropertyValueFactory<>("carrera"));
 		carreraColumn.setMinWidth(0);
 		
@@ -111,8 +111,7 @@ public class Estadisticas implements Initializable {
 		datosAlumno.getColumns().addAll(noControlColumn,nombreColumn,carreraColumn,visitasColumn);
 		datosAlumno.getStylesheets().add(Tabs.class.getResource("/view/Estilos.css").toExternalForm());
 
-		data = FXCollections.observableArrayList(new ContenidoTabla("17011277", "Cesar Valdez Jacinto", "Sistemas", "14"));
-		datosAlumno.setItems(data);
+		
 		datosAlumno.resizeColumn(noControlColumn, 20);
 		datosAlumno.resizeColumn(nombreColumn, 54);
 		datosAlumno.resizeColumn(carreraColumn, 30);
@@ -316,6 +315,7 @@ public class Estadisticas implements Initializable {
 				((ImageView) imgPerfiles.get(i)).getStyleClass().add("photoProfile");
 
 					String nombre = "", usuario = "",correro="",especialidad="",semestre="",noControl="";
+					int visitas=0;
 
 					try {
 						file = new RandomAccessFile(
@@ -330,7 +330,11 @@ public class Estadisticas implements Initializable {
 							file.readLine();
 							usuario=file.readLine();
 							file.readLine();
-							correro=file.readLine();																						
+							correro=file.readLine();	
+							file.readInt();
+							file.readInt();
+							visitas=file.readInt();
+
 							cont++;
 						}
 						file1=(cont==1)?(int) file.getFilePointer():file1;
@@ -350,7 +354,7 @@ public class Estadisticas implements Initializable {
 							file = new RandomAccessFile(
 									System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
 						} catch (FileNotFoundException e2) {
-							System.out.println("Error2");
+							System.out.println("Error20");
 
 						}
 
@@ -395,8 +399,8 @@ public class Estadisticas implements Initializable {
 					String texto=((Text) ((VBox)(er.getSource())).getChildren().get(1)).getText();
 					System.out.println(texto);
 					
-					abrirEstadisticos(texto);
 					vaciarTablas();
+					abrirEstadisticos(texto);
 					rellenarTablaEjer1(texto);
 					rellenarTablaEjer2(texto);
 
@@ -425,6 +429,13 @@ public class Estadisticas implements Initializable {
 		if(dataEjercicios1!=null) {
 			dataEjercicios1.clear();
 		}
+		if(dataEjercicios2!=null) {
+			dataEjercicios2.clear();
+		}
+		if(data!=null) {
+			data.clear();
+		}
+	
 	}
 	
 	public void limpiarDatos() {
@@ -475,8 +486,8 @@ public class Estadisticas implements Initializable {
 	}
 	public void leerUsuario(String user) {
 		boolean band = false;
-		String nombre,apellido,nacimiento,usuario,password,mail;
-		int maxEjer1,maxEjer2;
+		String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
+		int maxEjer1,maxEjer2,visitas=0;
 		RandomAccessFile file=null;
 		
 		try {
@@ -504,8 +515,12 @@ public class Estadisticas implements Initializable {
 					mail = file.readLine();
 					maxEjer1=file.readInt();
 					maxEjer2=file.readInt();
+					visitas=file.readInt();
 
 				}
+				
+				data = FXCollections.observableArrayList(new ContenidoTabla(usuario, nombre+" "+apellido,mail, visitas+""));
+				datosAlumno.setItems(data);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

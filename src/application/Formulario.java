@@ -196,6 +196,7 @@ public class Formulario implements Initializable {
 	public boolean verificarExistencias(String user) throws IOException {
 		boolean band = false;
 		String nombre,apellido,nacimiento,usuario,password,mail;
+		int visitas=0;
 		int maxEjer1,maxEjer2;
 		RandomAccessFile file=null;
 		
@@ -218,6 +219,7 @@ public class Formulario implements Initializable {
 				mail = file.readLine();
 				maxEjer1=file.readInt();
 				maxEjer2=file.readInt();
+				visitas=file.readInt();
 	
 			}
 			file.close();
@@ -264,6 +266,7 @@ public class Formulario implements Initializable {
 			file.writeBytes(user.getCorreo()+"\n");		
 			file.writeInt(1);
 			file.writeInt(1);
+			file.writeInt(0);
 			file.close();
 			
 			

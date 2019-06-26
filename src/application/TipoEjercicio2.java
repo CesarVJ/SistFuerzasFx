@@ -552,7 +552,7 @@ public class TipoEjercicio2 implements Initializable{
 		
 	  	boolean band = false;
 			String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
-			int maxEjer1=0,maxEjer2=0;
+			int maxEjer1=0,maxEjer2=0,visitas=0;
 			long pointer=0;
 		while(!band && file.getFilePointer()<file.length()) {
 			pointer=file.getFilePointer();
@@ -565,6 +565,7 @@ public class TipoEjercicio2 implements Initializable{
 			mail = file.readLine();
 			maxEjer1=file.readInt();
 			maxEjer2=file.readInt();
+			visitas=file.readInt();
 
 		}
 		
@@ -578,6 +579,7 @@ public class TipoEjercicio2 implements Initializable{
 			file.writeBytes(mail+"\n");		
 			file.writeInt(maxEjer1);
 			file.writeInt(max);
+			file.writeInt(visitas);
 		}
 		file.close();
 	}

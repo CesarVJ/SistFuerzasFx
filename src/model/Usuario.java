@@ -13,6 +13,7 @@ public class Usuario {
 	private String password;
 	private int maxEjer1;
 	private int maxEjer2;
+	private int visitas;
 
 	
 	
@@ -80,6 +81,11 @@ public class Usuario {
 	public void setMaxEjer2(int maxEjer2) {
 		this.maxEjer2 = maxEjer2;
 	}
-	
+	public int getVisitas() {
+		return visitas;
+	}
+	public void setVisitas(int visitas) {
+		this.visitas = visitas;
+	}
 
 }
