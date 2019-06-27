@@ -305,7 +305,7 @@ public class Estadisticas implements Initializable {
 		try {
 
 			int file1=0;
-			for (int i = 0; i < btnPerfiles.size()+1 && file.getFilePointer()<file.length()-file1; i++) {
+			for (int i = 0; i < btnPerfiles.size()+1 && file.getFilePointer()<file.length(); i++) {
 				
 				System.out.println("FilePointer= "+file.getFilePointer()+"  file.length= "+file.length());
 				System.out.println("JAJAJAJA");
