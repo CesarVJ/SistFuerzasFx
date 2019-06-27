@@ -85,6 +85,9 @@ public class PanelEjercicios implements Initializable {
 	float initialLayoutX2 = 90;
 	float initialLayoutY2 = 70;
 	static int idEjer2;
+	
+	static int idEjercicioAModificar;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -463,43 +466,7 @@ public class PanelEjercicios implements Initializable {
 
 		});
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-		btnAtrasEditor.setOnMouseClicked(e -> {
+			btnAtrasEditor.setOnMouseClicked(e -> {
 			// editorEjercicios.getChildren().clear();
 			
 			editorEjercicios.toBack();
@@ -530,7 +497,116 @@ public class PanelEjercicios implements Initializable {
 		
 		
 		crearEditor();	
+	}
+	
+	
+	public void guardarCambios() {
+		int  tipoEjercicio = adicionales.getChildren().contains(pesoBox)?2:1; 
+		RandomAccessFile file = null;
+		int maxFiles = 0;
+		try {
+			if(tipoEjercicio==1) {
+				file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo.dat", "rw");
+				maxFiles = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicios1")
+						.listFiles().length;
+			}else if(tipoEjercicio ==2) {
+				file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2.dat", "rw");
+				maxFiles = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicio2")
+						.listFiles().length;
+				
+			}
+			
+		} catch (Exception op) {
+			try {
+				
+				if(tipoEjercicio==1) {
+					file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo.dat",
+							"rw");
+					maxFiles = new File(System.getProperty("user.home") + "/SistFuerzasFiles/imgEjercicios1")
+							.listFiles().length;
+				}else if(tipoEjercicio==2) {
+					file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo2.dat",
+							"rw");
+					maxFiles = new File(System.getProperty("user.home") + "/SistFuerzasFiles/imgEjercicio2")
+							.listFiles().length;
+				}
+				
 
+			} catch (FileNotFoundException e) {
+
+			}
+		}
+		
+		
+		boolean band = false;
+		int vects2=0;
+		int id=0,tipo=0;
+		float peso1=0;
+		String descripcion2="",nameFile="";
+		float[] angulos2=null,fuerzas2=null;
+		long apuntador=0;
+		 
+			try {
+				while(!band && file.getFilePointer()<file.length()) { 
+					apuntador=file.getFilePointer();					
+					id=file.readInt();
+					  band=(id)==idEjercicioAModificar?true:false;
+				  		nameFile=file.readLine(); 
+				  		tipo=file.readInt();//tipo
+				  		vects2=file.readInt();
+				  		 angulos2= new float[vects2]; 
+				  		 fuerzas2= new float[vects2];		  
+				  		for(int n=0;n<angulos2.length;n++) {
+				  			angulos2[n]=file.readFloat();
+				  			fuerzas2[n]=file.readFloat(); 
+				  		}
+				  	if(tipoEjercicio==2) {
+				  		peso1=file.readFloat();
+				  	}
+				  descripcion2=file.readLine(); 
+				  }
+				
+				float[] angulosNuevos= new float[vects2];
+				float[] fuerzasNuevas= new float[vects2];
+				int ii=0;
+				for (ContenidoTabla bean : data) {
+					if (!bean.getFuerzas().getText().isEmpty()) {
+						angulosNuevos[ii] = Float.parseFloat(bean.getAngulo().getText());
+						fuerzasNuevas[ii] = Float.parseFloat(bean.getFuerzas().getText());
+					}
+					System.out.println(fuerzasNuevas[ii] + "," + angulosNuevos[ii]);
+					ii++;
+					
+					
+				}
+
+				file.seek(apuntador);
+				file.writeInt(id);
+				file.writeBytes(nameFile+"\n");
+				if(tipoEjercicio==2) {
+					file.writeInt(esCociente.isSelected()?2:1);
+				}else {
+					file.writeInt(tipo);
+				}				
+				file.writeInt(vects2);
+				for(int n=0;n<vects2;n++) {
+					file.writeFloat(angulosNuevos[n]);
+					file.writeFloat(fuerzasNuevas[n]);
+				}	
+				
+				if(tipoEjercicio==2) {
+					file.writeFloat(Float.parseFloat(peso.getText()));
+			  	}
+				file.writeBytes(txtDescripcion.getText()+"\n");
+				file.close();
+	
+				
+			} catch (IOException e) {
+
+			}
+		  
+	
+		
 	}
 	
 	
@@ -671,10 +747,7 @@ public class PanelEjercicios implements Initializable {
 	
 
 	public void rellenarDatos(int idE, int tipoEjercicio) {
-		
-		
-		numVect.requestFocus();
-	
+		numVect.requestFocus();	
 		//rellenarDatos(idEjer);
 		RandomAccessFile file = null;
 		int maxFiles = 0;
@@ -736,6 +809,8 @@ public class PanelEjercicios implements Initializable {
 			  	}
 			  descripcion2=file.readLine(); 
 			  }
+			
+			idEjercicioAModificar=id;
 			
 			if(tipoEjercicio==1) {
 				imgEjercicio.setImage(new Image(

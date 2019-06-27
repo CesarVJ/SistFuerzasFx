@@ -92,7 +92,7 @@
             			<TextField fx:id="peso"/>            		
             			<CheckBox text="Tomar como cociente" fx:id="esCociente"></CheckBox>
             		</HBox>
-            		<Button text="Guardar Cambios" fx:id="btnGuardar"></Button>
+            		<Button text="Guardar Cambios" fx:id="btnGuardar" onAction="#guardarCambios"></Button>
             		</VBox>
             	
 	
