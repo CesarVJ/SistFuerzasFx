@@ -28,7 +28,9 @@
 			<Label fx:id="textUser" text="     Perfil de usuario  "></Label>
 		</VBox>
 		<VBox fx:id="photoBox" prefHeight="200.0">
-			<ImageView fx:id="photoProfile" />
+		<VBox fx:id="VBoxPhoto" prefWidth="200.0">
+			<ImageView fx:id="photoProfile" />		
+		</VBox>
 			<Label fx:id="userName" text="" />
 			<Label text="Ejercicios resueltos: " />
 

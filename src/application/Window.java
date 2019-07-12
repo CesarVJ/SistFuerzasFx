@@ -264,6 +264,13 @@ public class Window implements Initializable{
 		    new File (username+"/SistFuerzasFiles/imgEjercicios1").mkdirs();
 
 	    }
+	    
+	    try {
+		    new File (username+"\\SistFuerzasFiles\\avatares").mkdirs();
+		    }catch(Exception er) {
+			    new File (username+"/SistFuerzasFiles/avatares").mkdirs();
+
+		    }
 		//imgSistema2 = new Image("file:///"+username+"\\SistFuerzasFiles\\imgEjercicios\\Ejer1.png", 500, 355, true, true);// Ancho.alto
 //C:\Users\alberto\SistFuerzasFiles\imgEjercicios
 

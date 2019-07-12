@@ -42,7 +42,7 @@ public class Profile implements Initializable{
 	//@FXML
 	//private HBox mainBox;
 	@FXML
-	private VBox picture,accountDetails,titlePic,titleAccount,photoBox,exportBtns1,importBtns,cajaNombre,cajaApellidos,cajaCorreo,cajaNacimiento,cajaContra,cajaContraConfirm,cajaDatos;
+	private VBox picture,accountDetails,titlePic,titleAccount,photoBox,exportBtns1,importBtns,cajaNombre,cajaApellidos,cajaCorreo,cajaNacimiento,cajaContra,cajaContraConfirm,cajaDatos,VBoxPhoto;
 	@FXML
 	private HBox info1,info2,cajaH2,cajaH3,exportBtns,cajaBoton,cajaH1;
 	@FXML
@@ -59,6 +59,7 @@ public class Profile implements Initializable{
 	PasswordField password,passwordConfirm;
 	@FXML
 	Button btnGuardar;
+	static String rutaAvatar="",nameFileAvatar="";
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -94,9 +95,29 @@ public class Profile implements Initializable{
 		picture.setSpacing(10);
 		exportBtns.setSpacing(15);
 
+		File avatar=null;
 		
-		photoProfile.setImage(new Image(getClass().getResourceAsStream("/images/avatar.png"), 260, 200, true, true));
+		if(System.getProperty("os.name").contains("Windows")) {
+			avatar = new File(System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(getUserName().getUsuario())+".png");
+		}else {
+			avatar = new File(System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(getUserName().getUsuario())+".png");
+		}
+		
+		if(avatar.exists()) {
+			if(System.getProperty("os.name").contains("Windows")) {
+				photoProfile.setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\avatares\\"+(getUserName().getUsuario())+".png", 260, 200, false, false));// Ancho.alto
+			}else {
+				photoProfile.setImage(new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(getUserName().getUsuario())+".png", 260, 200, false, false));// Ancho.alto
+			}
+		}else {
+			photoProfile.setImage(new Image(getClass().getResourceAsStream("/images/avatar.png"), 260, 200, true, true));
+		}
+		
+		
+		
+		
 		photoProfile.getStyleClass().add("photoProfile");
+		VBoxPhoto.getStyleClass().add("VBoxPhoto");
 		
 		//exportApp.setImage(new Image(getClass().getResourceAsStream("/images/exportApp.png"), 30, 30, true, true));
 		//exportApp.getStyleClass().add("photoProfile");
@@ -110,6 +131,7 @@ public class Profile implements Initializable{
 		
 		
 		photoBox.setAlignment(Pos.CENTER);
+		VBoxPhoto.setAlignment(Pos.CENTER);
 		userName.getStyleClass().add("userName");
 		userName.setText(getUserName().getUsuario());
 		
@@ -156,6 +178,8 @@ public class Profile implements Initializable{
 		passwordConfirm.setPrefWidth(170);
 		password.setPrefWidth(170);
 		birthDay.setPrefWidth(170);
+		VBoxPhoto.setPrefWidth(150);
+
 		
 		firstName.setText(getUserName().getNombre());
 		lastName.setText(getUserName().getApellidos());
@@ -362,8 +386,53 @@ public class Profile implements Initializable{
 		}
 		
 		
+		photoProfile.setOnMouseClicked(e->{cambiarAvatar();});
+		
+		
 
 	}
+	
+	public void cambiarAvatar() {
+		
+		try {
+		FileChooser select = new FileChooser();
+		select.setTitle("Elegir imagen");
+		Stage stage = (Stage)profile.getScene().getWindow();
+		
+		File file = select.showOpenDialog(stage);
+		file.setWritable(true);
+		
+		rutaAvatar= file.getAbsolutePath();
+		nameFileAvatar = file.getName();
+	       
+
+		System.out.println(rutaAvatar);
+		
+		try {
+			Files.copy(Paths.get(rutaAvatar),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\avatares\\"+(getUserName().getUsuario())+".png"),StandardCopyOption.REPLACE_EXISTING);
+		}catch(Exception nm) {
+				Files.copy(Paths.get(rutaAvatar),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(getUserName().getUsuario())+".png"),StandardCopyOption.REPLACE_EXISTING);
+		}
+		
+		if(System.getProperty("os.name").contains("Windows")) {
+			photoProfile.setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\avatares\\"+(getUserName().getUsuario())+".png", 260, 200, false, false));// Ancho.alto
+		}else {
+			photoProfile.setImage(new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(getUserName().getUsuario())+".png", 260, 200, false, false));// Ancho.alto
+		}
+
+		
+		
+		}catch(Exception ex) {
+			System.out.println("No se selecciono ninguna imagen");
+		}
+
+	}
+	
+	
+	
+	
+	
+	
 	
 	public void setProgressEjer() {
 		try {
@@ -374,9 +443,7 @@ public class Profile implements Initializable{
 				file= new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");
 
 			}
-			
-			
-			
+	
 			boolean band = false;
 			String nombre="",apellido="",nacimiento="",usuario="",password="",mail="";
 			int maxEjer1=0,maxEjer2=0,visitas=0;
@@ -437,8 +504,6 @@ public class Profile implements Initializable{
 
 		progressText1.setText((sizeFile1+1)+"");
 		progressText2.setText(sizeFile2+"");
-		
-
 	}
 
 	

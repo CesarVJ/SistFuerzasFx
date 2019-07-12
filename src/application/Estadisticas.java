@@ -342,9 +342,29 @@ public class Estadisticas implements Initializable {
 										+ "\\SistFuerzasFiles\\imgEjercicios1\\Ejer3.png",
 								150, 150, true, true));*/
 						
-						//((ImageView) imgPerfiles.get(i)).setImage(new Image("SistFuerzasFiles\\imgEjercicios1\\avatar.png",150,150,true,true));
-						((ImageView) imgPerfiles.get(i)).setImage(new Image(getClass().getResourceAsStream("/images/avatar.png"), 100, 100, true, true));
+						//((ImageView) imgPerfiles.get(i)).setImage(new Image("SistFuerzasFiles\\imgEjercicios1\\avatar.png",150,150,true,true));	
+						
+						
+						File avatar=null;
 
+						if(System.getProperty("os.name").contains("Windows")) {
+							avatar = new File(System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(usuario)+".png");
+						}else {
+							avatar = new File(System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(usuario)+".png");
+						}
+						
+						if(avatar.exists()) {
+							if(System.getProperty("os.name").contains("Windows")) {
+								System.out.println("La imagen se definio para "+usuario);
+								((ImageView) imgPerfiles.get(i)).setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\avatares\\"+usuario+".png", 100, 100, true,true));// Ancho.alto
+								//((ImageView) imgPerfiles.get(i)).setImage(new Image(getClass().getResourceAsStream(System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(usuario)+".png"), 100, 100, true, true));
+							}else {
+								((ImageView) imgPerfiles.get(i)).setImage(new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(usuario)+".png", 100, 100, true, true));// Ancho.alto
+								//((ImageView) imgPerfiles.get(i)).setImage(new Image(getClass().getResourceAsStream("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/avatares/"+(usuario)+".png"), 100, 100, true, true));
+							}
+						}else {
+							((ImageView) imgPerfiles.get(i)).setImage(new Image(getClass().getResourceAsStream("/images/avatar.png"), 100, 100, true, true));
+						}
 						
 
 
