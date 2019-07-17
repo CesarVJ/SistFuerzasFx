@@ -42,8 +42,14 @@
             			<ChoiceBox fx:id="tipoEjercicio"></ChoiceBox>
             		</HBox>
             		<HBox spacing="20.0">
-            			<Label fx:id="vectLbl">Selecciona el numero de vectores: </Label>
-            			<TextField fx:id="numVect" prefWidth="50.0"></TextField>
+            			<Label fx:id="vectLbl">Agregar o eliminar vectores: </Label>
+            			<!--<TextField fx:id="numVect" prefWidth="50.0"></TextField>-->
+            			 <VBox fx:id="quitar" prefHeight="30.0" prefWidth="30.0" >
+         					<ImageView fx:id="imgQuitar"/>	                       
+    					 </VBox> 
+						<VBox fx:id="agregar" prefHeight="30.0" prefWidth="30.0" >
+      						<ImageView fx:id="imgAgregar"/>	                       
+						</VBox>  
             		</HBox>
             		
             		<TableView fx:id="tablaDatos" prefHeight="180.0" prefWidth="320.0"/>

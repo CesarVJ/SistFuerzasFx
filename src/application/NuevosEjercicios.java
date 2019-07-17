@@ -29,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -55,13 +56,13 @@ public class NuevosEjercicios implements Initializable{
 	@FXML
 	HBox boxName,pesoBox;
 	@FXML
-	VBox  board,formData,form2;
+	VBox  board,formData,form2,agregar,quitar;
 	@FXML
-	ImageView icoImg;
+	ImageView icoImg,imgQuitar,imgAgregar;
 	@FXML
 	private ChoiceBox<String> tipoEjercicio;
 	@FXML
-	private TextField numVect,peso;
+	private TextField peso;//numVect
 	@FXML 
 	private TableView tablaDatos;//,tablaDatos2;
 	@FXML
@@ -193,7 +194,7 @@ public class NuevosEjercicios implements Initializable{
 		formData.getStyleClass().add("formData");
 		
 		
-		try {
+		/*try {
 		numVect.setOnKeyPressed(e->{
 			System.out.println("KeyReleased()"+numVect.getText());
 
@@ -268,7 +269,7 @@ public class NuevosEjercicios implements Initializable{
 			}			
 			System.out.println(e.getCode());
 			//if(e.getCode().equals("BACK_SPACE")) {		
-		});
+		});*/
 
 		
 		
@@ -308,15 +309,57 @@ public class NuevosEjercicios implements Initializable{
 
 		}
 		
+		
+		
+			DropShadow ef = new DropShadow();
+			ef.setWidth(10);
+			ef.setHeight(10);
+			ef.setOffsetX(0);
+			ef.setOffsetY(0);
+			ef.setRadius(10);
+			agregar.setEffect(ef);
+			//btnAyuda.setSpacing(2);
+		    agregar.setAlignment(Pos.CENTER);
+		    agregar.setPrefWidth(30);
+			
+			imgAgregar.setImage(new Image(getClass().getResourceAsStream("/images/agregar.png"), 30, 30, true, true));
+			imgAgregar.getStyleClass().addAll("photoProfile","profileBox2");
+			agregar.getStyleClass().add("profileBox2");
+			imgAgregar.getStyleClass().add("boton");
+
+			
+			agregar.setOnMouseClicked(e->{
+				agregarVector();
+			});
+			
+		    quitar.setEffect(ef);
+					//btnAyuda.setSpacing(2);
+		    quitar.setAlignment(Pos.CENTER);
+		    quitar.setPrefWidth(30);
+					
+					imgQuitar.setImage(new Image(getClass().getResourceAsStream("/images/quitar.png"), 30, 30, true, true));
+					imgQuitar.getStyleClass().addAll("photoProfile","profileBox2");
+					quitar.getStyleClass().add("profileBox2");
+					imgAgregar.getStyleClass().add("boton");
+
+					
+					quitar.setOnMouseClicked(e->{	
+						
+						eliminarVector();
+					});
+			
+		
 	}
 	
 	 private void agregarVector(){
          contadorFilas++;
          data.add(new ContenidoTabla("",""));
+         vects++;
    }
      private void eliminarVector(){
          data.remove(--contadorFilas);          
          tablaDatos.getItems().removeAll(tablaDatos.getSelectionModel().getSelectedItems());
+         vects--;
    }
 
      

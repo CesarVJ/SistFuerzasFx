@@ -301,11 +301,7 @@ public class TipoEjercicio1 implements Initializable {
 				imgSistema = new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicios1/Ejer"+numEjercicio+".png", 500, 355, false, false);// Ancho.alto				
 		 }
 		
-		
-		
-		
-		
-		
+
 		// grafica1.setImage(new
 		// Image(getClass().getResourceAsStream("/images/imgEjercicios/Ejer"+numEjercicio+".png"),500,400,true,true));
 		grafica1.setImage(imgSistema);
