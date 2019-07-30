@@ -226,9 +226,7 @@ public class PanelEjercicios implements Initializable {
 
 		picture2.setEffect(ef);
 		picture2.setSpacing(10);
-		// btnEjer.setEffect(ef);
-		// btnEjer.setSpacing(10);
-		// btnEjer.setAlignment(Pos.CENTER);
+
 
 		picture.setOnMouseClicked(e -> {
 			// ventanaProfile.toFront();

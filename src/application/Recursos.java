@@ -1,7 +1,9 @@
 package application;
 
 import java.awt.Desktop;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -11,29 +13,43 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
 public class Recursos implements Initializable {
 	
 	@FXML
-	AnchorPane recursos,contenedor2,contenedor1;
+	AnchorPane recursos,contenedor2,contenedor1,editorRecursos;
 	@FXML
-	VBox btnApuntes,btnVideos,btnWikis,btnEjemplos,btnCuestionarios,btnObjetivo,btnPropuestos,btnAgregar;
+	VBox btnApuntes,btnVideos,btnWikis,btnEjemplos,btnCuestionarios,btnObjetivo,btnPropuestos,btnAgregar,formulario;
 	@FXML
-	ImageView imgApuntes,imgVideos,imgWikis,imgEjemplos,imgCuestionarios,imgObjetivo,imgPropuestos,btnAtras,imgAgregar;
+	ImageView imgApuntes,imgVideos,imgWikis,imgEjemplos,imgCuestionarios,imgObjetivo,imgPropuestos,btnAtras,imgAgregar,salirEditor;
 	@FXML
 	Label txtApuntes,txtVideos,txtWikis,txtEjemplos,txtCuestionarios,txtObjetivo,txtPropuestos,txtAgregar;
 	@FXML
 	Hyperlink myHyperlink;
 	@FXML
 	WebView video1,video2;
+	@FXML
+	HBox urlBox,nombreBox,categoriaBox;
+	@FXML
+	TextField URL,nombre;
+	@FXML
+	ChoiceBox<String> categoria;
+	@FXML
+	Button btnValidar;
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -60,7 +76,19 @@ public class Recursos implements Initializable {
 		txtObjetivo.getStyleClass().add("textForm");
 		txtAgregar.getStyleClass().add("textForm");
 
+		formulario.setSpacing(30);
+		urlBox.setSpacing(15);
+		nombreBox.setSpacing(15);
+		categoriaBox.setSpacing(15);
 		
+		categoria.getItems().addAll("Apuntes","Videos","Ejemplos","Cuestionarios","Wikis","Ejercicios");
+		categoria.getStylesheets().add(Tabs.class.getResource("/view/Estilos.css").toExternalForm());
+		categoria.setTooltip(new Tooltip("Selecciona en donde se añadira el recurso"));
+		categoria.getSelectionModel().select(0);
+		
+		btnValidar.getStyleClass().add("btnGuardar");
+
+
 
 		
 		DropShadow ef = new DropShadow();
@@ -127,6 +155,9 @@ public class Recursos implements Initializable {
 
 		imgAgregar.setImage(new Image(getClass().getResourceAsStream("/images/addResources.png"), 100, 100, true, true));
 		imgAgregar.getStyleClass().addAll("photoProfile");
+		
+		salirEditor.setImage(new Image(getClass().getResourceAsStream("/images/back.png"), 50, 50, true, true));
+		salirEditor.getStyleClass().addAll("photoProfile","boton");
 
 		
 		
@@ -152,6 +183,16 @@ public class Recursos implements Initializable {
 
 		contenedor2.setPrefWidth(1100);
 		contenedor2.setPrefHeight(580);
+		
+		
+		editorRecursos.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());
+		editorRecursos.getStyleClass().add("backgrounds");
+		editorRecursos.setPrefWidth(1100);
+		editorRecursos.setPrefHeight(580);
+		
+		
+		
+		
 
 		contenedor1.toFront();
 		//Links
@@ -184,8 +225,16 @@ public class Recursos implements Initializable {
 			irPagina("http://www.google.com");		
 		});
 		
+		btnAgregar.setOnMouseClicked(e->{
+			editorRecursos.toFront();
+		});
+		
 		btnAtras.setOnMouseClicked(e->{
 			contenedor2.toBack();
+		});
+		
+		salirEditor.setOnMouseClicked(e->{
+			editorRecursos.toBack();
 		});
 		
 		
@@ -213,6 +262,57 @@ public class Recursos implements Initializable {
 		});
 	}*/
 
+	}
+	
+	public void validarRecurso() {
+		RandomAccessFile datosRecursos= crearArchivo();
+		escribirDatos(datosRecursos);
+	}
+	
+	
+	public RandomAccessFile crearArchivo() {
+		try {
+			return crearParaWindows();
+		}catch(Exception e) {
+			return crearParaLinux();
+		}	
+	}
+	
+	public RandomAccessFile crearParaWindows() throws FileNotFoundException {
+		return new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\recursos.dat", "rw");
+	}
+	
+	public RandomAccessFile crearParaLinux(){
+		try {
+			return  new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/recursos.dat", "rw");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void escribirDatos(RandomAccessFile datosRecursos) {
+		try {
+			Recurso recursoActual= recuperarDatos();		
+			datosRecursos.writeBytes(recursoActual.getNombre()+"\n");
+			datosRecursos.writeBytes(recursoActual.getCategoria()+"\n");
+			datosRecursos.writeBytes(recursoActual.getEnlace()+"\n");
+			datosRecursos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public Recurso recuperarDatos() {
+		Recurso actualResource = new Recurso();
+		String nombreActual=nombre.getText();
+		String categoriaActual=categoria.getSelectionModel().getSelectedItem();
+		String URLActual=URL.getText();
+		actualResource.setNombre(nombreActual);
+		actualResource.setCategoria(categoriaActual);
+		actualResource.setEnlace(URLActual);
+		return actualResource;		
 	}
 	
 	public static void irPagina(String pagina) {

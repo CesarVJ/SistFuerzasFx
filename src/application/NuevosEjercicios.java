@@ -47,8 +47,7 @@ import java.nio.file.*;
 public class NuevosEjercicios implements Initializable{
 	
 	@FXML
-	AnchorPane add;
-	
+	AnchorPane add;	
 	@FXML
 	Button btnAgregar,btnValidar;
 	@FXML
@@ -77,9 +76,7 @@ public class NuevosEjercicios implements Initializable{
 	int vects=0;	
 	String ruta="",nameFile="";
 
-	
-	
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		

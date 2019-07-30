@@ -10,6 +10,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.web.WebView?>
+<?import javafx.scene.control.ChoiceBox?>
+
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="580.0" prefWidth="1100.0" fx:controller="application.Recursos" fx:id="recursos">
 <AnchorPane   fx:id="contenedor1">
@@ -50,8 +52,6 @@
 			<Label fx:id="txtAgregar" />		
 	</VBox>
 	
-	
-	
 	<Hyperlink fx:id="myHyperlink"></Hyperlink>
 	</AnchorPane>
 	
@@ -66,6 +66,40 @@
 	</WebView>
 
          </children>
+      </AnchorPane>
+      
+      
+      <AnchorPane fx:id="editorRecursos">
+      	<children>
+      	<ImageView layoutX="30.0" layoutY="15" fx:id="salirEditor"/>      
+      	<Label text="Datos del recurso" layoutX="100.0" layoutY="30.0"></Label>
+      	
+      	<VBox layoutX="100.0" layoutY="80.0" fx:id="formulario">
+      	<HBox fx:id="urlBox">
+      		<Label text="URL           "></Label>
+      		<TextField fx:id="URL" prefWidth="300.0"></TextField>
+      	</HBox>
+      	
+      	<HBox fx:id="nombreBox">
+      		<Label text="Nombre     "></Label>
+      		<TextField fx:id="nombre" prefWidth="300.0"></TextField>
+      	</HBox>
+      	
+      	<HBox fx:id="categoriaBox">
+      		<Label text="Categoria  "></Label>
+      		<ChoiceBox fx:id="categoria" prefWidth="200.0"></ChoiceBox>
+      	</HBox>
+      	
+      	<Button fx:id="btnValidar" text="Agregar Recurso" onAction="#validarRecurso"></Button>
+      	
+      	</VBox>
+      	
+      	
+      	
+      	
+      	</children>
+      
+      
       </AnchorPane>
 	
 	

@@ -175,12 +175,7 @@ public class Window implements Initializable{
 			}catch(Exception ee) {
 				file= new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo2.dat", "rw");
 
-			}
-			
-			
-			
-			
-			
+			}		
 			if(file.length()!=0) {
 				if(ventanaEjer2==null) {
 					ventanaEjer2 = FXMLLoader.load(getClass().getResource("/view/FXMLCuerpoL.fxml"));
