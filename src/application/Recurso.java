@@ -7,6 +7,16 @@ public class Recurso {
 	private String enlace;
 	
 	
+	public Recurso() {
+		this.nombre=null;
+		this.categoria=null;
+		this.enlace=null;
+	}
+	public Recurso(String nombre,String categoria,String enlace) {
+		this.nombre=nombre;
+		this.categoria=categoria;
+		this.enlace=enlace;
+	}
 	
 	public String getNombre() {
 		return nombre;

@@ -30,11 +30,11 @@ import javafx.scene.web.WebView;
 public class Recursos implements Initializable {
 	
 	@FXML
-	AnchorPane recursos,contenedor2,contenedor1,editorRecursos;
+	AnchorPane recursos,contenedor2,contenedor1,editorRecursos,visorDeRecursos;
 	@FXML
-	VBox btnApuntes,btnVideos,btnWikis,btnEjemplos,btnCuestionarios,btnObjetivo,btnPropuestos,btnAgregar,formulario;
+	VBox btnApuntes,btnVideos,btnWikis,btnEjemplos,btnCuestionarios,btnObjetivo,btnPropuestos,btnAgregar,formulario,listaDeRecursos,contenedorRecursos;
 	@FXML
-	ImageView imgApuntes,imgVideos,imgWikis,imgEjemplos,imgCuestionarios,imgObjetivo,imgPropuestos,btnAtras,imgAgregar,salirEditor;
+	ImageView imgApuntes,imgVideos,imgWikis,imgEjemplos,imgCuestionarios,imgObjetivo,imgPropuestos,btnAtras,imgAgregar,salirEditor,salirDeVisor;
 	@FXML
 	Label txtApuntes,txtVideos,txtWikis,txtEjemplos,txtCuestionarios,txtObjetivo,txtPropuestos,txtAgregar;
 	@FXML
@@ -49,6 +49,8 @@ public class Recursos implements Initializable {
 	ChoiceBox<String> categoria;
 	@FXML
 	Button btnValidar;
+	@FXML
+	Label txtTitle;
 	
 	
 	@Override
@@ -88,9 +90,6 @@ public class Recursos implements Initializable {
 		
 		btnValidar.getStyleClass().add("btnGuardar");
 
-
-
-		
 		DropShadow ef = new DropShadow();
 		ef.setWidth(20);
 	    ef.setHeight(20);
@@ -123,11 +122,7 @@ public class Recursos implements Initializable {
 		txtPropuestos.setWrapText(true);
 		txtObjetivo.setText("Objetivo de\naprendizaje");
 		txtPropuestos.setText(" Ejercicios\nPropuestos");
-		txtAgregar.setText(" Añadir Recursos");
-
-
-
-		
+		txtAgregar.setText(" Añadir Recursos");	
 		
 		imgApuntes.setImage(new Image(getClass().getResourceAsStream("/images/apuntes.png"), 100, 100, true, true));
 		imgApuntes.getStyleClass().add("photoProfile");
@@ -158,13 +153,10 @@ public class Recursos implements Initializable {
 		
 		salirEditor.setImage(new Image(getClass().getResourceAsStream("/images/back.png"), 50, 50, true, true));
 		salirEditor.getStyleClass().addAll("photoProfile","boton");
-
 		
-		
-		
-		
-		
-		
+		salirDeVisor.setImage(new Image(getClass().getResourceAsStream("/images/back.png"), 50, 50, true, true));
+		salirDeVisor.getStyleClass().addAll("photoProfile","boton");
+	
 		btnApuntes.setAlignment(Pos.CENTER);
 		btnVideos.setAlignment(Pos.CENTER);
 		btnWikis.setAlignment(Pos.CENTER);
@@ -172,8 +164,7 @@ public class Recursos implements Initializable {
 		btnCuestionarios.setAlignment(Pos.CENTER);
 		btnPropuestos.setAlignment(Pos.CENTER);
 		btnObjetivo.setAlignment(Pos.CENTER);
-		btnAgregar.setAlignment(Pos.CENTER);
-		
+		btnAgregar.setAlignment(Pos.CENTER);		
 		
 		contenedor2.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());
 		contenedor2.getStyleClass().add("backgrounds");
@@ -190,10 +181,17 @@ public class Recursos implements Initializable {
 		editorRecursos.setPrefWidth(1100);
 		editorRecursos.setPrefHeight(580);
 		
+		visorDeRecursos.getStylesheets().add(Window.class.getResource("/view/Estilos.css").toExternalForm());
+		visorDeRecursos.getStyleClass().add("backgrounds");
+		visorDeRecursos.setPrefWidth(1100);
+		visorDeRecursos.setPrefHeight(580);
 		
-		
-		
+		listaDeRecursos.setSpacing(10);
+		listaDeRecursos.setAlignment(Pos.CENTER);
+		contenedorRecursos.setAlignment(Pos.CENTER);
 
+
+		
 		contenedor1.toFront();
 		//Links
 	
@@ -203,18 +201,22 @@ public class Recursos implements Initializable {
 			
 		});
 		
-		btnApuntes.setOnMouseClicked(e->{
-			irPagina("http://www.google.com");		
+		btnApuntes.setOnMouseClicked(e->{			
+			visorDeRecursos.toFront();
+			cargarRecursos("Apuntes");
 		});
 		btnWikis.setOnMouseClicked(e->{
-			irPagina("http://www.google.com");		
+			visorDeRecursos.toFront();
+			cargarRecursos("Wikis");	
 		});
 		btnEjemplos.setOnMouseClicked(e->{
-			irPagina("http://www.google.com");		
+			visorDeRecursos.toFront();
+			cargarRecursos("Ejemplos");	
 		});
 		
 		btnCuestionarios.setOnMouseClicked(e->{
-			irPagina("http://www.google.com");
+			visorDeRecursos.toFront();
+			cargarRecursos("Cuestionarios");	
 		});
 		
 		btnPropuestos.setOnMouseClicked(e->{
@@ -237,6 +239,10 @@ public class Recursos implements Initializable {
 			editorRecursos.toBack();
 		});
 		
+		salirDeVisor.setOnMouseClicked(e->{
+			visorDeRecursos.toBack();
+		});
+		
 		
 	    video1.getEngine().load(
 	      "https://www.youtube.com/embed/Da-2h2B4faU"
@@ -246,8 +252,6 @@ public class Recursos implements Initializable {
 	  	      "https://www.youtube.com/embed/Da-2h2B4faU"
 	  	    );
 	    //video1.setPrefSize(640, 390);
-		
-		
 		/*myHyperlink.setOnAction(e -> {
 		    if(Desktop.isDesktopSupported())
 		    {
@@ -264,12 +268,85 @@ public class Recursos implements Initializable {
 
 	}
 	
+	public void cargarRecursos(String categoria) {
+		try {
+			verificarLista();
+			enlistarRecursos(categoria);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void verificarLista() {
+		boolean listaVacia=listaDeRecursos.getChildren().isEmpty();
+		if(!listaVacia) {
+			limpiarLista();
+		}
+	}
+	
+	public void limpiarLista() {
+		listaDeRecursos.getChildren().clear();
+	}
+	
+	public void enlistarRecursos(String categoriaAEnlistar) throws IOException {
+		txtTitle.setText(categoriaAEnlistar);
+		RandomAccessFile archivoDeRecursos =crearArchivo();
+		Recurso recursoActual=null;
+		long indicador = 0;
+		archivoDeRecursos.seek(indicador);
+		while(archivoDeRecursos.getFilePointer()<archivoDeRecursos.length()) {
+			String nombre=archivoDeRecursos.readLine();
+			String categoria= archivoDeRecursos.readLine();
+			String enlace=archivoDeRecursos.readLine();
+			if(categoriaAEnlistar.equals(categoria)) {
+				recursoActual= new Recurso(nombre,categoria,enlace);
+				posicionarRecurso(recursoActual);
+			}
+		}
+		archivoDeRecursos.close();
+	}
+	
+	public void posicionarRecurso(Recurso recursoNuevo) {
+		//nuevoElemento.setLayoutY(Y);
+
+		Label nombre = new Label(recursoNuevo.getNombre());
+		HBox nuevoElemento= new HBox();
+		nuevoElemento.getChildren().add(nombre);
+		nuevoElemento.setPrefHeight(18);
+		nuevoElemento.setPrefWidth(600);
+
+		agregarEfecto(nuevoElemento);		
+		
+		listaDeRecursos.getChildren().add(nuevoElemento);
+		definirHipervinculo(nuevoElemento,recursoNuevo.getEnlace());
+	
+	}
+	
+	public void agregarEfecto(HBox nuevoElemento) {
+		DropShadow ef = new DropShadow();
+		ef.setWidth(20);
+	    ef.setHeight(20);
+	    ef.setOffsetX(1);
+	    ef.setOffsetY(1);
+	    ef.setRadius(1);	    
+	    nuevoElemento.getStyleClass().addAll("cajaRecurso","titlesText");
+	    nuevoElemento.setEffect(ef);
+	    txtTitle.getStyleClass().addAll("textBoard");	   	    
+	    
+	}
+	
+	public void definirHipervinculo(HBox nuevoElemento,String enlace) {
+		nuevoElemento.setOnMouseClicked(e->{
+			irPagina(enlace);					
+		});
+	}
+	
+	
+	
 	public void validarRecurso() {
 		RandomAccessFile datosRecursos= crearArchivo();
 		escribirDatos(datosRecursos);
 	}
-	
-	
 	public RandomAccessFile crearArchivo() {
 		try {
 			return crearParaWindows();
@@ -293,6 +370,7 @@ public class Recursos implements Initializable {
 	
 	public void escribirDatos(RandomAccessFile datosRecursos) {
 		try {
+			datosRecursos.seek(datosRecursos.length());
 			Recurso recursoActual= recuperarDatos();		
 			datosRecursos.writeBytes(recursoActual.getNombre()+"\n");
 			datosRecursos.writeBytes(recursoActual.getCategoria()+"\n");

@@ -93,14 +93,25 @@
       	<Button fx:id="btnValidar" text="Agregar Recurso" onAction="#validarRecurso"></Button>
       	
       	</VBox>
-      	
-      	
-      	
-      	
       	</children>
-      
-      
       </AnchorPane>
+      
+      
+      <AnchorPane fx:id="visorDeRecursos">
+      <children>
+         <ImageView layoutX="30.0" layoutY="15" fx:id="salirDeVisor"/>            
+     	 <VBox layoutX="250.0" layoutY="25" prefWidth="600.0"  spacing="40" fx:id="contenedorRecursos">
+            <Label fx:id="txtTitle"></Label>      
+            <VBox fx:id="listaDeRecursos">
+            <children>
+            
+            </children>                              
+            </VBox>      
+     	 </VBox>      
+      
+      </children>      
+      </AnchorPane>
+      
 	
 	
 
