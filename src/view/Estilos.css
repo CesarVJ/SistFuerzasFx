@@ -352,7 +352,7 @@
  	-fx-pref-width: 30px; 	
  	-fx-pref-height: 34px; 
  }
- .cajaRecurso:hover{
+ .hipervinculo:hover{
  	-fx-cursor: hand;
  }
  

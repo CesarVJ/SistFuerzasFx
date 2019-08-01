@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 
 public class Recursos implements Initializable {
@@ -51,6 +52,10 @@ public class Recursos implements Initializable {
 	Button btnValidar;
 	@FXML
 	Label txtTitle;
+	
+	public boolean editorActivo=false;
+	public long posicionInicioDelRecursoActual=0;
+	public Recurso recursoEditado=null;
 	
 	
 	@Override
@@ -237,6 +242,9 @@ public class Recursos implements Initializable {
 		
 		salirEditor.setOnMouseClicked(e->{
 			editorRecursos.toBack();
+			if(editorActivo) {
+				editorActivo=false;
+			}
 		});
 		
 		salirDeVisor.setOnMouseClicked(e->{
@@ -298,8 +306,9 @@ public class Recursos implements Initializable {
 			String nombre=archivoDeRecursos.readLine();
 			String categoria= archivoDeRecursos.readLine();
 			String enlace=archivoDeRecursos.readLine();
-			if(categoriaAEnlistar.equals(categoria)) {
-				recursoActual= new Recurso(nombre,categoria,enlace);
+			boolean habilitado=archivoDeRecursos.readBoolean();
+			if(categoriaAEnlistar.equals(categoria) && habilitado) {
+				recursoActual= new Recurso(nombre,categoria,enlace,habilitado);
 				posicionarRecurso(recursoActual);
 			}
 		}
@@ -307,22 +316,55 @@ public class Recursos implements Initializable {
 	}
 	
 	public void posicionarRecurso(Recurso recursoNuevo) {
-		//nuevoElemento.setLayoutY(Y);
-
+		ImageView iconoEnlace= new ImageView();
+		iconoEnlace.setImage(new Image(getClass().getResourceAsStream("/images/link.png"), 25, 25, true, true));
+		
+		ImageView iconoEditar= new ImageView();
+		iconoEditar.setImage(new Image(getClass().getResourceAsStream("/images/edit.png"), 25, 25, true, true));
+		iconoEditar.getStyleClass().addAll("hipervinculo");
+		
+		ImageView iconoRemover= new ImageView();
+		iconoRemover.setImage(new Image(getClass().getResourceAsStream("/images/delete.png"), 25, 25, true, true));
+		iconoRemover.getStyleClass().addAll("hipervinculo");
+		
+		
 		Label nombre = new Label(recursoNuevo.getNombre());
+		HBox cajaDeNombre = new HBox();
+		cajaDeNombre.getChildren().addAll(iconoEnlace,nombre);
+		cajaDeNombre.setPrefWidth(510);
+		cajaDeNombre.setSpacing(10);
+		
 		HBox nuevoElemento= new HBox();
-		nuevoElemento.getChildren().add(nombre);
+		nuevoElemento.getChildren().addAll(cajaDeNombre,iconoEditar,iconoRemover);
+	
 		nuevoElemento.setPrefHeight(18);
 		nuevoElemento.setPrefWidth(600);
+		nuevoElemento.setSpacing(10);
 
-		agregarEfecto(nuevoElemento);		
+		agregarEfecto(nuevoElemento,cajaDeNombre);		
 		
 		listaDeRecursos.getChildren().add(nuevoElemento);
-		definirHipervinculo(nuevoElemento,recursoNuevo.getEnlace());
+		definirHipervinculo(cajaDeNombre,recursoNuevo.getEnlace());
+		
+		iconoRemover.setOnMouseClicked(e->{
+			try {
+				removerRecurso(recursoNuevo);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});		
+		iconoEditar.setOnMouseClicked(e->{
+			try {
+				editarRecurso(recursoNuevo);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
 	
 	}
 	
-	public void agregarEfecto(HBox nuevoElemento) {
+	public void agregarEfecto(HBox nuevoElemento,HBox hipervinculo) {
 		DropShadow ef = new DropShadow();
 		ef.setWidth(20);
 	    ef.setHeight(20);
@@ -331,8 +373,9 @@ public class Recursos implements Initializable {
 	    ef.setRadius(1);	    
 	    nuevoElemento.getStyleClass().addAll("cajaRecurso","titlesText");
 	    nuevoElemento.setEffect(ef);
-	    txtTitle.getStyleClass().addAll("textBoard");	   	    
-	    
+	    txtTitle.getStyleClass().addAll("textBoard");	 
+	    hipervinculo.getStyleClass().addAll("hipervinculo");
+
 	}
 	
 	public void definirHipervinculo(HBox nuevoElemento,String enlace) {
@@ -341,11 +384,97 @@ public class Recursos implements Initializable {
 		});
 	}
 	
+	public void removerRecurso(Recurso recursoARemover) throws IOException {
+		String nombreRecurso = recursoARemover.getNombre();
+		RandomAccessFile datosRecursos= crearArchivo();
+		datosRecursos.seek(0);
+		boolean encontrado=false;
+		while(datosRecursos.getFilePointer()<datosRecursos.length() && !encontrado ) {
+			long posRecursoActual=datosRecursos.getFilePointer();
+			String nombre=datosRecursos.readLine();
+			String categoria=datosRecursos.readLine();
+			String enlace=datosRecursos.readLine();
+			boolean habilitado=datosRecursos.readBoolean();
+			if(nombreRecurso.equals(nombre) && categoria.equals(recursoARemover.getCategoria()) && habilitado==recursoARemover.isHabilitado()) {
+				datosRecursos.seek(posRecursoActual);
+				datosRecursos.writeBytes(nombre+"\n");
+				datosRecursos.writeBytes(categoria+"\n");
+				datosRecursos.writeBytes(enlace+"\n");
+				datosRecursos.writeBoolean(false);
+				encontrado=!encontrado;
+			}
+		}
+		datosRecursos.close();
+		cargarRecursos(recursoARemover.getCategoria());
+	}
+	
+	public void editarRecurso(Recurso recursoAEditar) throws IOException {
+		abrirEditor(recursoAEditar);
+	}
+	
+	public void abrirEditor(Recurso recursoCargado) throws IOException {
+		editorRecursos.toFront();
+		rellenarDatos(recursoCargado);
+		editorActivo=true;
+		recursoEditado=recursoCargado;
+		
+		/*Revisar mas tarde, problema: dentro del archivo de datos se sobreescriben los caracteres al ser mas grandes las cadenas
+		editorActivo=true;
+		posicionInicioDelRecursoActual=buscarPosicionDelRecurso(recursoCargado);
+		*/
+	}
+	public void rellenarDatos(Recurso recursoCargado) {
+		URL.setText(recursoCargado.getEnlace());
+		nombre.setText(recursoCargado.getNombre());
+		categoria.getSelectionModel().select(recursoCargado.getCategoria());
+	}
+	
+	public long buscarPosicionDelRecurso(Recurso recursoCargado) throws IOException {				
+		String nombreRecurso = recursoCargado.getNombre();
+		RandomAccessFile datosRecursos= crearArchivo();
+		datosRecursos.seek(0);
+		boolean encontrado=false;
+		long posRecursoActual=0;
+		while(datosRecursos.getFilePointer()<datosRecursos.length() && !encontrado ) {
+			posRecursoActual=datosRecursos.getFilePointer();
+			String nombre=datosRecursos.readLine();
+			String categoria=datosRecursos.readLine();
+			String enlace=datosRecursos.readLine();
+			boolean habilitado=datosRecursos.readBoolean();
+			if(nombreRecurso.equals(nombre)) {
+				encontrado=!encontrado;
+			}
+		}
+		datosRecursos.close();
+		return posRecursoActual;			
+	}
 	
 	
 	public void validarRecurso() {
+		try {
+			if(editorActivo) {
+				removerRecurso(recursoEditado);
+				RandomAccessFile datosRecursos= crearArchivo();
+				escribirDatos(datosRecursos,datosRecursos.length());
+				editorActivo=false;
+				cargarRecursos(recursoEditado.getCategoria());
+				/*Revisar mas tarde, problema: dentro del archivo de datos se sobreescriben los caracteres al ser mas grandes las cadenas
+				validarRecurso(posicionInicioDelRecursoActual);
+				editorActivo=false;
+				*/
+			}else {
+				RandomAccessFile datosRecursos= crearArchivo();
+				escribirDatos(datosRecursos,datosRecursos.length());
+			}
+	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void validarRecurso(long posicion) {
 		RandomAccessFile datosRecursos= crearArchivo();
-		escribirDatos(datosRecursos);
+		escribirDatos(datosRecursos,posicion);
 	}
 	public RandomAccessFile crearArchivo() {
 		try {
@@ -368,13 +497,14 @@ public class Recursos implements Initializable {
 		}
 	}
 	
-	public void escribirDatos(RandomAccessFile datosRecursos) {
+	public void escribirDatos(RandomAccessFile datosRecursos,long posicion) {
 		try {
-			datosRecursos.seek(datosRecursos.length());
+			datosRecursos.seek(posicion);
 			Recurso recursoActual= recuperarDatos();		
 			datosRecursos.writeBytes(recursoActual.getNombre()+"\n");
 			datosRecursos.writeBytes(recursoActual.getCategoria()+"\n");
 			datosRecursos.writeBytes(recursoActual.getEnlace()+"\n");
+			datosRecursos.writeBoolean(true);
 			datosRecursos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
