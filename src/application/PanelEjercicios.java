@@ -87,6 +87,7 @@ public class PanelEjercicios implements Initializable {
 	static int idEjer2;
 	
 	static int idEjercicioAModificar;
+	String rutaArchivoViejo="";
 
 
 	@Override
@@ -475,13 +476,7 @@ public class PanelEjercicios implements Initializable {
 			}
 			
 			numVect.clear();
-			txtDescripcion.clear();
-
-			
-			
-			
-			
-			
+			txtDescripcion.clear();	
 		});
 
 		btnAtras.setOnMouseClicked(e -> {
@@ -497,8 +492,201 @@ public class PanelEjercicios implements Initializable {
 		crearEditor();	
 	}
 	
-	
 	public void guardarCambios() {
+		int  tipoEjercicio = adicionales.getChildren().contains(pesoBox)?2:1; 
+		RandomAccessFile archivoViejo = null;
+		int maxFiles = 0;
+		try {
+			if(tipoEjercicio==1) {
+				archivoViejo= abrirArchivo(tipoEjercicio);
+				maxFiles=obtenerNumDeArchivos(1);
+				modificarDatos(archivoViejo,tipoEjercicio);	
+			}else if(tipoEjercicio==2) {			
+				archivoViejo= abrirArchivo(tipoEjercicio);
+				maxFiles=obtenerNumDeArchivos(2);
+				modificarDatos(archivoViejo,tipoEjercicio);	
+			}			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}	
+		
+	}
+	public RandomAccessFile abrirArchivo(int tipo) throws FileNotFoundException {
+		RandomAccessFile file=null;
+		String homePath=System.getProperty("user.home");				
+		String rutaDatosGraficasWindows ="\\SistFuerzasFiles\\graficasInfo";
+		String rutaDatosGraficaOtros ="/SistFuerzasFiles/graficasInfo";		
+		
+		if(System.getProperty("os.name").contains("Windows")) {
+			if(tipo!=1) {
+				file=new RandomAccessFile(homePath+rutaDatosGraficasWindows+tipo+".dat","rw");
+				rutaArchivoViejo=rutaDatosGraficasWindows+tipo+".dat";
+			}else {
+				file=new RandomAccessFile(homePath+rutaDatosGraficasWindows+".dat","rw");
+				rutaArchivoViejo=rutaDatosGraficasWindows+".dat";
+
+			}
+		}else {
+			if(tipo!=1) {
+				file=new RandomAccessFile(homePath+rutaDatosGraficaOtros+tipo+".dat","rw");
+				rutaArchivoViejo=rutaDatosGraficaOtros+tipo+".dat";
+
+			}else {
+				file=new RandomAccessFile(homePath+rutaDatosGraficaOtros+".dat","rw");
+				rutaArchivoViejo=rutaDatosGraficaOtros+".dat";
+
+			}
+		}		
+		return file;
+	}
+	
+	public int obtenerNumDeArchivos(int tipo) {
+		String homePath=System.getProperty("user.home");				
+		String rutaWindows1="\\SistFuerzasFiles\\imgEjercicios1";
+		String rutaWindows2="\\SistFuerzasFiles\\imgEjercicio2";		
+		String rutaOtros1="/SistFuerzasFiles/imgEjercicios1";
+		String rutaOtros2="/SistFuerzasFiles/imgEjercicio2";
+		int numArchivos=0;
+		if(System.getProperty("os.name").contains("Windows")) {
+			if(tipo!=1) {
+				numArchivos= new File(homePath +rutaWindows1).listFiles().length;
+			}else {
+				numArchivos= new File(homePath +rutaWindows2).listFiles().length;
+			}
+		}else {
+			if(tipo!=1) {
+				numArchivos= new File(homePath +rutaOtros1).listFiles().length;
+			}else {
+				numArchivos= new File(homePath +rutaOtros2).listFiles().length;
+			}
+		}
+		return numArchivos;
+	}
+	
+	
+	public void modificarDatos(RandomAccessFile archivoViejo,int tipoEjercicio) throws IOException {
+		RandomAccessFile archivoNuevo=null;
+		String rutaArchivoNuevo="";
+		if(System.getProperty("os.name").contains("Windows")) {
+			if(tipoEjercicio==1) {
+				archivoNuevo= new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfoTemporal.dat","rw");
+				rutaArchivoNuevo="\\SistFuerzasFiles\\graficasInfoTemporal.dat";
+			}else {
+				archivoNuevo=new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\graficasInfo2Temporal.dat", "rw");
+				rutaArchivoNuevo="\\SistFuerzasFiles\\graficasInfo2Temporal.dat";
+			}
+		}else {
+			if(tipoEjercicio==1) {
+				archivoNuevo= new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfoTemporal.dat","rw");
+				rutaArchivoNuevo="/SistFuerzasFiles/graficasInfoTemporal.dat";
+
+			}else {
+				archivoNuevo= new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo2Temporal.dat","rw");
+				rutaArchivoNuevo="/SistFuerzasFiles/graficasInfo2Temporal.dat";
+
+			}
+		}
+		
+		boolean isEditado = false;
+		int vects2=0;
+		int id=0,tipo=0;
+		float peso1=0;
+		String descripcion="",nameFile="";
+		float[] angulos2=null,fuerzas2=null;
+		long apuntador=0;
+		
+	
+		 
+	
+		while(archivoViejo.getFilePointer()<archivoViejo.length()) { 
+			id=archivoViejo.readInt();
+			isEditado=(id)==idEjercicioAModificar?true:false;
+			nameFile=archivoViejo.readLine(); 
+			tipo=archivoViejo.readInt();//tipo
+			vects2=archivoViejo.readInt();
+			angulos2= new float[vects2]; 
+			fuerzas2= new float[vects2];		  
+			for(int n=0;n<angulos2.length;n++) {
+				angulos2[n]=archivoViejo.readFloat();
+		 		fuerzas2[n]=archivoViejo.readFloat(); 
+		  	}
+			if(tipoEjercicio==2) {
+				peso1=archivoViejo.readFloat();
+			}
+			descripcion=archivoViejo.readLine(); 
+			
+		
+			
+			if(!isEditado) {
+				archivoNuevo.seek(archivoNuevo.length());
+				archivoNuevo.writeInt(id);
+				archivoNuevo.writeBytes(nameFile+"\n");				
+				archivoNuevo.writeInt(tipo);				
+				archivoNuevo.writeInt(vects2);
+				for(int n=0;n<vects2;n++) {
+					archivoNuevo.writeFloat(angulos2[n]);
+					archivoNuevo.writeFloat(fuerzas2[n]);
+				}				
+				if(tipoEjercicio==2) {
+					archivoNuevo.writeFloat(peso1);
+			  	}
+				archivoNuevo.writeBytes(descripcion+"\n");
+			}else {
+				//Obteniendo datos nuevos
+				float[] angulosNuevos= new float[vects2];
+				float[] fuerzasNuevas= new float[vects2];
+				int ii=0;
+				for (ContenidoTabla bean : data) {
+					if (!bean.getFuerzas().getText().isEmpty()) {
+						angulosNuevos[ii] = Float.parseFloat(bean.getAngulo().getText());
+						fuerzasNuevas[ii] = Float.parseFloat(bean.getFuerzas().getText());
+					}
+					ii++;
+				}//Datos obtenidos
+								
+				archivoNuevo.seek(archivoNuevo.length());
+				archivoNuevo.writeInt(id);
+				archivoNuevo.writeBytes(nameFile+"\n");
+				if(tipoEjercicio==2) {
+					archivoNuevo.writeInt(esCociente.isSelected()?2:1);
+				}else {
+					archivoNuevo.writeInt(tipo);
+				}				
+				archivoNuevo.writeInt(vects2);
+				for(int n=0;n<vects2;n++) {
+					archivoNuevo.writeFloat(angulosNuevos[n]);
+					archivoNuevo.writeFloat(fuerzasNuevas[n]);
+				}					
+				if(tipoEjercicio==2) {
+					archivoNuevo.writeFloat(Float.parseFloat(peso.getText()));
+			  	}
+				archivoNuevo.writeBytes(txtDescripcion.getText()+"\n");	
+			}
+			isEditado=false;
+		}
+		archivoNuevo.close();
+		archivoViejo.close();
+		
+		reemplazarArchivos(rutaArchivoViejo,rutaArchivoNuevo);
+	}
+	
+	public void reemplazarArchivos(String antiguo,String nuevo) {
+		System.out.print("Intercambiando archivos");
+		File archivoAntiguo= new File(System.getProperty("user.home") + antiguo);
+		File archivoNuevo= new File(System.getProperty("user.home") + nuevo);
+		
+		archivoAntiguo.delete();
+		archivoNuevo.renameTo(new File(System.getProperty("user.home")+antiguo));
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	public void guardarCambios2() {
 		int  tipoEjercicio = adicionales.getChildren().contains(pesoBox)?2:1; 
 		RandomAccessFile file = null;
 		int maxFiles = 0;
@@ -512,11 +700,9 @@ public class PanelEjercicios implements Initializable {
 				maxFiles = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicio2")
 						.listFiles().length;
 				
-			}
-			
+			}	
 		} catch (Exception op) {
-			try {
-				
+			try {				
 				if(tipoEjercicio==1) {
 					file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/graficasInfo.dat",
 							"rw");
