@@ -549,15 +549,15 @@ public class PanelEjercicios implements Initializable {
 		int numArchivos=0;
 		if(System.getProperty("os.name").contains("Windows")) {
 			if(tipo!=1) {
-				numArchivos= new File(homePath +rutaWindows1).listFiles().length;
-			}else {
 				numArchivos= new File(homePath +rutaWindows2).listFiles().length;
+			}else {
+				numArchivos= new File(homePath +rutaWindows1).listFiles().length;
 			}
 		}else {
 			if(tipo!=1) {
-				numArchivos= new File(homePath +rutaOtros1).listFiles().length;
-			}else {
 				numArchivos= new File(homePath +rutaOtros2).listFiles().length;
+			}else {
+				numArchivos= new File(homePath +rutaOtros1).listFiles().length;
 			}
 		}
 		return numArchivos;
@@ -633,8 +633,9 @@ public class PanelEjercicios implements Initializable {
 				archivoNuevo.writeBytes(descripcion+"\n");
 			}else {
 				//Obteniendo datos nuevos
-				float[] angulosNuevos= new float[vects2];
-				float[] fuerzasNuevas= new float[vects2];
+				int nuevoNumDeVectores=Integer.parseInt(numVect.getText());
+				float[] angulosNuevos= new float[nuevoNumDeVectores];
+				float[] fuerzasNuevas= new float[nuevoNumDeVectores];
 				int ii=0;
 				for (ContenidoTabla bean : data) {
 					if (!bean.getFuerzas().getText().isEmpty()) {
@@ -647,13 +648,13 @@ public class PanelEjercicios implements Initializable {
 				archivoNuevo.seek(archivoNuevo.length());
 				archivoNuevo.writeInt(id);
 				archivoNuevo.writeBytes(nameFile+"\n");
-				if(tipoEjercicio==2) {
-					archivoNuevo.writeInt(esCociente.isSelected()?2:1);
-				}else {
+				//if(tipoEjercicio==2) {
+					//archivoNuevo.writeInt(esCociente.isSelected()?2:1);
+				//}else {
 					archivoNuevo.writeInt(tipo);
-				}				
-				archivoNuevo.writeInt(vects2);
-				for(int n=0;n<vects2;n++) {
+				//}				
+				archivoNuevo.writeInt(nuevoNumDeVectores);
+				for(int n=0;n<nuevoNumDeVectores;n++) {
 					archivoNuevo.writeFloat(angulosNuevos[n]);
 					archivoNuevo.writeFloat(fuerzasNuevas[n]);
 				}					
