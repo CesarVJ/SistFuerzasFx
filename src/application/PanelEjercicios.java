@@ -46,15 +46,15 @@ public class PanelEjercicios implements Initializable {
 	@FXML
 	ScrollPane ejerciciosT1Scroll,ejerciciosT2Scroll;
 	@FXML
-	VBox titlePanel, photoBox, picture, titlePanel2, photoBox2, picture2, formData,adicionales;
+	VBox titlePanel, photoBox, picture, titlePanel2, photoBox2, picture2, formData,adicionales,quitar,agregar;
 	@FXML
 	HBox pesoBox;
 	@FXML
 	Label textTitle, textTitle2, indicacionLbl, vectLbl,txtEjercicio1,totalEjer1,totalEjer2,txtEjercicio2;
 	@FXML
-	ImageView photoProfile, photoProfile2, btnAtras, btnAtrasEditor,btnAtras2,imgEjercicio;
+	ImageView photoProfile, photoProfile2, btnAtras, btnAtrasEditor,btnAtras2,imgEjercicio,imgQuitar,imgAgregar;
 	@FXML
-	TextField numVect,peso;
+	TextField peso;//numVect
 	@FXML
 	CheckBox esCociente;
 	@FXML
@@ -88,6 +88,8 @@ public class PanelEjercicios implements Initializable {
 	
 	static int idEjercicioAModificar;
 	String rutaArchivoViejo="";
+	
+	//int numeroDeVectores=0;
 
 
 	@Override
@@ -224,9 +226,36 @@ public class PanelEjercicios implements Initializable {
 		ejercicios.toFront();
 		picture.setEffect(ef);
 		picture.setSpacing(10);
-
 		picture2.setEffect(ef);
-		picture2.setSpacing(10);
+		picture2.setSpacing(10);				
+		agregar.setEffect(ef);
+	    agregar.setAlignment(Pos.CENTER);
+	    agregar.setPrefWidth(30);
+		
+		imgAgregar.setImage(new Image(getClass().getResourceAsStream("/images/agregar.png"), 30, 30, true, true));
+		imgAgregar.getStyleClass().addAll("photoProfile","profileBox2");
+		agregar.getStyleClass().add("profileBox2");
+		imgAgregar.getStyleClass().add("boton");
+
+		
+		agregar.setOnMouseClicked(e->{
+			agregarVector();
+		});
+		
+	    quitar.setEffect(ef);
+	    quitar.setAlignment(Pos.CENTER);
+	    quitar.setPrefWidth(30);				
+		imgQuitar.setImage(new Image(getClass().getResourceAsStream("/images/quitar.png"), 30, 30, true, true));
+		imgQuitar.getStyleClass().addAll("photoProfile","profileBox2");
+		quitar.getStyleClass().add("profileBox2");
+		imgAgregar.getStyleClass().add("boton");				
+		quitar.setOnMouseClicked(e->{						
+			eliminarVector();
+		});
+		
+
+
+
 
 
 		picture.setOnMouseClicked(e -> {
@@ -465,18 +494,24 @@ public class PanelEjercicios implements Initializable {
 
 		});
 		
-			btnAtrasEditor.setOnMouseClicked(e -> {
+		btnAtrasEditor.setOnMouseClicked(e -> {
 			// editorEjercicios.getChildren().clear();
 			
 			editorEjercicios.toBack();
 			//editorEjercicios.getChildren().clear();
 			limpiarDatos();
-			for(int i=0;i<Integer.parseInt(numVect.getText());i++) {
+			int filasActuales=contadorFilas;
+			for(int i=0;i<filasActuales;i++) {
 				eliminarVector();
 			}
 			
-			numVect.clear();
+			System.out.print("La tabla se quedo con: "+tablaDatos.getItems().size()+" vectores y la variable vectores vale "+filasActuales);
+
+			contadorFilas=0;
+			
+			//numVect.clear();
 			txtDescripcion.clear();	
+			
 		});
 
 		btnAtras.setOnMouseClicked(e -> {
@@ -633,7 +668,7 @@ public class PanelEjercicios implements Initializable {
 				archivoNuevo.writeBytes(descripcion+"\n");
 			}else {
 				//Obteniendo datos nuevos
-				int nuevoNumDeVectores=Integer.parseInt(numVect.getText());
+				int nuevoNumDeVectores=contadorFilas;
 				float[] angulosNuevos= new float[nuevoNumDeVectores];
 				float[] fuerzasNuevas= new float[nuevoNumDeVectores];
 				int ii=0;
@@ -833,7 +868,7 @@ public class PanelEjercicios implements Initializable {
 		formData.getStyleClass().add("formData");
 
 		try {
-			numVect.setOnKeyPressed(e -> {
+			/*numVect.setOnKeyPressed(e -> {
 				System.out.println("KeyReleased()" + numVect.getText());
 
 				// if(e.getCode().equals("DIGIT1")) {
@@ -856,14 +891,14 @@ public class PanelEjercicios implements Initializable {
 					}
 				}
 
-			});
+			});*/
 		} catch (NumberFormatException e) {
 			numFilasAnt = tablaDatos.getItems().size();
 			System.out.println("KeyReleased(Catch 2)");
 
 		}
 
-		numVect.setOnKeyReleased(e -> {
+		/*numVect.setOnKeyReleased(e -> {
 			System.out.println("KeyReleased(Inicio)");
 			// numFilasAnt= tablaDatos.getItems().size()-1;
 			if (!verificarExp(e))
@@ -903,7 +938,7 @@ public class PanelEjercicios implements Initializable {
 			}
 			System.out.println(e.getCode());
 			// if(e.getCode().equals("BACK_SPACE")) {
-		});
+		});*/
 		
 	}
 
@@ -932,7 +967,7 @@ public class PanelEjercicios implements Initializable {
 	
 
 	public void rellenarDatos(int idE, int tipoEjercicio) {
-		numVect.requestFocus();	
+		//numVect.requestFocus();	
 		//rellenarDatos(idEjer);
 		RandomAccessFile file = null;
 		int maxFiles = 0;
@@ -1013,6 +1048,8 @@ public class PanelEjercicios implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		  
+		  
 		  teclearVectores(vects2);
 		  numVectActual=vects2;
 		  //=====================
@@ -1049,8 +1086,9 @@ public class PanelEjercicios implements Initializable {
 		
 			System.out.println("Vectores: "+vects3);
 			for(int i=0;i<vects3;i++) agregarVector();
-			numVect.setText(vects3+"");
-			contadorFilas=vects3;
+			//numVect.setText(vects3+"");
+			//numeroDeVectores=vects3;
+			//contadorFilas=vects3;
 		//try {
 			/*Robot r = new Robot();
 			switch(vects3) {
@@ -1115,12 +1153,17 @@ public class PanelEjercicios implements Initializable {
 
 	private void agregarVector() {
 		contadorFilas++;
+		System.out.println("contadorDeFilas + 1"+contadorFilas);
 		data.add(new ContenidoTabla("", ""));
+		//numeroDeVectores++;		
 	}
 
 	private void eliminarVector() {
 		data.remove(--contadorFilas);
 		tablaDatos.getItems().removeAll(tablaDatos.getSelectionModel().getSelectedItems());
+		//numeroDeVectores--;
+		System.out.println("contadorDeFilas - 1"+contadorFilas);
+
 	}
 	
 	public void limpiarDatos() {
