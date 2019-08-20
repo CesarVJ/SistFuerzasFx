@@ -356,6 +356,11 @@
  	-fx-cursor: hand;
  }
  
+ .reduceOpacity:hover{
+ 	 -fx-cursor: hand; 	 
+ 	 -fx-opacity:0.25;
+ }
+ 
  
  
 

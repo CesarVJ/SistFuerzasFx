@@ -39,6 +39,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import model.Usuario;
 
 public class PanelEjercicios implements Initializable {
 	@FXML
@@ -46,7 +49,7 @@ public class PanelEjercicios implements Initializable {
 	@FXML
 	ScrollPane ejerciciosT1Scroll,ejerciciosT2Scroll;
 	@FXML
-	VBox titlePanel, photoBox, picture, titlePanel2, photoBox2, picture2, formData,adicionales,quitar,agregar;
+	VBox titlePanel, photoBox, picture, titlePanel2, photoBox2, picture2, formData,adicionales,quitar,agregar,graficaBox;
 	@FXML
 	HBox pesoBox;
 	@FXML
@@ -70,6 +73,7 @@ public class PanelEjercicios implements Initializable {
 	int contadorFilas = 0;
 	int numFilasAnt = 0;
 	int vects = 0;
+	int tipoDelEjercicioActual=0;
 
 	int size;
 	VBox btnEjercicios[];
@@ -101,6 +105,10 @@ public class PanelEjercicios implements Initializable {
 
 		ejerciciosT1Scroll.setPannable(true);
 		
+		graficaBox.getStyleClass().add("VBoxPhoto");
+		imgEjercicio.getStyleClass().add("reduceOpacity");
+
+
 
 		ejerciciosT2Scroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		ejerciciosT2Scroll.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
@@ -206,6 +214,10 @@ public class PanelEjercicios implements Initializable {
 		
 		int total2  = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;
 		totalEjer2.setText(totalEjer2.getText()+total2);
+		
+		imgEjercicio.setOnMouseClicked(e->{
+			cambiarGrafica();
+		});
 
 		/*
 		 * btnEjer.getStyleClass().addAll("profileBox","resourcesBox");
@@ -256,7 +268,7 @@ public class PanelEjercicios implements Initializable {
 
 
 
-
+		
 
 		picture.setOnMouseClicked(e -> {
 			// ventanaProfile.toFront();
@@ -525,6 +537,8 @@ public class PanelEjercicios implements Initializable {
 		
 		
 		crearEditor();	
+
+
 	}
 	
 	public void guardarCambios() {
@@ -943,6 +957,7 @@ public class PanelEjercicios implements Initializable {
 	}
 
 	public void abrirEditor(int i, int tipoEjercicio) {
+		tipoDelEjercicioActual=tipoEjercicio;
 		EjercicioAct=i;
 		
 		if(tipoEjercicio==2) {
@@ -963,6 +978,7 @@ public class PanelEjercicios implements Initializable {
 			editorEjercicios.getChildren().add(btnAtrasEditor);
 		}
 		rellenarDatos(i,tipoEjercicio);
+
 	}
 	
 
@@ -1077,6 +1093,59 @@ public class PanelEjercicios implements Initializable {
 					esCociente.fire();
 			}
 			
+	}
+	
+	
+	public void cambiarGrafica() {
+		try {
+			FileChooser select = new FileChooser();
+			select.setTitle("Elegir imagen");
+			Stage stage = (Stage)editorEjercicios.getScene().getWindow();
+			
+			File file = select.showOpenDialog(stage);
+			file.setWritable(true);
+			
+			String nuevaRuta=file.getAbsolutePath();
+			
+			String aditional=tipoDelEjercicioActual==1?"s":"";
+			
+			try {
+				Files.copy(Paths.get(nuevaRuta),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio"+aditional+tipoDelEjercicioActual+"\\Ejer"+EjercicioAct+".png"),StandardCopyOption.REPLACE_EXISTING);
+			}catch(Exception nm) {
+					Files.copy(Paths.get(nuevaRuta),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicio"+aditional+tipoDelEjercicioActual+"/Ejer"+EjercicioAct+".png"),StandardCopyOption.REPLACE_EXISTING);
+			}
+			
+			if(System.getProperty("os.name").contains("Windows")) {
+				photoProfile.setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio"+aditional+tipoDelEjercicioActual+"\\Ejer"+EjercicioAct+".png", 400, 300, false, false));// Ancho.alto
+			}else {
+				photoProfile.setImage(new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicio"+aditional+tipoDelEjercicioActual+"/Ejer"+EjercicioAct+".png", 400, 300, false, false));// Ancho.alto
+			}
+			
+			
+
+		}catch(Exception e) {
+			System.out.println("No se selecciono ninguna imagen");
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+	
+	public static Usuario getUserName() {
+		//try {
+		Tabs user = new Tabs();
+		//System.out.println("TU usuario es "+user.user.getUsuario());
+		return user.user;
+		//}catch(Exception e) {
+			//Formulario user = new Formulario();
+			//return user.cuenta;
+		//}
 	}
 	
 	
