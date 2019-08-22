@@ -67,7 +67,7 @@ public class PanelEjercicios implements Initializable {
 	@FXML
 	ObservableList<ContenidoTabla> data;
 	@FXML
-	Button btnGuardar;
+	Button btnGuardar,btnAsignarImgResultado;
 
 	static int EjercicioAct=0,numVectActual=0;
 	int contadorFilas = 0;
@@ -1113,19 +1113,16 @@ public class PanelEjercicios implements Initializable {
 				Files.copy(Paths.get(nuevaRuta),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio"+aditional+tipoDelEjercicioActual+"\\Ejer"+EjercicioAct+".png"),StandardCopyOption.REPLACE_EXISTING);
 			}catch(Exception nm) {
 					Files.copy(Paths.get(nuevaRuta),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicio"+aditional+tipoDelEjercicioActual+"/Ejer"+EjercicioAct+".png"),StandardCopyOption.REPLACE_EXISTING);
-			}
-			
+			}			
 			if(System.getProperty("os.name").contains("Windows")) {
 				photoProfile.setImage(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgEjercicio"+aditional+tipoDelEjercicioActual+"\\Ejer"+EjercicioAct+".png", 400, 300, false, false));// Ancho.alto
 			}else {
 				photoProfile.setImage(new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/imgEjercicio"+aditional+tipoDelEjercicioActual+"/Ejer"+EjercicioAct+".png", 400, 300, false, false));// Ancho.alto
-			}
-			
-			
-
+			}					
 		}catch(Exception e) {
 			System.out.println("No se selecciono ninguna imagen");
 		}
+	}
 	
 	
 	
@@ -1133,8 +1130,49 @@ public class PanelEjercicios implements Initializable {
 	
 	
 	
+	public void asignarImagenResultado(){
 	
+		try {
+			crearCarpetas();
+			String rutaDeImagenSolucion=abrirVisorDeArchivos();
+			copiarImagen(rutaDeImagenSolucion);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	public void crearCarpetas() {
+		String username = System.getProperty("user.home");
+		if(System.getProperty("os.name").contains("Windows")) {
+			System.out.println("THE FILES HAS BEEN CREATED");
+
+			new File (username+"\\SistFuerzasFiles\\imgsResultado1").mkdirs();
+			new File (username+"\\SistFuerzasFiles\\imgsResultado2").mkdirs();
+		}else {
+			System.out.println("THE FILES HAS BEEN CREATED LINUX" );
+			new File (username+"/SistFuerzasFiles/imgsResultado1").mkdirs();
+		    new File (username+"/SistFuerzasFiles/imgsResultado2").mkdirs();
+		}
+	}
+	
+	public String abrirVisorDeArchivos() {
+		FileChooser select = new FileChooser();
+		select.setTitle("Elegir imagen");
+		Stage stage = (Stage)editorEjercicios.getScene().getWindow();
+		
+		File file = select.showOpenDialog(stage);
+		file.setWritable(true);
+		
+		String ruta=file.getAbsolutePath();
+		return ruta;
+	}
+	
+	public void copiarImagen(String ruta) throws IOException {
+		try {
+			Files.copy(Paths.get(ruta),Paths.get(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgsResultado"+tipoDelEjercicioActual+"\\Ejer"+EjercicioAct+".png"),StandardCopyOption.REPLACE_EXISTING);
+		}catch(Exception nm) {
+			Files.copy(Paths.get(ruta),Paths.get(System.getProperty("user.home")+"/SistFuerzasFiles/imgsResultado"+tipoDelEjercicioActual+"/Ejer"+EjercicioAct+".png"),StandardCopyOption.REPLACE_EXISTING);
+		}	
 	}
 	
 	public static Usuario getUserName() {

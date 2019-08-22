@@ -434,8 +434,8 @@ public class TipoEjercicio1 implements Initializable {
 	@FXML
 	private void verificarDatos(ActionEvent event) {
 		
-	
-		
+		boolean isCorrect=false;
+		Alert AvisoGraficaCorrecta = new Alert(Alert.AlertType.INFORMATION);
 		ObservableList<ContenidoTabla> dataRows = FXCollections.observableArrayList();
 		Resultados obj = new Resultados();
 		Alert resultado = new Alert(Alert.AlertType.WARNING);
@@ -501,6 +501,16 @@ public class TipoEjercicio1 implements Initializable {
 			resultado.setGraphic(correcta);
 			
 			
+			ImageView graficaCorrecta= obtenerGraficaSolucion(1,numEjercicio);
+			if(graficaCorrecta!=null) {
+				AvisoGraficaCorrecta.setGraphic(graficaCorrecta);
+				AvisoGraficaCorrecta.setResizable(true);
+				AvisoGraficaCorrecta.setTitle("Diagrama resultante");
+				isCorrect=true;
+			}
+
+			
+			
 			
 			
 			
@@ -564,11 +574,16 @@ public class TipoEjercicio1 implements Initializable {
 		}
 		resultado.setHeaderText(null);
 		resultado.showAndWait();
+		if(isCorrect) {
+    		AvisoGraficaCorrecta.setHeaderText(null);
+    		AvisoGraficaCorrecta.showAndWait();
+    	}
 		
 		}catch(Exception e){
 			registrarIntento(getUserName().getUsuario(),numEjercicio);
-
+			isCorrect=false;
 			resultado.setTitle("Respuesta incorrecta");
+			
 			resultado.setContentText(
 					"Alguno de tus resultados es incorrecto, verifica tus operaciones y vuelve a intentarlo");
 			ImageView incorrecta = new ImageView(
@@ -577,11 +592,30 @@ public class TipoEjercicio1 implements Initializable {
         	new Shake(table).play();
         	resultado.setHeaderText(null);
         	resultado.showAndWait();
+        	
         	return;
 			
 		}
 
 	}
+	
+	public ImageView obtenerGraficaSolucion(int tipoEjercicio,int idEjercicio) {
+		ImageView correcta =null;
+		File fileWindos= new File(System.getProperty("user.home")+"\\SistFuerzasFiles\\imgsResultado"+tipoEjercicio+"\\Ejer"+idEjercicio+".png");
+		File fileLinux= new File(System.getProperty("user.home")+"/SistFuerzasFiles/imgsResultado"+tipoEjercicio+"/Ejer"+idEjercicio+".png");
+
+		if(!fileWindos.exists()  && !fileLinux.exists()) return null;
+		
+		try {
+			correcta=new ImageView(new Image("file:///"+System.getProperty("user.home")+"\\SistFuerzasFiles\\imgsResultado"+tipoEjercicio+"\\Ejer"+idEjercicio+".png", 400, 300, true, true));
+		}catch(Exception e) {
+			correcta=new ImageView(new Image("file:///"+System.getProperty("user.home")+"/SistFuerzasFiles/imgsResultado"+tipoEjercicio+"/Ejer"+idEjercicio+".png", 400, 300, true, true));
+		}
+		return correcta;
+	}
+	
+	
+	
 	public void aumentarMaximos(Usuario user,int max) throws IOException {
 		
 		RandomAccessFile file=null;

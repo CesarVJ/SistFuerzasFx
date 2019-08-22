@@ -100,7 +100,11 @@
             			<TextField fx:id="peso"/>            		
             			<CheckBox text="Tomar como cociente" fx:id="esCociente"></CheckBox>
             		</HBox>
-            		<Button text="Guardar Cambios" fx:id="btnGuardar" onAction="#guardarCambios"></Button>
+            		<HBox spacing="20.0">
+            		    <Button text="Guardar Cambios" fx:id="btnGuardar" onAction="#guardarCambios"></Button>       
+		                <Button text="Asignar imagen resultado" fx:id="btnAsignarImgResultado" onAction="#asignarImagenResultado"></Button>            		            		         	
+            		</HBox>
+            		
             		</VBox>
             	
 	
