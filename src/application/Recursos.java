@@ -41,7 +41,7 @@ public class Recursos implements Initializable {
 	@FXML
 	Hyperlink myHyperlink;
 	@FXML
-	WebView video1,video2;
+	WebView video;
 	@FXML
 	HBox urlBox,nombreBox,categoriaBox;
 	@FXML
@@ -202,7 +202,9 @@ public class Recursos implements Initializable {
 	
 		btnVideos.setOnMouseClicked(e->{			
 			//ventanaProfile.toFront();
-			contenedor2.toFront();
+			//contenedor2.toFront();
+			visorDeRecursos.toFront();
+			cargarRecursos("Videos");	
 			
 		});
 		
@@ -225,7 +227,8 @@ public class Recursos implements Initializable {
 		});
 		
 		btnPropuestos.setOnMouseClicked(e->{
-			irPagina("http://www.google.com");					
+			visorDeRecursos.toFront();
+			cargarRecursos("Propuestos");					
 		});
 		
 		btnObjetivo.setOnMouseClicked(e->{
@@ -252,13 +255,9 @@ public class Recursos implements Initializable {
 		});
 		
 		
-	    video1.getEngine().load(
-	      "https://www.youtube.com/embed/Da-2h2B4faU"
-	    );
+	  
 	    
-	    video2.getEngine().load(
-	  	      "https://www.youtube.com/embed/Da-2h2B4faU"
-	  	    );
+	   
 	    //video1.setPrefSize(640, 390);
 		/*myHyperlink.setOnAction(e -> {
 		    if(Desktop.isDesktopSupported())
@@ -379,9 +378,21 @@ public class Recursos implements Initializable {
 	}
 	
 	public void definirHipervinculo(HBox nuevoElemento,String enlace) {
-		nuevoElemento.setOnMouseClicked(e->{
-			irPagina(enlace);					
-		});
+		if(enlace.contains("youtube")) {
+			nuevoElemento.setOnMouseClicked(e->{
+				cargarVideo(enlace);					
+			});
+		}else {
+			nuevoElemento.setOnMouseClicked(e->{
+				irPagina(enlace);					
+			});
+		}
+		
+	}
+	
+	public void cargarVideo(String enlace) {
+		contenedor2.toFront();
+		video.getEngine().load(enlace);		
 	}
 	
 	public void removerRecurso(Recurso recursoARemover) throws IOException {
