@@ -208,12 +208,22 @@ public class PanelEjercicios implements Initializable {
 		ejercicios.setPrefWidth(1100);
 		ejercicios.setPrefHeight(580);
 		
-		int total1  = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicios1").listFiles().length
-				+ 1;
-		totalEjer1.setText(totalEjer1.getText()+total1);
+		if(System.getProperty("os.name").contains("Windows")) {
+			int total1  = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicios1").listFiles().length+ 1;
+			totalEjer1.setText(totalEjer1.getText()+total1);		
+			int total2  = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;
+			totalEjer2.setText(totalEjer2.getText()+total2);
+		}else {
+			int total1  = new File(System.getProperty("user.home") + "/SistFuerzasFiles/imgEjercicios1").listFiles().length+ 1;
+			totalEjer1.setText(totalEjer1.getText()+total1);		
+			int total2  = new File(System.getProperty("user.home") + "/SistFuerzasFiles/imgEjercicio2").listFiles().length;
+			totalEjer2.setText(totalEjer2.getText()+total2);						
+		}
 		
-		int total2  = new File(System.getProperty("user.home") + "\\SistFuerzasFiles\\imgEjercicio2").listFiles().length;
-		totalEjer2.setText(totalEjer2.getText()+total2);
+		
+		
+		
+		
 		
 		imgEjercicio.setOnMouseClicked(e->{
 			cambiarGrafica();

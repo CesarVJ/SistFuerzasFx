@@ -298,10 +298,22 @@ public class Estadisticas implements Initializable {
 		RandomAccessFile file=null;
 
 		try {
-			file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+			
+			if(System.getProperty("os.name").contains("Windows")) {
+				file = new RandomAccessFile(System.getProperty("user.home") + "\\SistFuerzasFiles\\users.dat", "rw");
+			}else {
+				file = new RandomAccessFile(System.getProperty("user.home") + "/SistFuerzasFiles/users.dat", "rw");				
+			}						
 		} catch (FileNotFoundException e3) {
-
+			System.out.print("Rutas erroneas");
 		}
+		
+		
+		
+		
+		
+		
+		
 		try {
 
 			int file1=0;
